@@ -1,0 +1,212 @@
+/* New Styles for Updated Section */
+.new-product-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #D3D3D3;
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Full width across the entire page */
+    margin: 0 0 15px 0; /* Only 15px bottom margin in white color for separation */
+    height: 650px; /* Increased height to accommodate vertical layout */
+    position: relative;
+    font-family: Arial, sans-serif;
+}
+
+/* Title Styling - now positioned at top */
+.new-product-title {
+    font-size: 60px;
+    line-height: 1;
+    font-weight: 900;
+    margin: 0;
+    color: #000;
+    text-align: center;
+    width: 100%;
+    padding: 30px 20px 15px;
+    order: 1; /* Title at top */
+}
+
+/* Large title styling - now positioned below title */
+.new-product-large-title {
+    font-size: 90px;
+    line-height: 0.9;
+    font-weight: 900;
+    margin: 0;
+    color: white;
+    text-align: center;
+    width: 100%;
+    padding: 0 20px 30px;
+    order: 2; /* Subtitle below title */
+}
+
+/* Image container - now positioned at bottom */
+.product-image-container {
+    width: 100%;
+    flex: 1; /* Take remaining height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow: hidden;
+    order: 3; /* Image at bottom */
+}
+
+/* Image styling with animation */
+.new-product-image {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    transition: all 0.3s ease;
+    object-fit: contain;
+}
+
+/* MAINTAINING VERTICAL LAYOUT ACROSS ALL SCREEN SIZES */
+
+/* Large Screens */
+@media (min-width: 1401px) {
+    .new-product-card {
+        height: 750px;
+    }
+    
+    .new-product-title {
+        font-size: 70px;
+        padding: 40px 30px 20px;
+    }
+    
+    .new-product-large-title {
+        font-size: 120px;
+        padding: 0 30px 40px;
+    }
+    
+    .product-image-container {
+        padding: 30px;
+    }
+}
+
+/* Medium-sized Screens */
+@media (max-width: 1400px) and (min-width: 1024px) {
+    .new-product-card {
+        height: 700px;
+    }
+    
+    .new-product-title {
+        font-size: 65px;
+    }
+    
+    .new-product-large-title {
+        font-size: 100px;
+    }
+}
+
+/* Tablets */
+@media (max-width: 1023px) and (min-width: 768px) {
+    .new-product-card {
+        height: 600px;
+    }
+    
+    .new-product-title {
+        font-size: 55px;
+        padding: 25px 20px 15px;
+    }
+    
+    .new-product-large-title {
+        font-size: 80px;
+        padding: 0 20px 25px;
+    }
+}
+
+/* Large Mobile */
+@media (max-width: 767px) and (min-width: 426px) {
+    .new-product-card {
+        height: 550px;
+    }
+    
+    .new-product-title {
+        font-size: 45px;
+        padding: 20px 15px 10px;
+    }
+    
+    .new-product-large-title {
+        font-size: 70px;
+        padding: 0 15px 20px;
+    }
+    
+    .product-image-container {
+        padding: 15px;
+    }
+}
+
+/* Medium Mobile */
+@media (max-width: 425px) and (min-width: 376px) {
+    .new-product-card {
+        height: 500px;
+    }
+    
+    .new-product-title {
+        font-size: 38px;
+        padding: 15px 10px 10px;
+    }
+    
+    .new-product-large-title {
+        font-size: 60px;
+        padding: 0 10px 15px;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 375px) {
+    .new-product-card {
+        height: 450px;
+    }
+    
+    .new-product-title {
+        font-size: 32px;
+        padding: 15px 10px 8px;
+    }
+    
+    .new-product-large-title {
+        font-size: 50px;
+        padding: 0 10px 15px;
+    }
+    
+    .product-image-container {
+        padding: 10px;
+    }
+}
+
+/* Very Small Mobile */
+@media (max-width: 320px) {
+    .new-product-card {
+        height: 400px;
+    }
+    
+    .new-product-title {
+        font-size: 28px;
+        padding: 12px 8px 6px;
+    }
+    
+    .new-product-large-title {
+        font-size: 40px;
+        padding: 0 8px 12px;
+    }
+    
+    .product-image-container {
+        padding: 8px;
+    }
+}
+
+/* White margin separation between multiple products */
+body {
+    background-color: white; /* Ensure the separation shows as white */
+}
+
+/* Container for multiple products - if you need it */
+.products-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0; /* Using margin-bottom: 15px on each card for separation */
+}

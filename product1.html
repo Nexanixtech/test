@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head><link as_="style" href="styles.css?v=1.1" rel="preload"/><link as_="style" href="styles.css" rel="preload"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Technovation Products</title>
+<link href="./images/Tech Logo (W)-Photoroom.png" rel="shortcut icon" type="image/x-icon"/>
+<link href="styles.css" rel="stylesheet"/>
+<!-- Google Fonts -->
+
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+
+
+
+
+<script defer="defer" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.0.1/model-viewer.min.js" type="module"></script>
+<link href="styles.css?v=1.1" rel="stylesheet"/>
+<script src="script.js?v=1.1"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;family=Poppins:wght@400;500;600;700&amp;family=Roboto:wght@400;500&amp;family=Oswald:wght@700&amp;display=swap" rel="stylesheet"/>  <link rel="stylesheet" href="animation.css">
+</head>
+<body>
+
+<body>
+<!-- First Navigation Bar -->
+<nav class="navbar">
+<div class="container">
+<div class="logo">
+<a href="index.html">
+<img src="./images/Tech Logo (B).png" alt="Tech Logo" class="spin-logo" />
+<img alt="Technovation Logo" loading="lazy" src="./images/techno black logo-Photoroom.png"/>
+</a>
+</div>
+<div class="nav-links">
+<ul>
+<li><a class="active" href="index.html">Home</a></li>
+<li><a href="./index.html#prod-section">Product</a></li>
+</ul>
+</div>
+<div class="menu-toggle">
+<span class="bar"></span>
+<span class="bar"></span>
+<span class="bar"></span>
+</div>
+</div>
+</nav>
+<div class="nav-container">
+<div class="main-navbar">
+<!-- Categories Button (visible in mobile/tab view) -->
+<div class="categories-menu-button">
+<span>Categories</span>
+</div>
+<!-- Categories Navigation for Desktop -->
+<div class="desktop-category-navbar">
+<ul class="category-list">
+<li class="category-item"><a class="category-link" href="/category/earphone">Earphone</a></li>
+<li class="category-item"><a class="category-link" href="/category/headphone">Headphone</a></li>
+<li class="category-item"><a class="category-link" href="/category/oculus">Oculus</a></li>
+<li class="category-item"><a class="category-link" href="/category/speaker">Speaker</a></li>
+<li class="category-item"><a class="category-link" href="/category/watch">Watch</a></li>
+<li class="category-item"><a class="category-link" href="/category/console">Console</a></li>
+<li class="category-item"><a class="category-link" href="/category/mobile">Mobile</a></li>
+<li class="category-item"><a class="category-link" href="/category/laptop">Laptop</a></li>
+</ul>
+</div>
+<!-- Search Form for Desktop -->
+<div class="search-container">
+<form action="/search" class="search-form" method="GET">
+<input class="search-input" id="navSearch" maxlength="256" name="query" placeholder="Search…" required="" type="search"/>
+<button class="search-button" type="submit">
+<svg fill="currentColor" height="16" viewbox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+</svg>
+</button>
+</form>
+</div>
+<!-- Search Icon (visible in mobile/tab view) -->
+<div class="search-icon-mobile">
+<svg fill="currentColor" height="20" viewbox="0 0 16 16" width="20" xmlns="http://www.w3.org/2000/svg">
+<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+</svg>
+</div>
+</div>
+<!-- Mobile Categories Menu (hidden by default) -->
+<div class="mobile-category-menu">
+<ul class="mobile-category-list">
+<li class="mobile-category-item"><a class="mobile-category-link" href="/category/earphone">Earphone</a></li>
+<li class="mobile-category-item"><a class="mobile-category-link" href="/category/headphone">Headphone</a></li>
+<li class="mobile-category-item"><a class="mobile-category-link" href="/category/oculus">Oculus</a></li>
+<li class="mobile-category-item"><a class="mobile-category-link" href="/category/speaker">Speaker</a></li>
+<li class="mobile-category-item"><a class="mobile-category-link" href="/category/watch">Watch</a></li>
+<li class="mobile-category-item"><a class="mobile-category-link" href="/category/console">Console</a></li>
+<li class="mobile-category-item"><a class="mobile-category-link" href="/category/mobile">Mobile</a></li>
+<li class="mobile-category-item"><a class="mobile-category-link" href="/category/laptop">Laptop</a></li>
+</ul>
+</div>
+<!-- Mobile Search Form (hidden by default) -->
+<div class="mobile-search-container">
+<form action="/search" class="mobile-search-form" method="GET">
+<input class="mobile-search-input" id="mobileNavSearch" maxlength="256" name="query" placeholder="Search…" required="" type="search"/>
+<button class="mobile-search-button" type="submit">
+<svg fill="currentColor" height="16" viewbox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+</svg>
+</button>
+<div class="close-search-button">
+<svg fill="currentColor" height="16" viewbox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"></path>
+</svg>
+</div>
+</form>
+</div>
+</div>
+<!-- Overlay Background -->
+<div class="overlay" id="overlay"></div>
+<!-- Banner Section HTML -->
+<section class="banner-section">
+<div class="banner-overlay">
+<h1 class="banner-title">Wireless Headphone</h1>
+<div class="breadcrumb">
+<a href="./index.html">Home</a>
+<span class="breadcrumb-separator">›</span>
+<a href="./index.html#prod-section">Products</a>
+<span class="breadcrumb-separator">›</span>
+<span class="current-page">Wireless Headphone</span>
+</div>
+</div>
+</section>
+<!-- product gallery -->
+<div class="product-gallery">
+<div class="thumbnail-container">
+<button class="scroll-button scroll-up">↑</button>
+<div class="thumbnails">
+<div class="thumbnail active" data-model="https://modelviewer.dev/shared-assets/models/Astronaut.glb" data-src="https://cdn.prod.website-files.com/676a58d5fdde7ec989f63f4c/676a58d5fdde7ec989f63fb4_6712343394ee4c4752ce8782_product1-4.png" data-type="image">
+<img alt="Product Thumbnail 1" loading="lazy" src="https://cdn.prod.website-files.com/676a58d5fdde7ec989f63f4c/676a58d5fdde7ec989f63fb4_6712343394ee4c4752ce8782_product1-4.png"/>
+</div>
+<div class="thumbnail" data-model="https://modelviewer.dev/shared-assets/models/Astronaut.glb" data-src="https://cdn.prod.website-files.com/676a58d5fdde7ec989f63f4c/676a58d5fdde7ec989f63fb4_6712343394ee4c4752ce8782_product1-4.png" data-type="image">
+<img alt="Product Thumbnail 2" loading="lazy" src="https://cdn.prod.website-files.com/676a58d5fdde7ec989f63f4c/676a58d5fdde7ec989f63fb4_6712343394ee4c4752ce8782_product1-4.png"/>
+</div>
+<div class="thumbnail" data-model="https://modelviewer.dev/shared-assets/models/Astronaut.glb" data-src="https://cdn.prod.website-files.com/676a58d5fdde7ec989f63f4c/676a58d5fdde7ec989f63fb4_6712343394ee4c4752ce8782_product1-4.png" data-type="image">
+<img alt="Product Thumbnail 3" loading="lazy" src="https://cdn.prod.website-files.com/676a58d5fdde7ec989f63f4c/676a58d5fdde7ec989f63fb4_6712343394ee4c4752ce8782_product1-4.png"/>
+</div>
+<div class="thumbnail" data-model="https://modelviewer.dev/shared-assets/models/Astronaut.glb" data-src="https://cdn.prod.website-files.com/676a58d5fdde7ec989f63f4c/676a58d5fdde7ec989f63fb4_6712343394ee4c4752ce8782_product1-4.png" data-type="image">
+<img alt="Product Thumbnail 4" loading="lazy" src="https://cdn.prod.website-files.com/676a58d5fdde7ec989f63f4c/676a58d5fdde7ec989f63fb4_6712343394ee4c4752ce8782_product1-4.png"/>
+</div>
+<div class="thumbnail" data-model="https://modelviewer.dev/shared-assets/models/Astronaut.glb" data-src="https://cdn.prod.website-files.com/676a58d5fdde7ec989f63f4c/676a58d5fdde7ec989f63fb4_6712343394ee4c4752ce8782_product1-4.png" data-type="image">
+<img alt="Product Thumbnail 5" loading="lazy" src="https://cdn.prod.website-files.com/676a58d5fdde7ec989f63f4c/676a58d5fdde7ec989f63fb4_6712343394ee4c4752ce8782_product1-4.png"/>
+</div>
+<div class="thumbnail" data-model="https://modelviewer.dev/shared-assets/models/Astronaut.glb" data-src="https://www.w3schools.com/html/mov_bbb.mp4" data-type="video">
+<video autoplay="" loop="" muted="">
+<source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"/>
+</video>
+<div class="video-icon">▶</div>
+</div>
+<div class="thumbnail" data-model="https://modelviewer.dev/shared-assets/models/Astronaut.glb" data-src="" data-type="3d">
+<img alt="3D Model Thumbnail" loading="lazy" src="https://cdn.prod.website-files.com/676a58d5fdde7ec989f63f4c/676a58d5fdde7ec989f63fb4_6712343394ee4c4752ce8782_product1-4.png"/>
+<div class="model-icon">3D</div>
+</div>
+</div>
+<button class="scroll-button scroll-down">↓</button>
+</div>
+<div class="main-display">
+<button class="main-nav-button main-prev">❮</button>
+<div class="media-container">
+<img alt="Product Image" loading="lazy" src="https://cdn.prod.website-files.com/676a58d5fdde7ec989f63f4c/676a58d5fdde7ec989f63fb4_6712343394ee4c4752ce8782_product1-4.png"/>
+</div>
+<button class="main-nav-button main-next">❯</button>
+<button class="view-3d-button" title="View in 3D">
+<svg class="view-3d-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"></path>
+<path d="M12 12l8-4.5"></path>
+<path d="M12 12v9"></path>
+<path d="M12 12L4 7.5"></path>
+</svg>
+</button>
+</div>
+</div>
+<!-- Required for 3D models -->
+<script defer="defer" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js" type="module"></script>
+<!-- product details  -->
+<div class="container1">
+<div class="tab-buttons">
+<button class="tab-button" data-tab="specification">Specification</button>
+<button class="tab-button active" data-tab="description">Description</button>
+</div>
+<div class="tab-content">
+<!-- Specification Tab Content -->
+<div class="tab-pane" id="specification">
+<h2 class="section-title">Product Features</h2>
+<div class="specs-container">
+<div class="spec-item">
+<div class="spec-name">Screen Dimensions</div>
+<div class="spec-value">21.45 inches</div>
+</div>
+<div class="spec-item">
+<div class="spec-name">Technology</div>
+<div class="spec-value">LED</div>
+</div>
+<div class="spec-item">
+<div class="spec-name">Panel Style</div>
+<div class="spec-value">VA</div>
+</div>
+<div class="spec-item">
+<div class="spec-name">Screen Resolution</div>
+<div class="spec-value">4K</div>
+</div>
+<div class="spec-item">
+<div class="spec-name">Finish</div>
+<div class="spec-value">Anti-glare coating</div>
+</div>
+<div class="spec-item">
+<div class="spec-name">Refresh Speed</div>
+<div class="spec-value">100Hz</div>
+</div>
+<div class="spec-item">
+<div class="spec-name">Color Range</div>
+<div class="spec-value">16.7 million colors</div>
+</div>
+</div>
+</div>
+<!-- Description Tab Content -->
+<div class="tab-pane active" id="description">
+<h2 class="section-title">Product Description</h2>
+<div class="description-content">
+<p>Experience stunning visuals with the iPhone's cutting-edge display. Boasting a <span class="highlight-text">21.45-inch Full HD screen</span>, it features LED technology and a VA panel for deep contrast and vibrant colors. The anti-glare surface ensures effortless viewing in any lighting, while the 100Hz refresh rate delivers ultra-smooth motion. With support for 16.7 million colors, every image and video comes to life with incredible detail and clarity.</p>
+<p>Immerse yourself in unparalleled clarity with the iPhone's expansive display. The <span class="highlight-text">21.45-inch screen</span> offers Full HD resolution for sharp and detailed visuals, while the VA panel ensures deeper blacks and vibrant hues. The anti-glare surface reduces distractions, making it perfect for both indoor and outdoor use. With a 100Hz refresh rate, every motion feels fluid and lifelike. Whether streaming, gaming, or browsing, the 16.7 million color spectrum guarantees a truly captivating experience.</p>
+</div>
+</div>
+</div>
+<!-- Mobile Accordion -->
+<div class="mobile-accordion">
+<div class="accordion-item">
+<div class="accordion-header" data-accordion="specification-mobile">
+<span class="header-text">Specification</span>
+<span class="accordion-icon">+</span>
+</div>
+<div class="accordion-content" id="specification-mobile">
+<h2 class="section-title">Product Features</h2>
+<div class="specs-container">
+<div class="spec-item">
+<div class="spec-name">Screen Dimensions</div>
+<div class="spec-value">21.45 inches</div>
+</div>
+<div class="spec-item">
+<div class="spec-name">Technology</div>
+<div class="spec-value">LED</div>
+</div>
+<div class="spec-item">
+<div class="spec-name">Panel Style</div>
+<div class="spec-value">VA</div>
+</div>
+<div class="spec-item">
+<div class="spec-name">Screen Resolution</div>
+<div class="spec-value">4K</div>
+</div>
+<div class="spec-item">
+<div class="spec-name">Finish</div>
+<div class="spec-value">Anti-glare coating</div>
+</div>
+<div class="spec-item">
+<div class="spec-name">Refresh Speed</div>
+<div class="spec-value">100Hz</div>
+</div>
+<div class="spec-item">
+<div class="spec-name">Color Range</div>
+<div class="spec-value">16.7 million colors</div>
+</div>
+</div>
+</div>
+</div>
+<div class="accordion-item">
+<div class="accordion-header active" data-accordion="description-mobile">
+<span class="header-text">Description</span>
+<span class="accordion-icon">−</span>
+</div>
+<div class="accordion-content show" id="description-mobile">
+<h2 class="section-title">Product Description</h2>
+<div class="description-content">
+<p>Experience stunning visuals with the iPhone's cutting-edge display. Boasting a <span class="highlight-text">21.45-inch Full HD screen</span>, it features LED technology and a VA panel for deep contrast and vibrant colors. The anti-glare surface ensures effortless viewing in any lighting, while the 100Hz refresh rate delivers ultra-smooth motion. With support for 16.7 million colors, every image and video comes to life with incredible detail and clarity.</p>
+<p>Immerse yourself in unparalleled clarity with the iPhone's expansive display. The <span class="highlight-text">21.45-inch screen</span> offers Full HD resolution for sharp and detailed visuals, while the VA panel ensures deeper blacks and vibrant hues. The anti-glare surface reduces distractions, making it perfect for both indoor and outdoor use. With a 100Hz refresh rate, every motion feels fluid and lifelike. Whether streaming, gaming, or browsing, the 16.7 million color spectrum guarantees a truly captivating experience.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- related products  -->
+<section class="prod-section" id="prod-section">
+<div>
+<p class="subtitle">Products</p>
+<h1 class="title">Related Products</h1>
+</div>
+</section>
+<br/><br/>
+<section class="related-product-details" id="related-product-details">
+<a class="product-card-details" href="./product1.html">
+<div class="product-image-details">
+<img alt="Phone Pro" loading="lazy" src="https://cdn.prod.website-files.com/676a58d5fdde7ec989f63f29/676a58d5fdde7ec989f63f44_ads1-1.png"/>
+</div>
+<h2 class="product-title-details">Phone Pro</h2>
+</a>
+<a class="product-card-details" href="./product1.html">
+<div class="product-image-details">
+<img alt="Gaming Console" loading="lazy" src="https://cdn.prod.website-files.com/676a58d5fdde7ec989f63f29/676a58d5fdde7ec989f63f44_ads1-1.png"/>
+</div>
+<h2 class="product-title-details">Gaming Console</h2>
+</a>
+<a class="product-card-details" href="./product1.html">
+<div class="product-image-details">
+<img alt="Speaker Amplifier" loading="lazy" src="https://cdn.prod.website-files.com/676a58d5fdde7ec989f63f29/676a58d5fdde7ec989f63f44_ads1-1.png"/>
+</div>
+<h2 class="product-title-details">Speaker Amplifier</h2>
+</a>
+<a class="product-card-details" href="./product1.html">
+<div class="product-image-details">
+<img alt="Oculus Headsets" loading="lazy" src="https://cdn.prod.website-files.com/676a58d5fdde7ec989f63f29/676a58d5fdde7ec989f63f44_ads1-1.png"/>
+</div>
+<h2 class="product-title-details">Oculus Headsets</h2>
+</a>
+</section>
+<br/><br/><br/><br/><br/>
+<!-- footer   -->
+<footer class="tech-footer">
+<div class="footer-container">
+<div class="footer-left">
+<div class="footer-logo">
+<img alt="Technovation" loading="lazy" src="./images/techno black logo-Photoroom.png"/>
+</div>
+<p class="footer-description">
+                With over a decade of experience, we are proud to deliver innovative products to clients around the globe.
+            </p>
+<div class="footer-contact-info">
+<p class="contact-item">
+<i class="fa-solid fa-map-marker-alt contact-icon"></i>
+                    186/25 golden nager kallidaikurichi, Tirunelveli -627416
+                </p>
+<p class="contact-item">
+<i class="fa-solid fa-envelope contact-icon"></i>
+                    techtechnovation@gmail.com
+                </p>
+<p class="contact-item">
+<i class="fa-solid fa-phone contact-icon"></i>
+                    7339224811
+                </p>
+</div>
+</div>
+<div class="footer-right">
+<h2 class="footer-section-title">Sections</h2>
+<div class="footer-divider"></div>
+<ul class="footer-links">
+<li>
+<i class="fa-solid fa-chevron-right arrow-icon"></i>
+<a href="./index.html">Home</a>
+</li>
+<li>
+<i class="fa-solid fa-chevron-right arrow-icon"></i>
+<a href="./index.html#prod-section">Products</a>
+</li>
+</ul>
+</div>
+</div>
+</footer>
+<!-- Font Awesome for Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<div class="footer-navbar">
+<div class="copyright">© Copyright - <a class="company-link" href="https://technovationpvtltd.com/">Technovation</a></div>
+</div>
+<script src="script.js"></script>
+<script src="mouse.js"></script>
+</body>
+</body></html>

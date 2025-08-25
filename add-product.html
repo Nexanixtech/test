@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product - Technovation</title>
+    <link href="../images/tecpn.png" rel="shortcut icon" type="image/x-icon" />
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="admin.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script type="module" src="https://unpkg.com/@google/model-viewer@3.4.0/dist/model-viewer.min.js"></script>
+    <script>
+        // Check if model-viewer is loaded
+        window.addEventListener('load', () => {
+            console.log('Model-viewer loaded:', !!window.customElements.get('model-viewer'));
+        });
+    </script>
+</head>
+
+<body class="admin-page">
+    <style>
+        /* Video with Background Color */
+        .video-bg-container {
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .video-bg-container:hover {
+            border-color: #4285f4;
+            background-color: rgba(66, 133, 244, 0.05);
+        }
+
+        .video-upload {
+            flex: 3;
+        }
+
+        .color-picker {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .color-picker input[type="color"] {
+            width: 50px;
+            height: 50px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        /* Technical Specifications */
+        .tech-specs-container {
+            margin-top: 1rem;
+        }
+
+        .tech-spec-item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            background-color: #f8f9fa;
+        }
+
+        .tech-spec-row {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tech-spec-img-container {
+            border: 1px dashed #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .tech-spec-img-preview {
+            width: 100%;
+            max-height: 150px;
+            overflow: hidden;
+            margin-top: 1rem;
+            border-radius: 6px;
+        }
+
+        .tech-spec-img-preview img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .tech-spec-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .tech-spec-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 1rem;
+        }
+
+        .remove-tech-spec-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .remove-tech-spec-btn:hover {
+            background-color: #c82333;
+        }
+
+        .add-tech-spec-btn {
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .add-tech-spec-btn:hover {
+            background-color: #3367d6;
+            transform: translateY(-1px);
+        }
+
+        /* Responsive styles for technical specifications */
+        @media (max-width: 768px) {
+            .tech-spec-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Enhanced color picker styles */
+        .color-picker {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+
+        .color-picker select,
+        .color-picker input[type="color"] {
+            width: 100%;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        .color-picker input[type="color"] {
+            height: 40px;
+            cursor: pointer;
+        }
+
+        .gradient-colors {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .gradient-color {
+            flex: 1;
+        }
+
+        .gradient-color label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        #linearOptions,
+        #radialOptions {
+            margin-top: 15px;
+        }
+
+        #linearOptions select,
+        #radialOptions select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        /* Preview for gradient */
+        .bg-preview {
+            width: 100%;
+            height: 50px;
+            border-radius: 6px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+        }
+    </style>
+    <!-- Replace the form part of the HTML starting from product-form opening div -->
+    <div class="product-form">
+        <h2>Add New Product</h2>
+        <form id="productForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="subtitle">Subtitle</label>
+                    <input type="text" id="subtitle" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" required>
+                        <!-- Categories will be loaded dynamically -->
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="bannerImage">Banner Image</label>
+                <div class="file-upload-container">
+                    <input type="file" id="bannerImage" accept="image/*">
+                    <div class="image-preview" id="bannerImagePreview"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="mainImage">Main Image</label>
+                <div class="file-upload-container">
+                    <input type="file" id="mainImage" accept="image/*" required>
+                    <div class="image-preview" id="mainImagePreview"></div>
+                </div>
+            </div>
+            
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" required></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="rightDescImage">Right Side of Description Image</label>
+                    <div class="file-upload-container">
+                        <input type="file" id="rightDescImage" accept="image/*">
+                        <div class="image-preview" id="rightDescImagePreview"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="leftSpecImage">Left Side of Specification Image</label>
+                    <div class="file-upload-container">
+                        <input type="file" id="leftSpecImage" accept="image/*">
+                        <div class="image-preview" id="leftSpecImagePreview"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Video Upload with Background Color</label>
+                <div class="video-bg-container">
+                    <div class="form-row">
+                        <div class="form-group video-upload">
+                            <input type="file" id="productVideo" accept="video/*">
+                            <div class="video-preview" id="productVideoPreview"></div>
+                        </div>
+
+
+                        <!-- With this section -->
+                        <div class="form-group color-picker">
+                            <label for="videoBgType">Background Type</label>
+                            <select id="videoBgType" onchange="updateBgColorInputs()">
+                                <option value="solid">Solid Color</option>
+                                <option value="linear">Linear Gradient</option>
+                                <option value="radial">Radial Gradient</option>
+                            </select>
+
+                            <div id="solidColorInputs">
+                                <label for="videoBgColor">Color</label>
+                                <input type="color" id="videoBgColor" value="#ffffff">
+                            </div>
+
+                            <div id="gradientColorInputs" style="display: none;">
+                                <div class="gradient-colors">
+                                    <div class="gradient-color">
+                                        <label>Start Color</label>
+                                        <input type="color" id="gradientStartColor" value="#ffffff">
+                                    </div>
+                                    <div class="gradient-color">
+                                        <label>End Color</label>
+                                        <input type="color" id="gradientEndColor" value="#000000">
+                                    </div>
+                                </div>
+                                <div id="linearOptions" style="display: none;">
+                                    <label for="linearDirection">Direction</label>
+                                    <select id="linearDirection">
+                                        <option value="to right">Left to Right</option>
+                                        <option value="to left">Right to Left</option>
+                                        <option value="to bottom">Top to Bottom</option>
+                                        <option value="to top">Bottom to Top</option>
+                                        <option value="to bottom right">Top Left to Bottom Right</option>
+                                        <option value="to top right">Bottom Left to Top Right</option>
+                                        <option value="to bottom left">Top Right to Bottom Left</option>
+                                        <option value="to top left">Bottom Right to Top Left</option>
+                                    </select>
+                                </div>
+                                <div id="radialOptions" style="display: none;">
+                                    <label for="radialShape">Shape</label>
+                                    <select id="radialShape">
+                                        <option value="circle">Circle</option>
+                                        <option value="ellipse">Ellipse</option>
+                                    </select>
+                                    <label for="radialPosition">Position</label>
+                                    <select id="radialPosition">
+                                        <option value="center">Center</option>
+                                        <option value="top">Top</option>
+                                        <option value="bottom">Bottom</option>
+                                        <option value="left">Left</option>
+                                        <option value="right">Right</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>3D Model</label>
+                <div class="model-upload-container">
+                    <input type="file" id="model3d" accept=".glb,.gltf,.stl">
+                    <div class="model-preview" id="modelPreview"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Specifications</label>
+                <div class="specs-table">
+                    <table id="specsTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Value</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <button type="button" class="add-spec-btn" id="addSpecBtn">Add Specification</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Technical Specifications</label>
+                <div class="tech-specs-container" id="techSpecsContainer">
+                    <!-- Technical specs will be added here dynamically -->
+                </div>
+                <button type="button" class="add-tech-spec-btn" id="addTechSpecBtn">Add Technical Specification</button>
+            </div>
+
+            <div class="form-group">
+                <label>Related Products</label>
+                <div class="related-products-container">
+                    <div class="related-products-list" id="relatedProductsList"></div>
+                    <button type="button" class="add-related-btn" id="addRelatedBtn">Add Related Product</button>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">Add Product</button>
+        </form>
+    </div>
+
+    <div id="loader" class="loader" style="display: none;">
+        <div class="spinner"></div>
+        <p>Adding product...</p>
+    </div>
+
+    <style>
+        /* Base Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 2rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Product Form */
+        .product-form {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-form h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        /* Form Groups */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #444;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="file"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group input[type="file"]:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #4285f4;
+            box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.1);
+            outline: none;
+        }
+
+        /* Form Rows */
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Checkbox Labels */
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        /* File Upload Containers */
+        .file-upload-container,
+        .gallery-upload-container,
+        .video-upload-container,
+        .model-upload-container {
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload-container:hover,
+        .gallery-upload-container:hover,
+        .video-upload-container:hover,
+        .model-upload-container:hover {
+            border-color: #4285f4;
+            background-color: rgba(66, 133, 244, 0.05);
+        }
+
+        /* Image/Video Previews */
+        .image-preview,
+        .gallery-preview,
+        .video-preview,
+        .model-preview {
+            margin-top: 1rem;
+        }
+
+        .image-preview img,
+        .gallery-preview img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+
+        .gallery-preview,
+        .video-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .gallery-item,
+        .video-item {
+            position: relative;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .gallery-item img,
+        .video-item video {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .remove-btn:hover {
+            background: #dc3545;
+            color: white;
+        }
+
+        /* Specifications Table */
+        .specs-table {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .specs-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .specs-table th,
+        .specs-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .specs-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+
+        .specs-table input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        /* Buttons */
+        .add-gallery-btn,
+        .add-video-btn,
+        .add-spec-btn,
+        .add-related-btn,
+        .submit-btn {
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .add-gallery-btn:hover,
+        .add-video-btn:hover,
+        .add-spec-btn:hover,
+        .add-related-btn:hover,
+        .submit-btn:hover {
+            background-color: #3367d6;
+            transform: translateY(-1px);
+        }
+
+        .submit-btn {
+            width: 100%;
+            justify-content: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            font-size: 1.1rem;
+        }
+
+        /* Loader */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #4285f4;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        .loader p {
+            color: #333;
+            font-weight: 500;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .product-form {
+                padding: 1.5rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-preview,
+            .video-preview {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .specs-table {
+                overflow-x: auto;
+            }
+
+            .specs-table table {
+                min-width: 600px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 1rem 0;
+            }
+
+            .product-form {
+                padding: 1rem;
+            }
+
+            .product-form h2 {
+                font-size: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .form-group input[type="text"],
+            .form-group input[type="file"],
+            .form-group select,
+            .form-group textarea {
+                padding: 0.7rem;
+            }
+
+            .gallery-preview,
+            .video-preview {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-item img,
+            .video-item video {
+                height: 200px;
+            }
+        }
+
+        /* 3D Model Preview */
+        .model-preview {
+            margin-top: 1rem;
+            width: 100%;
+            height: 300px;
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .model-preview model-viewer {
+            width: 100%;
+            height: 100%;
+            --poster-color: transparent;
+            --progress-bar-color: #4285f4;
+            --progress-bar-height: 2px;
+            --progress-mask: transparent;
+        }
+
+        .model-preview .model-info {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            z-index: 1;
+        }
+
+        .model-preview .model-info span {
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .model-preview .model-info .remove-btn {
+            position: static;
+            width: 20px;
+            height: 20px;
+            font-size: 1rem;
+        }
+
+        .model-preview .model-loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .model-preview .model-loader .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4285f4;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .model-preview .model-loader p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Styles for 3D Model */
+        @media (max-width: 768px) {
+            .model-preview {
+                height: 250px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .model-preview {
+                height: 200px;
+            }
+        }
+    </style>
+
+    <script type="module">
+        import { supabase } from '../supabase.js'
+
+        // Check if user is authenticated
+        const session = JSON.parse(localStorage.getItem('adminSession'))
+        if (!session) {
+            window.location.href = 'login.html'
+        }
+
+        // Load categories
+        async function loadCategories() {
+            try {
+                const { data: categories, error } = await supabase
+                    .from('categories')
+                    .select('*')
+                    .order('name')
+
+                if (error) throw error
+
+                const categorySelect = document.getElementById('category')
+                categorySelect.innerHTML = categories.map(category =>
+                    `<option value="${category.id}">${category.name}</option>`
+                ).join('')
+            } catch (error) {
+                console.error('Error loading categories:', error)
+            }
+        }
+
+        // Load categories when page loads
+        loadCategories()
+
+        // File upload handling
+        async function uploadFile(file, path) {
+            try {
+                const fileExt = file.name.split('.').pop()
+                const fileName = `${Math.random()}.${fileExt}`
+                const filePath = `${path}/${fileName}`
+
+                // Get the current session
+                const { data: { session }, error: sessionError } = await supabase.auth.getSession()
+                if (sessionError) {
+                    console.error('Session error:', sessionError)
+                    throw new Error('Failed to get session: ' + sessionError.message)
+                }
+                if (!session) {
+                    throw new Error('No active session')
+                }
+
+                console.log('Uploading file:', {
+                    path: filePath,
+                    size: file.size,
+                    type: file.type
+                })
+
+                const { error: uploadError } = await supabase.storage
+                    .from('product-assets')
+                    .upload(filePath, file, {
+                        cacheControl: '3600',
+                        upsert: false
+                    })
+
+                if (uploadError) {
+                    console.error('Upload error:', uploadError)
+                    throw new Error('Failed to upload file: ' + uploadError.message)
+                }
+
+                const { data: { publicUrl } } = supabase.storage
+                    .from('product-assets')
+                    .getPublicUrl(filePath)
+
+                console.log('File uploaded successfully:', publicUrl)
+                return publicUrl
+            } catch (error) {
+                console.error('Error in uploadFile:', error)
+                throw error
+            }
+        }
+
+        document.getElementById('bannerImage').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    document.getElementById('bannerImagePreview').innerHTML = `
+                        <img src="${e.target.result}" alt="Banner Image Preview">
+                    `;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        // Function to update background color inputs based on selected type
+        window.updateBgColorInputs = () => {
+            const bgType = document.getElementById('videoBgType').value;
+            const solidInputs = document.getElementById('solidColorInputs');
+            const gradientInputs = document.getElementById('gradientColorInputs');
+            const linearOptions = document.getElementById('linearOptions');
+            const radialOptions = document.getElementById('radialOptions');
+
+            // Hide all first
+            solidInputs.style.display = 'none';
+            gradientInputs.style.display = 'none';
+            linearOptions.style.display = 'none';
+            radialOptions.style.display = 'none';
+
+            // Show relevant inputs based on selection
+            if (bgType === 'solid') {
+                solidInputs.style.display = 'block';
+            } else {
+                gradientInputs.style.display = 'block';
+                if (bgType === 'linear') {
+                    linearOptions.style.display = 'block';
+                } else if (bgType === 'radial') {
+                    radialOptions.style.display = 'block';
+                }
+            }
+
+            // Update preview if it exists
+            updateBgPreview();
+        };
+
+        // Function to update background preview
+        window.updateBgPreview = () => {
+            const previewElement = document.getElementById('bgPreview');
+            if (!previewElement) return;
+
+            const bgType = document.getElementById('videoBgType').value;
+
+            if (bgType === 'solid') {
+                const color = document.getElementById('videoBgColor').value;
+                previewElement.style.background = color;
+            } else if (bgType === 'linear') {
+                const startColor = document.getElementById('gradientStartColor').value;
+                const endColor = document.getElementById('gradientEndColor').value;
+                const direction = document.getElementById('linearDirection').value;
+                previewElement.style.background = `linear-gradient(${direction}, ${startColor}, ${endColor})`;
+            } else if (bgType === 'radial') {
+                const startColor = document.getElementById('gradientStartColor').value;
+                const endColor = document.getElementById('gradientEndColor').value;
+                const shape = document.getElementById('radialShape').value;
+                const position = document.getElementById('radialPosition').value;
+                previewElement.style.background = `radial-gradient(${shape} at ${position}, ${startColor}, ${endColor})`;
+            }
+        };
+
+        // Add event listeners for color inputs to update preview
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add a preview element to the color picker
+            const colorPicker = document.querySelector('.color-picker');
+            const previewDiv = document.createElement('div');
+            previewDiv.id = 'bgPreview';
+            previewDiv.className = 'bg-preview';
+            colorPicker.appendChild(previewDiv);
+            const addSpecBtn = document.getElementById('addSpecBtn');
+            if (addSpecBtn) {
+                addSpecBtn.addEventListener('click', function () {
+                    const tbody = document.querySelector('#specsTable tbody');
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><input type="text" class="spec-name" placeholder="Specification name" required></td>
+                        <td><input type="text" class="spec-value" placeholder="Specification value" required></td>
+                        <td><button type="button" class="remove-spec-btn" style="background-color: #ff4d4d; color: white; border: none; border-radius: 4px; padding: 5px 10px; cursor: pointer; font-weight: bold; transition: background-color 0.3s;">Remove</button></td>
+                    `;
+                    
+                    // Add event listener to the newly created remove button
+                    const removeBtn = tr.querySelector('.remove-spec-btn');
+                    removeBtn.addEventListener('click', function() {
+                        tr.remove();
+                    });
+                    
+                    // Add hover effect for the remove button
+                    removeBtn.addEventListener('mouseover', function() {
+                        this.style.backgroundColor = '#ff1a1a';
+                    });
+                    removeBtn.addEventListener('mouseout', function() {
+                        this.style.backgroundColor = '#ff4d4d';
+                    });
+                    
+                    tbody.appendChild(tr);
+                });
+            }
+
+            // Setup Add Technical Specification button
+            const addTechSpecBtn = document.getElementById('addTechSpecBtn');
+            if (addTechSpecBtn) {
+                addTechSpecBtn.addEventListener('click', function () {
+                    const techSpecId = Date.now();
+                    const techSpecItem = document.createElement('div');
+                    techSpecItem.className = 'tech-spec-item';
+                    techSpecItem.dataset.id = techSpecId;
+
+                    techSpecItem.innerHTML = `
+                <div class="tech-spec-row">
+                    <div class="tech-spec-img-container">
+                        <label>Specification Image</label>
+                        <input type="file" class="tech-spec-img" accept="image/*" onchange="previewTechSpecImage(event, ${techSpecId})">
+                        <div class="tech-spec-img-preview" id="techSpecImgPreview${techSpecId}"></div>
+                    </div>
+                    <div class="tech-spec-content">
+                        <div class="form-group">
+                            <label>Specification</label>
+                            <input type="text" class="tech-spec-title" placeholder="Enter specification" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Sub-specification</label>
+                            <textarea class="tech-spec-description" placeholder="Enter sub-specification details" rows="3" required></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="tech-spec-actions">
+                    <button type="button" class="remove-tech-spec-btn" onclick="removeTechSpec(${techSpecId})">Remove</button>
+                </div>
+            `;
+
+                    document.getElementById('techSpecsContainer').appendChild(techSpecItem);
+                });
+            }
+            // Add event listeners
+            document.getElementById('videoBgColor').addEventListener('input', updateBgPreview);
+            document.getElementById('gradientStartColor').addEventListener('input', updateBgPreview);
+            document.getElementById('gradientEndColor').addEventListener('input', updateBgPreview);
+            document.getElementById('linearDirection').addEventListener('change', updateBgPreview);
+            document.getElementById('radialShape').addEventListener('change', updateBgPreview);
+            document.getElementById('radialPosition').addEventListener('change', updateBgPreview);
+
+            // Initialize the preview
+            updateBgColorInputs();
+        });
+        // Main image preview
+        document.getElementById('mainImage').addEventListener('change', (e) => {
+            const file = e.target.files[0]
+            if (file) {
+                const reader = new FileReader()
+                reader.onload = (e) => {
+                    document.getElementById('mainImagePreview').innerHTML = `
+                        <img src="${e.target.result}" alt="Main Image Preview">
+                    `
+                }
+                reader.readAsDataURL(file)
+            }
+        })
+
+      
+    
+
+        // Gallery videos handling
+        const videoFiles = []
+       
+
+        function updateVideoPreview() {
+            const preview = document.getElementById('videoPreview')
+            preview.innerHTML = videoFiles.map((file, index) => `
+                <div class="video-item">
+                    <video controls>
+                        <source src="${URL.createObjectURL(file)}" type="${file.type}">
+                        Your browser does not support the video tag.
+                    </video>
+                    <button type="button" class="remove-btn" onclick="removeVideo(${index})">×</button>
+                </div>
+            `).join('')
+        }
+
+        window.removeVideo = (index) => {
+            videoFiles.splice(index, 1)
+            updateVideoPreview()
+        }
+
+        // 3D model handling
+        let modelFile = null
+        document.getElementById('model3d').addEventListener('change', (e) => {
+            const file = e.target.files[0]
+            if (file) {
+                console.log('File selected:', file.name, file.type);
+                modelFile = file
+                const fileUrl = URL.createObjectURL(file)
+                console.log('File URL created:', fileUrl);
+
+                const modelPreview = document.getElementById('modelPreview')
+
+                // Show loading state
+                modelPreview.innerHTML = `
+                    <div class="model-loader">
+                        <div class="spinner"></div>
+                        <p>Loading 3D model...</p>
+                    </div>
+                `
+
+                // Create model viewer
+                const modelViewer = document.createElement('model-viewer')
+                console.log('Model viewer element created:', modelViewer);
+
+                // Set attributes
+                modelViewer.setAttribute('src', fileUrl)
+                modelViewer.setAttribute('alt', '3D model preview')
+                modelViewer.setAttribute('auto-rotate', '')
+                modelViewer.setAttribute('camera-controls', '')
+                modelViewer.setAttribute('shadow-intensity', '1')
+                modelViewer.setAttribute('exposure', '1')
+                modelViewer.setAttribute('environment-image', 'neutral')
+                modelViewer.setAttribute('ar-status', 'not-presenting')
+                modelViewer.setAttribute('interaction-prompt', 'auto')
+                modelViewer.setAttribute('interaction-prompt-style', 'basic')
+                modelViewer.setAttribute('interaction-prompt-threshold', '0')
+                modelViewer.style.width = '100%'
+                modelViewer.style.height = '100%'
+
+                console.log('Model viewer attributes set');
+
+                // Add event listener for when model is loaded
+                modelViewer.addEventListener('load', () => {
+                    console.log('Model loaded successfully');
+                    modelPreview.innerHTML = `
+                        <div class="model-info">
+                            <span>${file.name}</span>
+                            <button type="button" class="remove-btn" onclick="removeModel()">×</button>
+                        </div>
+                    `
+                    modelPreview.appendChild(modelViewer)
+                })
+
+                // Add error handling
+                modelViewer.addEventListener('error', (error) => {
+                    console.error('Error loading 3D model:', error);
+                    modelPreview.innerHTML = `
+                        <div class="model-info">
+                            <span>Error loading model: ${error.message || 'Unknown error'}</span>
+                            <button type="button" class="remove-btn" onclick="removeModel()">×</button>
+                        </div>
+                    `
+                })
+
+                // Add progress event listener
+                modelViewer.addEventListener('progress', (event) => {
+                    console.log('Loading progress:', event.detail.totalProgress);
+                })
+            }
+        })
+
+        window.removeModel = () => {
+            modelFile = null
+            document.getElementById('model3d').value = ''
+            document.getElementById('modelPreview').innerHTML = ''
+            console.log('Model removed');
+        }
+
+        // Specifications handling
+        // Modified Add Specification button event listener
+      
+
+        // Related products handling
+        let relatedProducts = []
+        document.getElementById('addRelatedBtn').addEventListener('click', async () => {
+            const { data: products, error } = await supabase
+                .from('products')
+                .select('id, title')
+                .order('created_at', { ascending: false })
+
+            if (error) {
+                alert('Error loading products')
+                return
+            }
+
+            const select = document.createElement('select')
+            select.className = 'related-product-select'
+            select.innerHTML = '<option value="">Select a product</option>' +
+                products.map(p => `<option value="${p.id}">${p.title}</option>`).join('')
+
+            const div = document.createElement('div')
+            div.className = 'related-product-item'
+            div.innerHTML = `
+                ${select.outerHTML}
+                <button type="button" class="remove-btn" onclick="this.parentElement.remove()">×</button>
+            `
+            document.getElementById('relatedProductsList').appendChild(div)
+        })
+        // Image preview handlers for new image uploads
+        document.getElementById('rightDescImage').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    document.getElementById('rightDescImagePreview').innerHTML = `
+                <img src="${e.target.result}" alt="Right Description Image Preview">
+            `;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('leftSpecImage').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    document.getElementById('leftSpecImagePreview').innerHTML = `
+                <img src="${e.target.result}" alt="Left Specification Image Preview">
+            `;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Video preview handler
+        document.getElementById('productVideo').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const url = URL.createObjectURL(file);
+                document.getElementById('productVideoPreview').innerHTML = `
+            <video controls style="max-width: 100%; border-radius: 6px;">
+                <source src="${url}" type="${file.type}">
+                Your browser does not support the video tag.
+            </video>
+        `;
+            }
+        });
+
+        // Specifications handling - Updated to remove action column
+    
+
+        // Technical specifications handling
+        let techSpecCounter = 0;
+
+        // Modified Add Technical Specification button event listener
+      
+
+        // Make sure these helper functions are defined in the global scope
+        window.previewTechSpecImage = function (event, id) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById(`techSpecImgPreview${id}`).innerHTML = `
+                <img src="${e.target.result}" alt="Technical Specification Image">
+            `;
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+
+        window.removeTechSpec = function (id) {
+            const item = document.querySelector(`.tech-spec-item[data-id="${id}"]`);
+            if (item) {
+                item.remove();
+            }
+        };
+
+        // Form submission
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('productForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+    
+                try {
+                    // Show loader
+                    document.getElementById('loader').style.display = 'flex';
+                    document.getElementById('submitBtn').disabled = true;
+    
+                    // Upload main image
+                    const mainImageFile = document.getElementById('mainImage').files[0];
+                    const mainImageUrl = await uploadFile(mainImageFile, 'main-images');
+                    // Upload banner image if exists
+let bannerImageUrl = null;
+const bannerImageFile = document.getElementById('bannerImage').files[0];
+if (bannerImageFile) {
+    bannerImageUrl = await uploadFile(bannerImageFile, 'banner-images');
+}
+    
+                    // Upload right description image if exists
+                    let rightDescImageUrl = null;
+                    const rightDescImageFile = document.getElementById('rightDescImage').files[0];
+                    if (rightDescImageFile) {
+                        rightDescImageUrl = await uploadFile(rightDescImageFile, 'description-images');
+                    }
+    
+                    // Upload left specification image if exists
+                    let leftSpecImageUrl = null;
+                    const leftSpecImageFile = document.getElementById('leftSpecImage').files[0];
+                    if (leftSpecImageFile) {
+                        leftSpecImageUrl = await uploadFile(leftSpecImageFile, 'specification-images');
+                    }
+    
+                    // Upload product video if exists
+                    let productVideoUrl = null;
+                    const productVideoFile = document.getElementById('productVideo').files[0];
+                    if (productVideoFile) {
+                        productVideoUrl = await uploadFile(productVideoFile, 'product-videos');
+                    }
+    
+                    // Get video background color
+                    // Update this section in the form submission code
+                    // Replace the single line that gets videoBgColor with:
+                    // Get video background settings
+                    let videoBgSettings = {};
+                    const bgType = document.getElementById('videoBgType').value;
+    
+                    if (bgType === 'solid') {
+                        videoBgSettings = {
+                            type: 'solid',
+                            color: document.getElementById('videoBgColor').value
+                        };
+                    } else if (bgType === 'linear') {
+                        videoBgSettings = {
+                            type: 'linear',
+                            startColor: document.getElementById('gradientStartColor').value,
+                            endColor: document.getElementById('gradientEndColor').value,
+                            direction: document.getElementById('linearDirection').value
+                        };
+                    } else if (bgType === 'radial') {
+                        videoBgSettings = {
+                            type: 'radial',
+                            startColor: document.getElementById('gradientStartColor').value,
+                            endColor: document.getElementById('gradientEndColor').value,
+                            shape: document.getElementById('radialShape').value,
+                            position: document.getElementById('radialPosition').value
+                        };
+                    }
+    
+    
+    
+                    // Upload 3D model if exists
+                    let modelUrl = null;
+                    const modelFile = document.getElementById('model3d').files[0];
+                    if (modelFile) {
+                        modelUrl = await uploadFile(modelFile, '3d-models');
+                    }
+    
+                    // Get specifications
+                    const specs = {};
+                    document.querySelectorAll('#specsTable tbody tr').forEach(tr => {
+                        const name = tr.querySelector('.spec-name').value;
+                        const value = tr.querySelector('.spec-value').value;
+                        if (name && value) {
+                            specs[name] = value;
+                        }
+                    });
+    
+                    // Get technical specifications
+                    // Get technical specifications
+                    const techSpecs = await Promise.all(
+                        Array.from(document.querySelectorAll('.tech-spec-item')).map(async (item) => {
+                            const specImg = item.querySelector('.tech-spec-img').files[0];
+                            let specImgUrl = null;
+    
+                            if (specImg) {
+                                specImgUrl = await uploadFile(specImg, 'tech-spec-images');
+                            }
+    
+                            const specTitle = item.querySelector('.tech-spec-title').value;
+                            const specDesc = item.querySelector('.tech-spec-description').value;
+    
+                            if (specTitle && specDesc) {
+                                return {
+                                    image: specImgUrl,
+                                    spec: specTitle,
+                                    subspec: specDesc
+                                };
+                            } else {
+                                return null;
+                            }
+                        })
+                    );
+    
+                    // Remove null entries
+                    const filteredTechSpecs = techSpecs.filter(spec => spec !== null);
+    
+    
+    
+                    // Get related products
+                    const relatedIds = Array.from(document.querySelectorAll('.related-product-select'))
+                        .map(select => select.value)
+                        .filter(id => id);
+    
+                    const productData = {
+                        title: document.getElementById('title').value,
+                        subtitle: document.getElementById('subtitle').value,
+                        title_large: document.getElementById('title').value,
+                        category: document.getElementById('category').value,
+                        main_image: mainImageUrl,
+                        banner_image: bannerImageUrl,
+                        description: document.getElementById('description').value,
+                        right_desc_image: rightDescImageUrl,
+                        left_spec_image: leftSpecImageUrl,
+                        product_video: productVideoUrl,
+    
+                        video_bg_settings: videoBgSettings,
+                        model_3d: modelUrl,
+                        specifications: specs,
+                        technical_specifications: filteredTechSpecs,
+    
+                        related_products: relatedIds
+                    };
+    
+                    const { error } = await supabase
+                        .from('products')
+                        .insert([productData]);
+    
+                    if (error) throw error;
+    
+                    alert('Product added successfully!');
+                    window.location.href = 'dashboard.html';
+                } catch (error) {
+                    alert(error.message);
+                    // Hide loader on error
+                    document.getElementById('loader').style.display = 'none';
+                    document.getElementById('submitBtn').disabled = false;
+                }
+            });
+        });
+     
+    </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("productForm");
+  if(form){
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      document.body.innerHTML = `
+        <div class="loader-container">
+          <div class="loader"></div>
+          <p style="text-align:center; font-size:18px; margin-top:20px;">Adding your product, please wait...</p>
+        </div>
+      `;
+      setTimeout(() => {
+        window.location.href = "index.html"; // redirect after success
+      }, 2000);
+    });
+  }
+});
+</script>
+
+</body>
+
+</html>

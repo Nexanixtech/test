@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head><link as_="style" href="./new styles.css" rel="preload"/><link as_="style" href="styles.css" rel="preload"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Technovation</title>
+<link href="../images/tecpn.png" rel="shortcut icon" type="image/x-icon"/>
+<link href="styles.css" rel="stylesheet"/>
+<link href="./new styles.css" rel="stylesheet"/>
+
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+
+
+
+
+<script defer="defer" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.0.1/model-viewer.min.js" type="module"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;family=Poppins:wght@400;500;600;700&amp;family=Roboto:wght@400;500&amp;family=Oswald:wght@700&amp;display=swap" rel="stylesheet"/>  <link rel="stylesheet" href="animation.css">
+</head>
+<body>
+<!-- First Navigation Bar -->
+<nav class="navbar">
+<div class="container">
+<div class="logo">
+<a href="index.html">
+<img src="./images/Tech Logo (B).png" alt="Tech Logo" class="spin-logo" />
+<img alt="Technovation Logo" loading="lazy" src="./images/techno black logo-Photoroom.png"/>
+</a>
+</div>
+<div class="search-container">
+<form action="/search" class="search-form" method="GET">
+<input class="search-input" id="navSearch" maxlength="256" name="query" placeholder="Search…" required="" type="search"/>
+<button class="search-button" type="submit">
+<svg fill="currentColor" height="16" viewbox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+</svg>
+</button>
+<div class="search-results" id="searchResults"></div>
+</form>
+</div>
+<!-- Mobile Search Icon -->
+<div class="search-icon-mobile">
+<svg fill="currentColor" height="20" viewbox="0 0 16 16" width="20" xmlns="http://www.w3.org/2000/svg">
+<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+</svg>
+</div>
+</div>
+</nav>
+<!-- White separator -->
+<div class="white-separator"></div>
+<div class="nav-container">
+<div class="main-navbar">
+<!-- Categories Navigation for Desktop -->
+<div class="desktop-category-navbar">
+<ul class="category-list" id="desktopCategories">
+<!-- Categories will be loaded here dynamically -->
+</ul>
+</div>
+</div>
+<!-- Mobile Categories Menu (hidden by default) -->
+<div class="mobile-category-menu">
+<ul class="mobile-category-list" id="mobileCategories">
+<!-- Categories will be loaded here dynamically -->
+</ul>
+</div>
+<!-- Mobile Search Form (hidden by default) -->
+<div class="mobile-search-container">
+<form action="/search" class="mobile-search-form" method="GET">
+<input class="mobile-search-input" id="mobileNavSearch" maxlength="256" name="query" placeholder="Search…" required="" type="search"/>
+<!-- <button type="submit" class="mobile-search-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        viewBox="0 0 16 16">
+                        <path
+                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                    </svg>
+                </button> -->
+<div class="search-results" id="mobileSearchResults"></div>
+</form>
+</div>
+</div>
+<!-- product  -->
+<div id="productsContainer">
+<!-- Products will be loaded here dynamically -->
+</div>
+<br/><br/>
+<!-- Featured Products -->
+<section class="featured-products">
+<div class="container">
+<div class="featured-grid" id="featuredProducts">
+<!-- Featured products will be loaded here -->
+</div>
+</div>
+</section>
+<section class="product-video-section">
+<div class="container">
+<div class="video-container" id="productVideo">
+<!-- Video will be loaded here from database -->
+</div>
+</div>
+</section>
+<style>
+        /* Product Video Section */
+        .product-video-section {
+            padding: 0;
+            margin: 0 0 15px 0;
+        }
+
+        .product-video-section .title {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            color: #333;
+        }
+
+        .video-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 450px;
+            border: none;
+        }
+    </style>
+<!-- Other Products -->
+<section class="other-products">
+<div class="container">
+<div class="products-grid" id="otherProducts">
+<!-- Other products will be loaded here -->
+</div>
+</div>
+</section>
+<!-- Video Slider Section -->
+<section class="video-slider-section" id="about-section">
+<div class="container">
+<div class="about-content" id="aboutContent">
+<!-- About content will be loaded here -->
+</div>
+<div class="video-slider-container">
+<div class="video-slider" id="videoSlider">
+<!-- Videos will be loaded here dynamically -->
+</div>
+<div class="slider-controls">
+<button class="slider-prev"><i class="fas fa-chevron-left"></i></button>
+<button class="slider-next"><i class="fas fa-chevron-right"></i></button>
+</div>
+</div>
+</div>
+</section>
+<style>
+        /* Video Slider Styles */
+        .video-slider-section {
+            padding: 4rem 0;
+            background: #f8f9fa;
+            margin-bottom: 15px;
+        }
+
+        .video-slider-container {
+            position: relative;
+            padding: 2rem 0;
+            margin: 0 auto;
+            overflow: hidden;
+            width: 80%;
+        }
+
+        .video-slider {
+            display: flex;
+            gap: 20px;
+            transition: transform 0.5s ease;
+            padding: 1rem 0;
+
+        }
+
+        .video-slide {
+            flex: 0 0 auto;
+            width: calc(33.333% - 14px);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .video-slide:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .video-slide iframe {
+            width: 100%;
+            height: 200px;
+            border: none;
+        }
+
+        .slider-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 15px;
+        }
+
+        .slider-prev,
+        .slider-next {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            border: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .slider-prev:hover,
+        .slider-next:hover {
+            background: #f0f0f0;
+            transform: scale(1.1);
+        }
+
+        /* About Content Styles */
+        .about-content {
+            text-align: center;
+            max-width: 800px;
+            display: none !important;
+        }
+
+        .about-content p {
+            color: #333;
+            font-size: 1.1rem;
+            display: none !important;
+        }
+
+        @media (max-width: 1024px) {
+            .video-slide {
+                width: calc(50% - 10px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .video-container iframe {
+                height: 350px;
+            }
+
+            .video-slide {
+                width: calc(100% - 2px);
+            }
+
+            .video-slide iframe {
+                height: 180px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .video-container iframe {
+                height: 250px;
+            }
+        }
+    </style>
+<!-- Extra Products -->
+<!-- Logo Slider Section -->
+<section class="logo-slider-section">
+<div class="container">
+<div class="logo-slider-container">
+<div class="logo-slider" id="logoSlider">
+<!-- Logos will be loaded here dynamically -->
+</div>
+</div>
+</div>
+</section>
+<!-- footer   -->
+<footer class="tech-footer">
+<div class="footer-container">
+<div class="footer-left">
+<div class="footer-logo">
+<img alt="Technovation" loading="lazy" src="./images/techno black logo-Photoroom.png"/>
+</div>
+<p class="footer-description">
+                    With over a decade of experience, we are proud to deliver innovative products to clients around the
+                    globe.
+                </p>
+<div class="footer-contact-info">
+<p class="contact-item">
+<i class="fa-solid fa-map-marker-alt contact-icon"></i>
+                        Tamil nadu - 627416
+                    </p>
+<p class="contact-item">
+<i class="fa-solid fa-envelope contact-icon"></i>
+                        techtechnovation@gmail.com
+                    </p>
+<p class="contact-item">
+<i class="fa-solid fa-phone contact-icon"></i>
+                        7339224811
+                    </p>
+</div>
+</div>
+<div class="footer-right">
+<h2 class="footer-section-title">Sections</h2>
+<div class="footer-divider"></div>
+<ul class="footer-links">
+<li>
+<i class="fa-solid fa-chevron-right arrow-icon"></i>
+<a href="./index.html">Home</a>
+</li>
+<li>
+<i class="fa-solid fa-chevron-right arrow-icon"></i>
+<a href="./index.html#prod-section">Products</a>
+</li>
+</ul>
+<div class="footer-about" id="footerAbout">
+<!-- About content will be loaded here from database -->
+</div>
+</div>
+</div>
+</footer>
+<style>
+        .search-results {
+            position: absolute;
+            background: #fff;
+            width: 100%;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .search-result-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #000;
+            transition: background 0.2s;
+        }
+
+        .search-result-item:hover {
+            background: #f1f1f1;
+        }
+
+        .search-result-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 15px;
+        }
+
+        .search-result-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .search-result-info h4 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .search-result-info p {
+            margin: 2px 0 0 0;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+<!-- Font Awesome for Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<div class="footer-navbar">
+<div class="copyright">© Copyright - <a class="company-link" href="https://technovationpvtltd.com/">Technovation</a></div>
+</div>
+<script src="script.js"></script>
+<script type="module">
+        import { supabase } from './supabase.js'
+
+        // Load products
+        // Load product video
+        // Load product video
+        // Load product video
+        // Update your loadProductVideo function with this code
+        async function loadProductVideo() {
+            try {
+                const { data: videos, error } = await supabase
+                    .from('featured_videos')
+                    .select('*')
+                    .order('created_at', { ascending: false })
+                    .limit(1)
+
+                if (error) throw error
+
+                if (videos && videos.length > 0) {
+                    const videoContainer = document.getElementById('productVideo')
+                    if (!videoContainer) {
+                        console.error('Video container element not found')
+                        return
+                    }
+
+                    const videoUrl = videos[0].video_url
+                    console.log("Loading Cloudinary video URL:", videoUrl) // Debug log
+
+                    if (videoUrl) {
+                        videoContainer.innerHTML = `
+                        <div style="position: relative; width: 100%; margin-bottom: 10px;">
+                            <video 
+                                id="featuredVideo" 
+                                controls 
+                                width="100%" 
+                                preload="auto" 
+                                muted 
+                                playsinline 
+                                style="border-radius: 8px; display: block;"
+                            >
+                                <source src="${videoUrl}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <div style="padding: 8px 0 0 0; text-align: center;">
+                                <h3 style="margin: 0; font-size: 18px; font-weight: bold; color: #000;">${videos[0].title || 'Featured Video'}</h3>
+                            </div>
+                        `
+                        const video = document.getElementById('featuredVideo');
+
+                        const observer = new IntersectionObserver((entries) => {
+                            entries.forEach(entry => {
+                                if (entry.isIntersecting) {
+                                    video.play();
+                                } else {
+                                    video.pause();
+                                }
+                            });
+                        }, { threshold: 0.5 }); // Play when 50% of the video is visible
+
+                        observer.observe(video);
+                        // Force reload the video element
+                        const videoElement = videoContainer.querySelector('video')
+                        if (videoElement) {
+                            videoElement.load()
+                        }
+                    } else {
+                        console.error("Invalid video URL:", videoUrl)
+                    }
+                } else {
+                    console.log("No featured videos found in database")
+                }
+            } catch (error) {
+                console.error('Error loading product video:', error)
+            }
+        }
+
+        // Load about content
+        // Load about content
+        async function loadAboutContent() {
+            try {
+                const { data: about, error } = await supabase
+                    .from('about_us')
+                    .select('*')
+                    .limit(1)
+
+                if (error) throw error
+
+                if (about && about.length > 0) {
+                    const aboutContent = document.getElementById('aboutContent')
+                    const footerAbout = document.getElementById('footerAbout')
+
+                    // Main about content
+                    aboutContent.innerHTML = `
+                <h3>${about[0].title}</h3>
+                <p>${about[0].content}</p>
+            `
+
+                    // Footer about content (shorter version)
+                    const shortContent = about[0].content.length > 150
+                        ? about[0].content.substring(0, 150) + '...'
+                        : about[0].content
+
+                    footerAbout.innerHTML = `<p>${shortContent}</p>`
+                }
+            } catch (error) {
+                console.error('Error loading about content:', error)
+            }
+        }
+        // Load video slider
+        // Load video slider
+        async function loadVideoSlider() {
+            try {
+                const { data: videos, error } = await supabase
+                    .from('youtube_links')
+                    .select('*')
+                    .order('display_order', { ascending: true })
+
+                if (error) throw error
+
+                if (videos && videos.length > 0) {
+                    const videoSlider = document.getElementById('videoSlider')
+
+                    // Create video slides
+                    videoSlider.innerHTML = videos.map(video => {
+                        const videoId = extractYouTubeId(video.url)
+                        if (!videoId) return ''
+
+                        return `
+                    <div class="video-slide">
+                        <iframe 
+                            src="https://www.youtube.com/embed/${videoId}" 
+                            title="${video.title || 'Video'}" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                `
+                    }).join('')
+
+                    // Set up slider controls
+                    const sliderPrev = document.querySelector('.slider-prev')
+                    const sliderNext = document.querySelector('.slider-next')
+                    let currentIndex = 0
+                    const slidesPerView = window.innerWidth > 1024 ? 3 : (window.innerWidth > 768 ? 2 : 1)
+                    const maxIndex = Math.max(0, videos.length - slidesPerView)
+
+                    // Update slider position
+                    function updateSlider() {
+                        const slideWidth = document.querySelector('.video-slide')?.offsetWidth
+                        if (slideWidth) {
+                            const slideGap = 20
+                            videoSlider.style.transform = `translateX(-${currentIndex * (slideWidth + slideGap)}px)`
+                        }
+                    }
+
+                    // Previous button
+                    sliderPrev.addEventListener('click', () => {
+                        currentIndex = Math.max(0, currentIndex - 1)
+                        updateSlider()
+                    })
+
+                    // Next button
+                    sliderNext.addEventListener('click', () => {
+                        currentIndex = Math.min(maxIndex, currentIndex + 1)
+                        updateSlider()
+                    })
+
+                    // Pause slider on hover
+                    videoSlider.addEventListener('mouseenter', () => {
+                        clearInterval(slideInterval)
+                    })
+
+                    videoSlider.addEventListener('mouseleave', () => {
+                        startSlideInterval()
+                    })
+
+                    // Auto-slide functionality
+                    let slideInterval
+
+                    function startSlideInterval() {
+                        slideInterval = setInterval(() => {
+                            currentIndex = currentIndex >= maxIndex ? 0 : currentIndex + 1
+                            updateSlider()
+                        }, 5000) // Change slide every 5 seconds
+                    }
+
+                    // Start auto-sliding
+                    startSlideInterval()
+
+                    // Initialize slider
+                    setTimeout(updateSlider, 100) // Small delay to ensure elements are rendered
+
+                    // Resize handler
+                    window.addEventListener('resize', () => {
+                        const newSlidesPerView = window.innerWidth > 1024 ? 3 : (window.innerWidth > 768 ? 2 : 1)
+                        if (newSlidesPerView !== slidesPerView) {
+                            currentIndex = 0
+                            updateSlider()
+                        }
+                    })
+                }
+            } catch (error) {
+                console.error('Error loading video slider:', error)
+            }
+        }
+
+        // Helper function to extract YouTube video ID
+        function extractYouTubeId(url) {
+            if (!url) return null
+
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/
+            const match = url.match(regExp)
+
+            return (match && match[2].length === 11) ? match[2] : null
+        }
+
+        // Load content when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProductVideo()
+            loadAboutContent()
+            loadVideoSlider()
+        })
+       // Replace the loadcatProducts function with this:
+async function loadcatProducts() {
+    try {
+        const { data: categories, error } = await supabase
+            .from('categories')
+            .select('*')
+            .order('created_at', { ascending: false }) // Order by creation date, newest first
+
+        if (error) throw error
+
+        // Split categories into main categories and subcategories
+        const mainCategories = categories.filter(c => c.is_main === true)
+        const subCategories = categories.filter(c => c.is_main === false)
+
+        // Display main categories (like featured products)
+        const mainCategoriesGrid = document.getElementById('featuredProducts')
+        mainCategoriesGrid.innerHTML = mainCategories.map(category => `
+        <a href="./category.html?name=${encodeURIComponent(category.name)}" class="product-card new-product-card" 
+        style="${category.bg_image_url ? `background-image: url('${category.bg_image_url}'); background-size: cover; background-position: center;` : `background-color: ${category.color || '#ffffff'};`}">
+         
+         <div class="product-info new-product-info">
+             <h3 class="product-title new-product-title" style="color: ${category.name_color || '#000000'};">${category.name}</h3>
+             <h2 class="product-title-large new-product-large-title" style="color: ${category.description_color || '#333333'};">${category.description || ''}</h2>
+         </div>
+     
+         ${category.main_image_url ? `
+         <div class="product-image-container">
+             <img src="${category.main_image_url}" alt="${category.name}" class="product-image new-product-image">
+         </div>` : ''}
+         
+     </a>
+     
+    `).join('')
+
+        // Display subcategories (like other products)
+        const subCategoriesGrid = document.getElementById('otherProducts')
+        subCategoriesGrid.innerHTML = subCategories.map(category => `
+        <a href="./category.html?name=${encodeURIComponent(category.name)}" class="product-link other-section-link" id="other-section-link-${category.id}">
+            <div class="product-card other-section-card" id="other-section-card-${category.id}" 
+                 style="${category.bg_image_url ? `background-image: url('${category.bg_image_url}'); background-size: cover; background-position: center;` : `background-color: ${category.color || '#ffffff'};`}">
+                
+                ${category.main_image_url ? `
+                <div class="other-section-image-container" id="other-section-image-container-${category.id}">
+                    <img src="${category.main_image_url}" alt="${category.name}" class="product-image other-section-image" id="other-section-image-${category.id}">
+                </div>` : ''}
+        
+                <div class="product-info other-section-info" id="other-section-info-${category.id}">
+                    <h3 class="product-title other-section-title" id="other-section-title-${category.id}" style="color: ${category.name_color || '#000000'};">${category.name}</h3>
+                    <p class="other-section-text" id="other-section-text-${category.id}" style="color: ${category.description_color || '#333333'};">${category.description || ''}</p>
+                </div>
+                
+            </div>
+        </a>
+        
+    `).join('')
+
+        // Hide extra and extra-other sections as they're not needed for categories
+        document.querySelector('.extra-products').style.display = 'none';
+        document.querySelector('.extra-other-products').style.display = 'none';
+        document.querySelectorAll('.prod-section')[3].style.display = 'none'; // Hide Extra Products title
+        document.querySelectorAll('.prod-section')[4].style.display = 'none'; // Hide Extra-Other Products title
+
+        // Update section titles
+        document.querySelectorAll('.prod-section')[1].querySelector('.title').textContent = 'Main Categories';
+        document.querySelectorAll('.prod-section')[2].querySelector('.title').textContent = 'Subcategories';
+
+    } catch (error) {
+        console.error('Error loading categories:', error)
+    }
+}
+
+        // Load products when page loads
+        loadcatProducts()
+
+        // Load categories
+        async function loadCategories() {
+            try {
+                const { data: categories, error } = await supabase
+                    .from('categories')
+                    .select('*')
+                    .order('created_at', { ascending: false }) // Order by creation date, newest first
+        
+                if (error) throw error
+        
+                // Update desktop categories
+                const desktopCategories = document.getElementById('desktopCategories')
+                desktopCategories.innerHTML = categories.map(category => `
+                    <li class="category-item">
+                        <a href="./category.html?name=${encodeURIComponent(category.name)}" class="category-link">
+                            <div class="category-icon-container">
+                                ${category.image_url
+                                    ? `<img src="${category.image_url}" class="category-icon" alt="${category.name}" onerror="this.onerror=null; this.src='./images/placeholder-icon.png';">`
+                                    : `<div class="no-icon-placeholder"></div>`
+                                }
+                            </div>
+                            <span class="category-name">${category.name}</span>
+                            ${category.is_new ? '<span class="category-tag">New</span>' : ''}
+                        </a>
+                    </li>
+                `).join('')
+        
+                // Update mobile categories
+                const mobileCategories = document.getElementById('mobileCategories')
+                mobileCategories.innerHTML = categories.map(category => `
+                    <li class="mobile-category-item">
+                        <a href="./category.html?name=${encodeURIComponent(category.name)}" class="mobile-category-link">
+                            <div class="category-icon-container">
+                                ${category.image_url
+                                    ? `<img src="${category.image_url}" class="category-icon" alt="${category.name}" onerror="this.onerror=null; this.src='./images/placeholder-icon.png';">`
+                                    : `<div class="no-icon-placeholder"></div>`
+                                }
+                            </div>
+                            <span class="category-name">${category.name}</span>
+                            ${category.is_new ? '<span class="mobile-category-tag">New</span>' : ''}
+                        </a>
+                    </li>
+                `).join('')
+                
+                console.log("Categories menu loaded:", categories.length, "categories")
+            } catch (error) {
+                console.error('Error loading categories:', error)
+            }
+        }
+        // Load categories when page loads
+        loadCategories()
+        // Mobile search functionality
+        const mobileSearchInput = document.getElementById('mobileNavSearch')
+        const mobileSearchResults = document.getElementById('mobileSearchResults')
+        let mobileSearchTimeout
+
+        // Handle mobile search input event
+        mobileSearchInput.addEventListener('input', (e) => {
+            clearTimeout(mobileSearchTimeout)
+            const query = e.target.value.trim()
+
+            if (query.length < 2) {
+                mobileSearchResults.style.display = 'none'
+                return
+            }
+
+            mobileSearchTimeout = setTimeout(async () => {
+                try {
+                    const { data: products, error } = await supabase
+                        .from('products')
+                        .select('*')
+                        .ilike('title', `%${query}%`)
+                        .limit(5)
+
+                    if (error) throw error
+
+                    if (products.length > 0) {
+                        mobileSearchResults.innerHTML = products
+                            .map(
+                                (product) => `
+  <a href="./product.html?id=${product.id}" class="search-result-item">
+    <img src="${product.main_image}" alt="${product.title}" style="width: 80px !important; height: 80px !important;">
+    <div class="search-result-info">
+        <h4>${product.title}</h4>
+        <p>${product.subtitle}</p>
+    </div>
+</a>
+
+                    `
+                            )
+                            .join('')
+                        mobileSearchResults.style.display = 'block'
+                    } else {
+                        mobileSearchResults.innerHTML = '<div class="no-results">No products found</div>'
+                        mobileSearchResults.style.display = 'block'
+                    }
+                } catch (error) {
+                    console.error('Error searching products:', error)
+                }
+            }, 300)
+        })
+
+        // Close mobile search results when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileSearchInput.contains(e.target) && !mobileSearchResults.contains(e.target)) {
+                mobileSearchResults.style.display = 'none'
+            }
+        })
+
+        // Handle mobile search form submission
+        document.querySelector('.mobile-search-form').addEventListener('submit', (e) => {
+            e.preventDefault()
+            const query = mobileSearchInput.value.trim()
+            if (query) {
+                window.location.href = `#`
+            }
+        })
+        // Search functionality
+        const searchInput = document.getElementById('navSearch')
+        const searchResults = document.getElementById('searchResults')
+        let searchTimeout
+
+        // Handle search input event
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(searchTimeout)
+            const query = e.target.value.trim()
+
+            if (query.length < 2) {
+                searchResults.style.display = 'none'
+                return
+            }
+
+            searchTimeout = setTimeout(async () => {
+                try {
+                    const { data: products, error } = await supabase
+                        .from('products')
+                        .select('*')
+                        .ilike('title', `%${query}%`)
+                        .limit(5)
+
+                    if (error) throw error
+
+                    if (products.length > 0) {
+                        searchResults.innerHTML = products
+                            .map(
+                                (product) => `
+                        <a href="./product.html?id=${product.id}" class="search-result-item">
+                            <img src="${product.main_image}" alt="${product.title}" style="  width: 80px;
+    height: 80px;" >
+                            <div class="search-result-info">
+                                <h4>${product.title}</h4>
+                                <p>${product.subtitle}</p>
+                            </div>
+                        </a>
+                    `
+                            )
+                            .join('')
+                        searchResults.style.display = 'block'
+                    } else {
+                        searchResults.innerHTML = '<div class="no-results">No products found</div>'
+                        searchResults.style.display = 'block'
+                    }
+                } catch (error) {
+                    console.error('Error searching products:', error)
+                }
+            }, 300)
+        })
+
+        // Close search results when clicking outside (for desktop & mobile)
+        document.addEventListener('click', (e) => {
+            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                searchResults.style.display = 'none'
+            }
+        })
+
+        document.addEventListener('touchstart', (e) => {
+            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                searchResults.style.display = 'none'
+            }
+        })
+
+        // Handle search submission
+        document.querySelector('.search-form').addEventListener('submit', (e) => {
+            e.preventDefault()
+            const query = searchInput.value.trim()
+            if (query) {
+                window.location.href = `#`
+            }
+        })
+
+        // Mobile search functionality toggle
+        const searchIconMobile = document.querySelector('.search-icon-mobile')
+        const mobileSearchContainer = document.querySelector('.mobile-search-container')
+        const closeSearchButton = document.querySelector('.close-search-button')
+
+        // Show mobile search
+      
+        // Close mobile search
+       
+        // Handle category toggle on mobile/tablet
+
+        const mobileCategoryMenu = document.querySelector('.mobile-category-menu')
+
+
+        // Load logos for slider
+        async function loadLogoSlider() {
+            try {
+                const { data: logos, error } = await supabase
+                    .from('logos')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+                
+                // Check if logos were returned
+                if (!logos || logos.length === 0) {
+                    console.warn('No logos found in the database');
+                    return;
+                }
+
+                console.log('Loaded logos:', logos); // Debug output
+                
+                const logoSlider = document.getElementById('logoSlider');
+                
+                // Create logo elements
+                const logoElements = logos.map(logo => `
+                    <div class="logo-slide">
+                        <img src="${logo.url}" alt="Client Logo">
+                    </div>
+                `).join('');
+                
+                // Add duplicates to create continuous effect
+                logoSlider.innerHTML = logoElements + logoElements;
+                
+                // Check if images are loading correctly
+                const images = logoSlider.querySelectorAll('img');
+                images.forEach(img => {
+                    img.onerror = () => console.error('Failed to load image:', img.src);
+                    img.onload = () => console.log('Image loaded successfully:', img.src);
+                });
+                
+            } catch (error) {
+                console.error('Error loading logos:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadLogoSlider);
+
+    </script>
+<!-- WhatsApp Floating Button -->
+<div class="whatsapp-float">
+<div class="thought-bubble" id="thoughtBubble">
+            Contact us for Custom Robots
+        </div>
+<button class="whatsapp-button" id="whatsappButton">
+<i class="fab fa-whatsapp"></i>
+</button>
+</div>
+<!-- WhatsApp Modal -->
+<div class="whatsapp-modal" id="whatsappModal">
+<div class="whatsapp-modal-content">
+<div class="whatsapp-modal-header">
+<div class="whatsapp-profile">
+<img alt="Technovation" loading="lazy" src="./images/techno black logo-Photoroom.png"/>
+<div class="whatsapp-profile-info">
+<h3>Technovation</h3>
+<p>Online</p>
+</div>
+</div>
+<button class="close-modal" id="closeWhatsappModal">×</button>
+</div>
+<div class="whatsapp-modal-body">
+<p>Hi! How can we help you today?</p>
+</div>
+<div class="whatsapp-modal-footer">
+<a class="whatsapp-chat-button" href="https://wa.me/917339224811" target="_blank">
+<i class="fab fa-whatsapp"></i> Start Chat
+                </a>
+</div>
+</div>
+</div>
+<style>
+        .thought-bubble {
+            position: absolute;
+            right: 60px;
+            bottom: 35px;
+            width: 120px;
+            height: auto;
+            background-color: white;
+            border: 2px solid #075E54;
+            border-radius: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            text-align: center;
+            padding: 8px 10px;
+            z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #075E54;
+            font-weight: 600;
+        }
+
+        /* Create the small circles connecting the bubble to the button */
+        .thought-bubble::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -10px;
+            width: 10px;
+            height: 10px;
+            background-color: white;
+            border-right: 2px solid #075E54;
+            border-bottom: 2px solid #075E54;
+            transform: rotate(-45deg) translateY(-50%);
+        }
+
+        /* WhatsApp Floating Button Styles */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .whatsapp-button {
+            width: 60px;
+            height: 60px;
+            background-color: #25D366;
+            border-radius: 50%;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .whatsapp-button:hover {
+            transform: scale(1.1);
+        }
+
+        .whatsapp-button i {
+            font-size: 32px;
+            color: white;
+        }
+
+        /* WhatsApp Modal Styles */
+        .whatsapp-modal {
+            display: none;
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 300px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .whatsapp-modal.active {
+            display: block;
+        }
+
+        .whatsapp-modal-content {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .whatsapp-modal-header {
+            background-color: #075E54;
+            color: white;
+            padding: 15px;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .whatsapp-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .whatsapp-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            background-color: #f0f0f0;
+        }
+
+        .whatsapp-profile-info h3 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .whatsapp-profile-info p {
+            margin: 0;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .whatsapp-modal-body {
+            padding: 15px;
+            background-color: #ECE5DD;
+            flex-grow: 1;
+        }
+
+        .whatsapp-modal-body p {
+            margin: 0;
+            color: #075E54;
+            font-size: 14px;
+        }
+
+        .whatsapp-modal-footer {
+            padding: 15px;
+            background-color: #F0F0F0;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .whatsapp-chat-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: #25D366;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .whatsapp-chat-button:hover {
+            background-color: #128C7E;
+        }
+
+        .whatsapp-chat-button i {
+            font-size: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .whatsapp-float {
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .whatsapp-button {
+                width: 50px;
+                height: 50px;
+            }
+
+            .whatsapp-button i {
+                font-size: 28px;
+            }
+            
+            .thought-bubble {
+                right: 50px;
+                bottom: 30px;
+                width: 100px;
+                font-size: 12px;
+            }
+
+            .whatsapp-modal {
+                bottom: 80px;
+                right: 20px;
+                width: 280px;
+            }
+        }
+
+
+        /* Logo Slider Styles */
+        /* Logo Slider Styles */
+        .logo-slider-section {
+            padding: 2rem 0;
+            /* Reduced from 4rem to reduce height */
+            background: #f8f9fa;
+            margin-bottom: 15px;
+            ;
+            position: relative;
+        }
+
+        .logo-slider-section::before,
+        .logo-slider-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 200px;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .logo-slider-section::before {
+            left: 0;
+            background: linear-gradient(to right, #f8f9fa, transparent);
+        }
+
+        .logo-slider-section::after {
+            right: 0;
+            background: linear-gradient(to left, #f8f9fa, transparent);
+        }
+
+        .logo-slider-container {
+            position: relative;
+            overflow: hidden;
+            padding: 1rem 0;
+            /* Reduced from 2rem to reduce height */
+        }
+
+        .logo-slider {
+            display: flex;
+            gap: 1.5rem;
+            /* Reduced from 3rem to decrease spacing between logos */
+            animation: slide 20s linear infinite;
+            width: max-content;
+        }
+
+        .logo-slider:hover {
+            animation-play-state: paused;
+        }
+
+        .logo-slide {
+            flex: 0 0 auto;
+            width: 300px;
+            /* Increased for larger images */
+            height: 120px;
+            /* Reduced height for better proportions */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            transition: all 0.3s ease;
+        }
+
+        .logo-slide:hover {
+            transform: translateY(-5px);
+        }
+
+        .logo-slide img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+          
+            transition: all 0.3s ease;
+            background: transparent !important;
+        }
+
+        .logo-slide:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.05);
+        }
+
+        @keyframes slide {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .logo-slider-section {
+                padding: 1.5rem 0;
+                /* Reduced for smaller height */
+            }
+
+            .logo-slide {
+                width: 240px;
+                /* Adjusted for mobile */
+                height: 100px;
+                /* Adjusted for mobile */
+            }
+
+            .logo-slider {
+                gap: 1rem;
+                /* Reduced gap for mobile */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-slide {
+                width: 200px;
+                /* Adjusted for mobile */
+                height: 80px;
+                /* Adjusted for mobile */
+            }
+
+            .logo-slider {
+                gap: 0.8rem;
+                /* Further reduced gap for mobile */
+            }
+        }
+    </style>
+<script>
+        const whatsappButton = document.getElementById('whatsappButton');
+        const whatsappModal = document.getElementById('whatsappModal');
+        const closeWhatsappModal = document.getElementById('closeWhatsappModal');
+        const thoughtBubble = document.getElementById('thoughtBubble');
+
+        // When WhatsApp button is clicked
+        whatsappButton.addEventListener('click', () => {
+            whatsappModal.classList.add('active');
+            // Hide thought bubble when opening modal
+            thoughtBubble.style.display = 'none';
+        });
+
+        // When close button is clicked
+        closeWhatsappModal.addEventListener('click', () => {
+            whatsappModal.classList.remove('active');
+            // Show thought bubble when closing modal
+            thoughtBubble.style.display = 'flex';
+        });
+
+        // Close modal when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!whatsappModal.contains(e.target) && !whatsappButton.contains(e.target)) {
+                whatsappModal.classList.remove('active');
+                // Show thought bubble when closing modal
+                thoughtBubble.style.display = 'flex';
+            }
+        });
+    </script>
+<script src="mouse.js"></script>
+</body>
+</html>

@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Product - Technovation</title>
+    <link href="../images/tecpn.png" rel="shortcut icon" type="image/x-icon" />
+  
+   <link rel="stylesheet" href="./edit.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="admin-page">
+    <div class="product-form">
+        <h2>Edit Product</h2>
+        <form id="productForm">
+            <input type="hidden" id="productId">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="subtitle">Subtitle</label>
+                    <input type="text" id="subtitle" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" required>
+                        <!-- Categories will be loaded dynamically -->
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="mainImage">Main Image</label>
+                <div class="file-upload-container">
+                    <input type="file" id="mainImage" accept="image/*">
+                    <div class="image-preview" id="mainImagePreview"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="bannerImage">Banner Image</label>
+                <div class="file-upload-container">
+                    <input type="file" id="bannerImage" accept="image/*">
+                    <div class="image-preview" id="bannerImagePreview"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" required></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="rightDescImage">Right Side of Description Image</label>
+                    <div class="file-upload-container">
+                        <input type="file" id="rightDescImage" accept="image/*">
+                        <div class="image-preview" id="rightDescImagePreview"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="leftSpecImage">Left Side of Specification Image</label>
+                    <div class="file-upload-container">
+                        <input type="file" id="leftSpecImage" accept="image/*">
+                        <div class="image-preview" id="leftSpecImagePreview"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Video Upload with Background Color</label>
+                <div class="video-bg-container">
+                    <div class="form-row">
+                        <div class="form-group video-upload">
+                            <input type="file" id="productVideo" accept="video/*">
+                            <div class="video-preview" id="productVideoPreview"></div>
+                        </div>
+
+                        <div class="form-group color-picker">
+                            <label for="videoBgType">Background Type</label>
+                            <select id="videoBgType" onchange="updateBgColorInputs()">
+                                <option value="solid">Solid Color</option>
+                                <option value="linear">Linear Gradient</option>
+                                <option value="radial">Radial Gradient</option>
+                            </select>
+
+                            <div id="solidColorInputs">
+                                <label for="videoBgColor">Color</label>
+                                <input type="color" id="videoBgColor" value="#ffffff">
+                            </div>
+
+                            <div id="gradientColorInputs" style="display: none;">
+                                <div class="gradient-colors">
+                                    <div class="gradient-color">
+                                        <label>Start Color</label>
+                                        <input type="color" id="gradientStartColor" value="#ffffff">
+                                    </div>
+                                    <div class="gradient-color">
+                                        <label>End Color</label>
+                                        <input type="color" id="gradientEndColor" value="#000000">
+                                    </div>
+                                </div>
+                                <div id="linearOptions" style="display: none;">
+                                    <label for="linearDirection">Direction</label>
+                                    <select id="linearDirection">
+                                        <option value="to right">Left to Right</option>
+                                        <option value="to left">Right to Left</option>
+                                        <option value="to bottom">Top to Bottom</option>
+                                        <option value="to top">Bottom to Top</option>
+                                        <option value="to bottom right">Top Left to Bottom Right</option>
+                                        <option value="to top right">Bottom Left to Top Right</option>
+                                        <option value="to bottom left">Top Right to Bottom Left</option>
+                                        <option value="to top left">Bottom Right to Top Left</option>
+                                    </select>
+                                </div>
+                                <div id="radialOptions" style="display: none;">
+                                    <label for="radialShape">Shape</label>
+                                    <select id="radialShape">
+                                        <option value="circle">Circle</option>
+                                        <option value="ellipse">Ellipse</option>
+                                    </select>
+                                    <label for="radialPosition">Position</label>
+                                    <select id="radialPosition">
+                                        <option value="center">Center</option>
+                                        <option value="top">Top</option>
+                                        <option value="bottom">Bottom</option>
+                                        <option value="left">Left</option>
+                                        <option value="right">Right</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>3D Model</label>
+                <div class="model-upload-container">
+                    <input type="file" id="model3d" accept=".glb,.gltf,.stl">
+                    <div class="model-preview" id="modelPreview"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Specifications</label>
+                <div class="specs-table">
+                    <table id="specsTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <button type="button" class="add-spec-btn" id="addSpecBtn">Add Specification</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Technical Specifications</label>
+                <div class="tech-specs-container" id="techSpecsContainer">
+                    <!-- Technical specs will be added here dynamically -->
+                </div>
+                <button type="button" class="add-tech-spec-btn" id="addTechSpecBtn">Add Technical Specification</button>
+            </div>
+
+            <div class="form-group">
+                <label>Related Products</label>
+                <div class="related-products-container">
+                    <div class="related-products-list" id="relatedProductsList"></div>
+                    <button type="button" class="add-related-btn" id="addRelatedBtn">Add Related Product</button>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">Update Product</button>
+        </form>
+    </div>
+
+    <div id="loader" class="loader" style="display: none;">
+        <div class="spinner"></div>
+        <p>Updating product...</p>
+    </div>
+    <style>
+        .video-upload-container {
+            margin-top: 1rem;
+        }
+        .video-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .video-item {
+            position: relative;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .video-item video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .video-item .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+
+    <script type="module">
+        import { supabase } from '../supabase.js'
+
+        // Check if user is authenticated
+        const session = JSON.parse(localStorage.getItem('adminSession'))
+        if (!session) {
+            window.location.href = 'login.html'
+        }
+
+        // Get product ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id');
+        
+        if (!productId) {
+            alert('No product ID specified');
+            window.location.href = 'dashboard.html';
+        }
+
+        // Set the hidden product ID field
+        document.getElementById('productId').value = productId;
+
+        // Load categories
+        async function loadCategories() {
+            try {
+                const { data: categories, error } = await supabase
+                    .from('categories')
+                    .select('*')
+                    .order('name')
+
+                if (error) throw error
+
+                const categorySelect = document.getElementById('category')
+                categorySelect.innerHTML = categories.map(category =>
+                    `<option value="${category.id}">${category.name}</option>`
+                ).join('')
+            } catch (error) {
+                console.error('Error loading categories:', error)
+            }
+        }
+
+        // Load product data
+        async function loadProductData() {
+            try {
+                const { data: product, error } = await supabase
+                    .from('products')
+                    .select('*')
+                    .eq('id', productId)
+                    .single()
+
+                if (error) throw error
+
+                // Fill form with product data
+                document.getElementById('title').value = product.title || '';
+                document.getElementById('subtitle').value = product.subtitle || '';
+                document.getElementById('category').value = product.category || '';
+                document.getElementById('description').value = product.description || '';
+
+                // Load images
+                if (product.main_image) {
+                    document.getElementById('mainImagePreview').innerHTML = `
+                        <img src="${product.main_image}" alt="Main Image">
+                        <p>Current image (upload a new one to replace)</p>
+                    `;
+                }
+                if (product.banner_image) {
+                    document.getElementById('bannerImagePreview').innerHTML = `
+                        <img src="${product.banner_image}" alt="Banner Image">
+                        <p>Current image (upload a new one to replace)</p>
+                    `;
+                }
+                if (product.right_desc_image) {
+                    document.getElementById('rightDescImagePreview').innerHTML = `
+                        <img src="${product.right_desc_image}" alt="Right Description Image">
+                        <p>Current image (upload a new one to replace)</p>
+                    `;
+                }
+
+                if (product.left_spec_image) {
+                    document.getElementById('leftSpecImagePreview').innerHTML = `
+                        <img src="${product.left_spec_image}" alt="Left Specification Image">
+                        <p>Current image (upload a new one to replace)</p>
+                    `;
+                }
+
+                // Load video
+                if (product.product_video) {
+                    document.getElementById('productVideoPreview').innerHTML = `
+                        <video controls style="max-width: 100%; border-radius: 6px;">
+                            <source src="${product.product_video}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <p>Current video (upload a new one to replace)</p>
+                    `;
+                }
+
+                // Load video background settings
+                if (product.video_bg_settings) {
+                    const bgSettings = product.video_bg_settings;
+                    
+                    document.getElementById('videoBgType').value = bgSettings.type || 'solid';
+                    updateBgColorInputs();
+                    
+                    if (bgSettings.type === 'solid') {
+                        document.getElementById('videoBgColor').value = bgSettings.color || '#ffffff';
+                    } else if (bgSettings.type === 'linear') {
+                        document.getElementById('gradientStartColor').value = bgSettings.startColor || '#ffffff';
+                        document.getElementById('gradientEndColor').value = bgSettings.endColor || '#000000';
+                        document.getElementById('linearDirection').value = bgSettings.direction || 'to right';
+                    } else if (bgSettings.type === 'radial') {
+                        document.getElementById('gradientStartColor').value = bgSettings.startColor || '#ffffff';
+                        document.getElementById('gradientEndColor').value = bgSettings.endColor || '#000000';
+                        document.getElementById('radialShape').value = bgSettings.shape || 'circle';
+                        document.getElementById('radialPosition').value = bgSettings.position || 'center';
+                    }
+                    
+                    updateBgPreview();
+                }
+
+                // Load 3D model
+                if (product.model_3d) {
+                    document.getElementById('modelPreview').innerHTML = `
+                        <model-viewer 
+                            src="${product.model_3d}" 
+                            alt="3D model preview" 
+                            auto-rotate 
+                            camera-controls 
+                            shadow-intensity="1" 
+                            exposure="1" 
+                            style="width: 100%; height: 100%">
+                        </model-viewer>
+                        <div class="model-info">
+                            <span>Current model (upload a new one to replace)</span>
+                        </div>
+                    `;
+                }
+
+                // Load specifications
+                if (product.specifications) {
+                    const tbody = document.querySelector('#specsTable tbody');
+                    tbody.innerHTML = '';
+                
+                    Object.entries(product.specifications).forEach(([name, value]) => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td><input type="text" class="spec-name" value="${name}" required></td>
+                            <td><input type="text" class="spec-value" value="${value}" required></td>
+                            <td><button type="button" class="remove-spec-btn">Remove</button></td>
+                        `;
+                        tbody.appendChild(tr);
+                
+                        // Add event listener to the remove button
+                        tr.querySelector('.remove-spec-btn').addEventListener('click', function () {
+                            tr.remove();
+                        });
+                    });
+                }
+                
+
+                // Load technical specifications
+                if (product.technical_specifications && Array.isArray(product.technical_specifications)) {
+                    const techSpecsContainer = document.getElementById('techSpecsContainer');
+                    techSpecsContainer.innerHTML = '';
+                    
+                    product.technical_specifications.forEach((spec, index) => {
+                        const techSpecId = Date.now() + index;
+                        const techSpecItem = document.createElement('div');
+                        techSpecItem.className = 'tech-spec-item';
+                        techSpecItem.dataset.id = techSpecId;
+                        
+                        techSpecItem.innerHTML = `
+                            <div class="tech-spec-row">
+                                <div class="tech-spec-img-container">
+                                    <label>Specification Image</label>
+                                    <input type="file" class="tech-spec-img" accept="image/*" onchange="previewTechSpecImage(event, ${techSpecId})">
+                                    ${spec.image ? `
+                                        <div class="tech-spec-img-preview" id="techSpecImgPreview${techSpecId}">
+                                            <img src="${spec.image}" alt="Technical Specification Image">
+                                            <p>Current image (upload a new one to replace)</p>
+                                        </div>
+                                    ` : `<div class="tech-spec-img-preview" id="techSpecImgPreview${techSpecId}"></div>`}
+                                </div>
+                                <div class="tech-spec-content">
+                                    <div class="form-group">
+                                        <label>Specification</label>
+                                        <input type="text" class="tech-spec-title" value="${spec.spec || ''}" placeholder="Enter specification" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Sub-specification</label>
+                                        <textarea class="tech-spec-description" placeholder="Enter sub-specification details" rows="3" required>${spec.subspec || ''}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tech-spec-actions">
+                                <button type="button" class="remove-tech-spec-btn" onclick="removeTechSpec(${techSpecId})">Remove</button>
+                            </div>
+                        `;
+                        
+                        techSpecsContainer.appendChild(techSpecItem);
+                    });
+                }
+
+                // Load related products
+                await loadRelatedProducts(product.related_products || []);
+
+            } catch (error) {
+                console.error('Error loading product data:', error);
+                alert('Error loading product data: ' + error.message);
+            }
+        }
+
+        // Load related products with selected values
+        async function loadRelatedProducts(selectedIds) {
+            try {
+                const { data: products, error } = await supabase
+                    .from('products')
+                    .select('id, title')
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                const relatedProductsList = document.getElementById('relatedProductsList');
+                relatedProductsList.innerHTML = '';
+
+                // Add already selected products
+                for (const selectedId of selectedIds) {
+                    const product = products.find(p => p.id === selectedId);
+                    if (product) {
+                        const div = document.createElement('div');
+                        div.className = 'related-product-item';
+                        
+                        const select = document.createElement('select');
+                        select.className = 'related-product-select';
+                        select.innerHTML = '<option value="">Select a product</option>' +
+                            products.map(p => `<option value="${p.id}" ${p.id === selectedId ? 'selected' : ''}>${p.title}</option>`).join('');
+                        
+                        div.innerHTML = `
+                            ${select.outerHTML}
+                            <button type="button" class="remove-btn" onclick="this.parentElement.remove()">×</button>
+                        `;
+                        
+                        relatedProductsList.appendChild(div);
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading related products:', error);
+            }
+        }
+
+        // File upload handling
+        async function uploadFile(file, path) {
+            try {
+                if (!file) return null;
+                
+                const fileExt = file.name.split('.').pop();
+                const fileName = `${Math.random()}.${fileExt}`;
+                const filePath = `${path}/${fileName}`;
+
+                // Get the current session
+                const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+                if (sessionError) {
+                    console.error('Session error:', sessionError);
+                    throw new Error('Failed to get session: ' + sessionError.message);
+                }
+                if (!session) {
+                    throw new Error('No active session');
+                }
+
+                console.log('Uploading file:', {
+                    path: filePath,
+                    size: file.size,
+                    type: file.type
+                });
+
+                const { error: uploadError } = await supabase.storage
+                    .from('product-assets')
+                    .upload(filePath, file, {
+                        cacheControl: '3600',
+                        upsert: false
+                    });
+
+                if (uploadError) {
+                    console.error('Upload error:', uploadError);
+                    throw new Error('Failed to upload file: ' + uploadError.message);
+                }
+
+                const { data: { publicUrl } } = supabase.storage
+                    .from('product-assets')
+                    .getPublicUrl(filePath);
+
+                console.log('File uploaded successfully:', publicUrl);
+                return publicUrl;
+            } catch (error) {
+                console.error('Error in uploadFile:', error);
+                throw error;
+            }
+        }
+
+        // Background color settings
+        window.updateBgColorInputs = () => {
+            const bgType = document.getElementById('videoBgType').value;
+            const solidInputs = document.getElementById('solidColorInputs');
+            const gradientInputs = document.getElementById('gradientColorInputs');
+            const linearOptions = document.getElementById('linearOptions');
+            const radialOptions = document.getElementById('radialOptions');
+
+            // Hide all first
+            solidInputs.style.display = 'none';
+            gradientInputs.style.display = 'none';
+            linearOptions.style.display = 'none';
+            radialOptions.style.display = 'none';
+
+            // Show relevant inputs based on selection
+            if (bgType === 'solid') {
+                solidInputs.style.display = 'block';
+            } else {
+                gradientInputs.style.display = 'block';
+                if (bgType === 'linear') {
+                    linearOptions.style.display = 'block';
+                } else if (bgType === 'radial') {
+                    radialOptions.style.display = 'block';
+                }
+            }
+
+            // Update preview if it exists
+            updateBgPreview();
+        };
+
+        // Update background preview
+        window.updateBgPreview = () => {
+            const previewElement = document.getElementById('bgPreview');
+            if (!previewElement) return;
+
+            const bgType = document.getElementById('videoBgType').value;
+
+            if (bgType === 'solid') {
+                const color = document.getElementById('videoBgColor').value;
+                previewElement.style.background = color;
+            } else if (bgType === 'linear') {
+                const startColor = document.getElementById('gradientStartColor').value;
+                const endColor = document.getElementById('gradientEndColor').value;
+                const direction = document.getElementById('linearDirection').value;
+                previewElement.style.background = `linear-gradient(${direction}, ${startColor}, ${endColor})`;
+            } else if (bgType === 'radial') {
+                const startColor = document.getElementById('gradientStartColor').value;
+                const endColor = document.getElementById('gradientEndColor').value;
+                const shape = document.getElementById('radialShape').value;
+                const position = document.getElementById('radialPosition').value;
+                previewElement.style.background = `radial-gradient(${shape} at ${position}, ${startColor}, ${endColor})`;
+            }
+        };
+
+        // Technical specifications handling functions
+        window.previewTechSpecImage = function(event, id) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById(`techSpecImgPreview${id}`).innerHTML = `
+                        <img src="${e.target.result}" alt="Technical Specification Image">
+                    `;
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+
+        window.removeTechSpec = function(id) {
+            const item = document.querySelector(`.tech-spec-item[data-id="${id}"]`);
+            if (item) {
+                item.remove();
+            }
+        };
+
+        // Add specification button event listener
+        document.getElementById('addSpecBtn').addEventListener('click', function () {
+            const tbody = document.querySelector('#specsTable tbody');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><input type="text" class="spec-name" placeholder="Specification name"></td>
+                <td><input type="text" class="spec-value" placeholder="Specification value"></td>
+                <td><button type="button" class="remove-spec-btn">Remove</button></td>
+            `;
+            tbody.appendChild(tr);
+        
+            // Attach event to the new remove button
+            tr.querySelector('.remove-spec-btn').addEventListener('click', function () {
+                tr.remove();
+            });
+        });
+        
+
+        // Add Technical Specification button event listener
+        document.getElementById('addTechSpecBtn').addEventListener('click', function() {
+            const techSpecId = Date.now();
+            const techSpecItem = document.createElement('div');
+            techSpecItem.className = 'tech-spec-item';
+            techSpecItem.dataset.id = techSpecId;
+
+            techSpecItem.innerHTML = `
+                <div class="tech-spec-row">
+                    <div class="tech-spec-img-container">
+                        <label>Specification Image</label>
+                        <input type="file" class="tech-spec-img" accept="image/*" onchange="previewTechSpecImage(event, ${techSpecId})">
+                        <div class="tech-spec-img-preview" id="techSpecImgPreview${techSpecId}"></div>
+                    </div>
+                    <div class="tech-spec-content">
+                        <div class="form-group">
+                            <label>Specification</label>
+                            <input type="text" class="tech-spec-title" placeholder="Enter specification" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Sub-specification</label>
+                            <textarea class="tech-spec-description" placeholder="Enter sub-specification details" rows="3" required></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="tech-spec-actions">
+                    <button type="button" class="remove-tech-spec-btn" onclick="removeTechSpec(${techSpecId})">Remove</button>
+                </div>
+            `;
+
+            document.getElementById('techSpecsContainer').appendChild(techSpecItem);
+        });
+
+        // Add Related Product button
+        document.getElementById('addRelatedBtn').addEventListener('click', async () => {
+            const { data: products, error } = await supabase
+                .from('products')
+                .select('id, title')
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                alert('Error loading products');
+                return;
+            }
+
+            const select = document.createElement('select');
+            select.className = 'related-product-select';
+            select.innerHTML = '<option value="">Select a product</option>' +
+                products.map(p => `<option value="${p.id}">${p.title}</option>`).join('');
+
+            const div = document.createElement('div');
+            div.className = 'related-product-item';
+            div.innerHTML = `
+                ${select.outerHTML}
+                <button type="button" class="remove-btn" onclick="this.parentElement.remove()">×</button>
+            `;
+            document.getElementById('relatedProductsList').appendChild(div);
+        });
+
+     
+        // Form submission
+        // Form submission
+        document.getElementById('productForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            try {
+                // Show loader
+                document.getElementById('loader').style.display = 'flex';
+                document.getElementById('submitBtn').disabled = true;
+
+                // Get product ID
+                const productId = document.getElementById('productId').value;
+
+                // Upload main image if provided
+                let mainImageUrl = null;
+                const mainImageFile = document.getElementById('mainImage').files[0];
+                if (mainImageFile) {
+                    mainImageUrl = await uploadFile(mainImageFile, 'main-images');
+                }
+// Upload banner image if provided
+let bannerImageUrl = null;
+const bannerImageFile = document.getElementById('bannerImage').files[0];
+if (bannerImageFile) {
+    bannerImageUrl = await uploadFile(bannerImageFile, 'banner-images');
+}
+                // Upload right description image if provided
+                let rightDescImageUrl = null;
+                const rightDescImageFile = document.getElementById('rightDescImage').files[0];
+                if (rightDescImageFile) {
+                    rightDescImageUrl = await uploadFile(rightDescImageFile, 'description-images');
+                }
+
+                // Upload left specification image if provided
+                let leftSpecImageUrl = null;
+                const leftSpecImageFile = document.getElementById('leftSpecImage').files[0];
+                if (leftSpecImageFile) {
+                    leftSpecImageUrl = await uploadFile(leftSpecImageFile, 'specification-images');
+                }
+
+                // Upload product video if provided
+                let productVideoUrl = null;
+                const productVideoFile = document.getElementById('productVideo').files[0];
+                if (productVideoFile) {
+                    productVideoUrl = await uploadFile(productVideoFile, 'product-videos');
+                }
+
+                // Get video background settings
+                let videoBgSettings = {};
+                const bgType = document.getElementById('videoBgType').value;
+
+                if (bgType === 'solid') {
+                    videoBgSettings = {
+                        type: 'solid',
+                        color: document.getElementById('videoBgColor').value
+                    };
+                } else if (bgType === 'linear') {
+                    videoBgSettings = {
+                        type: 'linear',
+                        startColor: document.getElementById('gradientStartColor').value,
+                        endColor: document.getElementById('gradientEndColor').value,
+                        direction: document.getElementById('linearDirection').value
+                    };
+                } else if (bgType === 'radial') {
+                    videoBgSettings = {
+                        type: 'radial',
+                        startColor: document.getElementById('gradientStartColor').value,
+                        endColor: document.getElementById('gradientEndColor').value,
+                        shape: document.getElementById('radialShape').value,
+                        position: document.getElementById('radialPosition').value
+                    };
+                }
+
+                // Upload 3D model if provided
+                let modelUrl = null;
+                const modelFile = document.getElementById('model3d').files[0];
+                if (modelFile) {
+                    modelUrl = await uploadFile(modelFile, '3d-models');
+                }
+
+                // Get specifications
+                const specs = {};
+                document.querySelectorAll('#specsTable tbody tr').forEach(tr => {
+                    const name = tr.querySelector('.spec-name').value;
+                    const value = tr.querySelector('.spec-value').value;
+                    if (name && value) {
+                        specs[name] = value;
+                    }
+                });
+
+                // Get technical specifications
+                const techSpecs = await Promise.all(
+                    Array.from(document.querySelectorAll('.tech-spec-item')).map(async (item) => {
+                        const specImg = item.querySelector('.tech-spec-img').files[0];
+                        let specImgUrl = null;
+
+                        if (specImg) {
+                            specImgUrl = await uploadFile(specImg, 'tech-spec-images');
+                        } else {
+                            // Keep the existing image URL if no new image is uploaded
+                            const imgElement = item.querySelector('.tech-spec-img-preview img');
+                            if (imgElement) {
+                                specImgUrl = imgElement.src;
+                            }
+                        }
+
+                        const specTitle = item.querySelector('.tech-spec-title').value;
+                        const specDesc = item.querySelector('.tech-spec-description').value;
+
+                        if (specTitle && specDesc) {
+                            return {
+                                image: specImgUrl,
+                                spec: specTitle,
+                                subspec: specDesc
+                            };
+                        } else {
+                            return null;
+                        }
+                    })
+                );
+
+                // Remove null entries
+                const filteredTechSpecs = techSpecs.filter(spec => spec !== null);
+
+                // Get related products
+                const relatedIds = Array.from(document.querySelectorAll('.related-product-select'))
+                    .map(select => select.value)
+                    .filter(id => id);
+
+                // Get current product data to merge with updates
+                const { data: currentProduct } = await supabase
+                    .from('products')
+                    .select('*')
+                    .eq('id', productId)
+                    .single();
+
+                // Create update data object, only including fields that are being updated
+                const updateData = {
+                    title: document.getElementById('title').value,
+                    subtitle: document.getElementById('subtitle').value,
+                    title_large: document.getElementById('title').value, // Update title_large to match title
+                    category: document.getElementById('category').value,
+                    description: document.getElementById('description').value,
+                    video_bg_settings: videoBgSettings,
+                    specifications: specs,
+                    technical_specifications: filteredTechSpecs,
+                    related_products: relatedIds,
+                   
+                };
+
+                // Only include file fields if new files were uploaded
+                if (mainImageUrl) updateData.main_image = mainImageUrl;
+                if (bannerImageUrl) updateData.banner_image = bannerImageUrl;
+                if (rightDescImageUrl) updateData.right_desc_image = rightDescImageUrl;
+                if (leftSpecImageUrl) updateData.left_spec_image = leftSpecImageUrl;
+                if (productVideoUrl) updateData.product_video = productVideoUrl;
+                if (modelUrl) updateData.model_3d = modelUrl;
+
+                // Update the product in the database
+                const { error: updateError } = await supabase
+                    .from('products')
+                    .update(updateData)
+                    .eq('id', productId);
+
+                if (updateError) {
+                    throw updateError;
+                }
+
+                // Hide loader and show success message
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('submitBtn').disabled = false;
+                
+                alert('Product updated successfully!');
+                
+                // Redirect to dashboard
+                window.location.href = 'dashboard.html';
+                
+            } catch (error) {
+                console.error('Error updating product:', error);
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('submitBtn').disabled = false;
+                alert('Error updating product: ' + error.message);
+            }
+        });
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadCategories();
+            await loadProductData();
+            
+            // Initialize color input listeners
+            document.getElementById('videoBgColor').addEventListener('input', updateBgPreview);
+            document.getElementById('gradientStartColor').addEventListener('input', updateBgPreview);
+            document.getElementById('gradientEndColor').addEventListener('input', updateBgPreview);
+            document.getElementById('linearDirection').addEventListener('change', updateBgPreview);
+            document.getElementById('radialShape').addEventListener('change', updateBgPreview);
+            document.getElementById('radialPosition').addEventListener('change', updateBgPreview);
+        });
+    </script>
+</body>
+</html>

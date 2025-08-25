@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Management System</title>
+    <link href="../images/tecpn.png" rel="shortcut icon" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://upload-widget.cloudinary.com/global/all.js"></script>
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2c3e50;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --warning: #f1c40f;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--secondary);
+            color: white;
+            padding: 1.5rem 0;
+            margin-bottom: 2rem;
+            box-shadow: var(--box-shadow);
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Forms & Inputs */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.25);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.75rem 1.25rem;
+            border-radius: 4px;
+            cursor: pointer;
+            border: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #27ae60;
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+        .btn-sm {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        /* File Upload */
+        .file-upload {
+            background-color: #f8f9fa;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .file-upload:hover {
+            border-color: var(--primary);
+        }
+
+        .file-upload i {
+            font-size: 2.5rem;
+            color: #777;
+            margin-bottom: 1rem;
+        }
+
+        .file-upload input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-upload-info {
+            margin-top: 1rem;
+            color: #666;
+        }
+
+        .file-preview {
+            margin-top: 1.5rem;
+            display: none;
+        }
+
+        .file-preview video {
+            max-width: 100%;
+            border-radius: 4px;
+            box-shadow: var(--box-shadow);
+        }
+
+        /* YouTube Links List */
+        .youtube-link-list {
+            margin-top: 1.5rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .youtube-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
+            background-color: #fff;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .youtube-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .youtube-thumbnail {
+            width: 120px;
+            height: 67.5px;
+            background-color: #eee;
+            border-radius: 4px;
+            margin-right: 1rem;
+            object-fit: cover;
+        }
+
+        .youtube-info {
+            flex: 1;
+        }
+
+        .youtube-item h4 {
+            margin-bottom: 0.25rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+
+        .youtube-link {
+            color: #777;
+            font-size: 0.875rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+
+        .youtube-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-left: 1rem;
+        }
+
+        /* Edit Mode Styles */
+        .edit-mode {
+            border: 2px solid var(--primary);
+            background-color: rgba(52, 152, 219, 0.05);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 1rem;
+            border-radius: 4px;
+            color: white;
+            max-width: 300px;
+            box-shadow: var(--box-shadow);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .notification-success {
+            background-color: var(--success);
+        }
+
+        .notification-error {
+            background-color: var(--danger);
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 1.5rem;
+            height: 1.5rem;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .content-card {
+                padding: 1rem;
+            }
+
+            .youtube-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .youtube-thumbnail {
+                width: 100%;
+                height: auto;
+                margin-right: 0;
+                margin-bottom: 0.75rem;
+            }
+
+            .youtube-actions {
+                margin-left: 0;
+                margin-top: 0.75rem;
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .file-upload {
+                padding: 1rem;
+            }
+
+            .file-upload i {
+                font-size: 2rem;
+            }
+
+            .btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="admin-page">
+    <header>
+        <div class="container">
+            <h1>Content Management System</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Video Upload Section -->
+        <div class="content-card">
+            <div class="section-title">
+                <h2>Featured Video</h2>
+                <button id="editFeaturedVideo" class="btn btn-primary btn-sm">
+                    <i class="fas fa-edit"></i> Edit
+                </button>
+            </div>
+
+            <div id="currentFeaturedVideo" class="current-content">
+                <div id="videoPlayer" class="file-preview" style="display: block;">
+                    <!-- Video will be displayed here -->
+                </div>
+            </div>
+
+            <div id="featuredVideoForm" class="edit-form hidden">
+                <div class="form-group">
+                    <label for="videoFile">Upload New Video</label>
+                    <div class="file-upload" id="videoUploadArea">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h3>Drag & Drop or Click to Upload</h3>
+                        <p>MP4, WebM or OGG (Max 100MB)</p>
+                        <input type="file" id="videoFile" accept="video/*">
+                    </div>
+                    <div class="file-upload-info" id="videoFileInfo"></div>
+                    <div class="file-preview" id="videoPreview">
+                        <video controls id="previewVideo"></video>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="videoTitle">Video Title</label>
+                    <input type="text" id="videoTitle" class="form-control" placeholder="Enter video title">
+                </div>
+
+                <div class="form-group">
+                    <label for="videoDescription">Video Description</label>
+                    <textarea id="videoDescription" class="form-control"
+                        placeholder="Enter video description"></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button id="saveFeaturedVideo" class="btn btn-success">
+                        <i class="fas fa-save"></i> Save Changes
+                    </button>
+                    <button id="cancelFeaturedVideoEdit" class="btn btn-danger">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- YouTube Links Section -->
+        <div class="content-card">
+            <div class="section-title">
+                <h2>YouTube Videos</h2>
+                <button id="addYouTubeLink" class="btn btn-primary btn-sm">
+                    <i class="fas fa-plus"></i> Add New
+                </button>
+            </div>
+
+            <div id="youtubeLinksForm" class="hidden">
+                <div class="form-group">
+                    <label for="youtubeURL">YouTube Video URL</label>
+                    <input type="text" id="youtubeURL" class="form-control"
+                        placeholder="https://www.youtube.com/watch?v=...">
+                </div>
+
+                <div class="form-group">
+                    <label for="youtubeTitle">Video Title</label>
+                    <input type="text" id="youtubeTitle" class="form-control" placeholder="Enter video title">
+                </div>
+
+                <div class="form-group">
+                    <label for="youtubeDescription">Video Description</label>
+                    <textarea id="youtubeDescription" class="form-control"
+                        placeholder="Enter video description"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="displayOrder">Display Order</label>
+                    <input type="number" id="displayOrder" class="form-control" min="1" value="1">
+                </div>
+
+                <div class="form-actions">
+                    <button id="saveYoutubeLink" class="btn btn-success">
+                        <i class="fas fa-save"></i> Save Video
+                    </button>
+                    <button id="cancelYoutubeAdd" class="btn btn-danger">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+            </div>
+
+            <div id="editYoutubeLinkForm" class="hidden">
+                <input type="hidden" id="editYoutubeId">
+                <div class="form-group">
+                    <label for="editYoutubeURL">YouTube Video URL</label>
+                    <input type="text" id="editYoutubeURL" class="form-control"
+                        placeholder="https://www.youtube.com/watch?v=...">
+                </div>
+
+                <div class="form-group">
+                    <label for="editYoutubeTitle">Video Title</label>
+                    <input type="text" id="editYoutubeTitle" class="form-control" placeholder="Enter video title">
+                </div>
+
+                <div class="form-group">
+                    <label for="editYoutubeDescription">Video Description</label>
+                    <textarea id="editYoutubeDescription" class="form-control"
+                        placeholder="Enter video description"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="editDisplayOrder">Display Order</label>
+                    <input type="number" id="editDisplayOrder" class="form-control" min="1">
+                </div>
+
+                <div class="form-actions">
+                    <button id="updateYoutubeLink" class="btn btn-success">
+                        <i class="fas fa-save"></i> Update Video
+                    </button>
+                    <button id="cancelYoutubeEdit" class="btn btn-danger">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+            </div>
+
+            <div class="youtube-link-list" id="youtubeLinks">
+                <!-- YouTube links will be displayed here -->
+            </div>
+        </div>
+
+        <!-- About Us Section -->
+        <div class="content-card">
+            <div class="section-title">
+                <h2>About Us Content</h2>
+                <button id="editAboutUs" class="btn btn-primary btn-sm">
+                    <i class="fas fa-edit"></i> Edit
+                </button>
+            </div>
+
+            <div id="currentAboutUs" class="current-content">
+                <!-- About Us content will be displayed here -->
+            </div>
+
+            <div id="aboutUsForm" class="edit-form hidden">
+                <div class="form-group">
+                    <label for="aboutUsTitle">Title</label>
+                    <input type="text" id="aboutUsTitle" class="form-control" placeholder="Enter title">
+                </div>
+
+                <div class="form-group">
+                    <label for="aboutUsContent">Content</label>
+                    <textarea id="aboutUsContent" class="form-control" placeholder="Enter about us content"></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button id="saveAboutUs" class="btn btn-success">
+                        <i class="fas fa-save"></i> Save Changes
+                    </button>
+                    <button id="cancelAboutUsEdit" class="btn btn-danger">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+
+    <script type="module">
+        import { supabase } from '../supabase.js'
+        // Global Variables
+        let editingYoutubeId = null;
+        const API_BASE_URL = '/api'; // Change this to your actual API endpoint
+
+        // DOM Elements
+        document.addEventListener('DOMContentLoaded', function () {
+            // Featured Video Elements
+            const editFeaturedVideoBtn = document.getElementById('editFeaturedVideo');
+            const currentFeaturedVideo = document.getElementById('currentFeaturedVideo');
+            const featuredVideoForm = document.getElementById('featuredVideoForm');
+            const videoFileInput = document.getElementById('videoFile');
+            const videoFileInfo = document.getElementById('videoFileInfo');
+            const videoPreview = document.getElementById('videoPreview');
+            const previewVideo = document.getElementById('previewVideo');
+            const videoTitle = document.getElementById('videoTitle');
+            const videoDescription = document.getElementById('videoDescription');
+            const saveFeaturedVideoBtn = document.getElementById('saveFeaturedVideo');
+            const cancelFeaturedVideoBtn = document.getElementById('cancelFeaturedVideoEdit');
+            const videoPlayer = document.getElementById('videoPlayer');
+
+            // YouTube Links Elements
+            const addYouTubeLinkBtn = document.getElementById('addYouTubeLink');
+            const youtubeLinksForm = document.getElementById('youtubeLinksForm');
+            const youtubeURL = document.getElementById('youtubeURL');
+            const youtubeTitle = document.getElementById('youtubeTitle');
+            const youtubeDescription = document.getElementById('youtubeDescription');
+            const displayOrder = document.getElementById('displayOrder');
+            const saveYoutubeLinkBtn = document.getElementById('saveYoutubeLink');
+            const cancelYoutubeAddBtn = document.getElementById('cancelYoutubeAdd');
+            const youtubeLinks = document.getElementById('youtubeLinks');
+
+            // YouTube Edit Form Elements
+            const editYoutubeLinkForm = document.getElementById('editYoutubeLinkForm');
+            const editYoutubeId = document.getElementById('editYoutubeId');
+            const editYoutubeURL = document.getElementById('editYoutubeURL');
+            const editYoutubeTitle = document.getElementById('editYoutubeTitle');
+            const editYoutubeDescription = document.getElementById('editYoutubeDescription');
+            const editDisplayOrder = document.getElementById('editDisplayOrder');
+            const updateYoutubeLinkBtn = document.getElementById('updateYoutubeLink');
+            const cancelYoutubeEditBtn = document.getElementById('cancelYoutubeEdit');
+
+            // About Us Elements
+            const editAboutUsBtn = document.getElementById('editAboutUs');
+            const currentAboutUs = document.getElementById('currentAboutUs');
+            const aboutUsForm = document.getElementById('aboutUsForm');
+            const aboutUsTitle = document.getElementById('aboutUsTitle');
+            const aboutUsContent = document.getElementById('aboutUsContent');
+            const saveAboutUsBtn = document.getElementById('saveAboutUs');
+            const cancelAboutUsBtn = document.getElementById('cancelAboutUsEdit');
+
+            // Notification Element
+            const notification = document.getElementById('notification');
+
+            // Init - Load all data
+            loadFeaturedVideo();
+            loadYoutubeLinks();
+            loadAboutUs();
+
+            // Featured Video Event Listeners
+            editFeaturedVideoBtn.addEventListener('click', () => {
+                currentFeaturedVideo.classList.add('hidden');
+                featuredVideoForm.classList.remove('hidden');
+
+                // Pre-fill form with existing data
+                fetchFeaturedVideoData().then(data => {
+                    if (data) {
+                        videoTitle.value = data.title || '';
+                        videoDescription.value = data.description || '';
+                    }
+                });
+            });
+
+            videoFileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    if (file.size > 100 * 1024 * 1024) { // 100MB limit
+                        showNotification('Error: File size exceeds 100MB limit.', 'error');
+                        videoFileInput.value = '';
+                        return;
+                    }
+
+                    videoFileInfo.textContent = `Selected file: ${file.name} (${formatFileSize(file.size)})`;
+
+                    // Preview the video
+                    const fileURL = URL.createObjectURL(file);
+                    previewVideo.src = fileURL;
+                    videoPreview.style.display = 'block';
+                }
+            });
+
+            saveFeaturedVideoBtn.addEventListener('click', () => {
+                const file = videoFileInput.files[0];
+                const title = videoTitle.value.trim();
+                const description = videoDescription.value.trim();
+
+                if (!title) {
+                    showNotification('Please enter a video title.', 'error');
+                    return;
+                }
+
+                // If a new file is selected, upload it
+                if (file) {
+                    uploadVideo(file, title, description);
+                } else {
+                    // Just update the metadata
+                    updateVideoMetadata(title, description);
+                }
+            });
+
+            cancelFeaturedVideoBtn.addEventListener('click', () => {
+                currentFeaturedVideo.classList.remove('hidden');
+                featuredVideoForm.classList.add('hidden');
+                videoFileInput.value = '';
+                videoFileInfo.textContent = '';
+                videoPreview.style.display = 'none';
+            });
+
+            // YouTube Links Event Listeners
+            addYouTubeLinkBtn.addEventListener('click', () => {
+                youtubeLinksForm.classList.remove('hidden');
+
+                // Reset form fields
+                youtubeURL.value = '';
+                youtubeTitle.value = '';
+                youtubeDescription.value = '';
+
+                // Set default display order to the next number
+                fetchNextYoutubeDisplayOrder().then(nextOrder => {
+                    displayOrder.value = nextOrder;
+                });
+            });
+
+            saveYoutubeLinkBtn.addEventListener('click', () => {
+                const url = youtubeURL.value.trim();
+                const title = youtubeTitle.value.trim();
+                const description = youtubeDescription.value.trim();
+                const order = parseInt(displayOrder.value);
+
+                if (!url || !title) {
+                    showNotification('Please enter both URL and title.', 'error');
+                    return;
+                }
+
+                // Validate YouTube URL
+                if (!isValidYouTubeUrl(url)) {
+                    showNotification('Please enter a valid YouTube URL.', 'error');
+                    return;
+                }
+
+                // Save the YouTube link
+                addYoutubeLink(url, title, description, order);
+            });
+
+            cancelYoutubeAddBtn.addEventListener('click', () => {
+                youtubeLinksForm.classList.add('hidden');
+            });
+
+            updateYoutubeLinkBtn.addEventListener('click', () => {
+                const id = editYoutubeId.value;
+                const url = editYoutubeURL.value.trim();
+                const title = editYoutubeTitle.value.trim();
+                const description = editYoutubeDescription.value.trim();
+                const order = parseInt(editDisplayOrder.value);
+
+                if (!url || !title) {
+                    showNotification('Please enter both URL and title.', 'error');
+                    return;
+                }
+
+                // Validate YouTube URL
+                if (!isValidYouTubeUrl(url)) {
+                    showNotification('Please enter a valid YouTube URL.', 'error');
+                    return;
+                }
+
+                // Update the YouTube link
+                updateYoutubeLink(id, url, title, description, order);
+            });
+
+            cancelYoutubeEditBtn.addEventListener('click', () => {
+                editYoutubeLinkForm.classList.add('hidden');
+            });
+
+            // About Us Event Listeners
+            editAboutUsBtn.addEventListener('click', () => {
+                currentAboutUs.classList.add('hidden');
+                aboutUsForm.classList.remove('hidden');
+
+                // Pre-fill form with existing data
+                fetchAboutUsData().then(data => {
+                    if (data) {
+                        aboutUsTitle.value = data.title || '';
+                        aboutUsContent.value = data.content || '';
+                    }
+                });
+            });
+
+            saveAboutUsBtn.addEventListener('click', () => {
+                const title = aboutUsTitle.value.trim();
+                const content = aboutUsContent.value.trim();
+
+                if (!title || !content) {
+                    showNotification('Please enter both title and content.', 'error');
+                    return;
+                }
+
+                // Save the About Us content
+                updateAboutUs(title, content);
+            });
+
+            cancelAboutUsBtn.addEventListener('click', () => {
+                currentAboutUs.classList.remove('hidden');
+                aboutUsForm.classList.add('hidden');
+            });
+
+            // API Functions
+
+            // Featured Video Functions
+            async function loadFeaturedVideo() {
+                try {
+                    const { data, error } = await supabase
+                        .from('featured_videos')
+                        .select('*')
+                        .order('created_at', { ascending: false })
+                        .limit(1);
+
+                    if (error && error.code !== 'PGRST116') throw error;
+
+                    if (data && data.length > 0) {
+                        const video = data[0];
+                        videoPlayer.innerHTML = `
+                            <video controls width="100%" autoplay>
+                                <source src="${video.video_url}" type="${getVideoMimeType(video.video_url)}">
+                                Your browser does not support the video tag.
+                            </video>
+                            <h3>${video.title || 'Featured Video'}</h3>
+                            <p>${video.description || ''}</p>
+                        `;
+                        videoPlayer.style.display = 'block';
+                        console.log("Loaded video URL:", video.video_url);
+                    } else {
+                        videoPlayer.innerHTML = '<p>No featured video available.</p>';
+                    }
+                } catch (error) {
+                    console.error('Error loading featured video:', error);
+                    videoPlayer.innerHTML = '<p>Failed to load featured video.</p>';
+                }
+            }
+
+            // Add this utility function to determine MIME type
+            function getVideoMimeType(url) {
+                if (url.endsWith('.mp4')) return 'video/mp4';
+                if (url.endsWith('.webm')) return 'video/webm';
+                if (url.endsWith('.ogg')) return 'video/ogg';
+                // Default to mp4 for Cloudinary URLs that might not have extension
+                return 'video/mp4';
+            }
+
+            async function deleteCloudinaryVideo(publicId) {
+                try {
+                    // You would typically use a serverless function for this
+                    // This is just an example of what the API call would look like
+                    const response = await fetch('/api/delete-cloudinary-video', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ public_id: publicId })
+                    });
+
+                    if (!response.ok) {
+                        const error = await response.json();
+                        throw new Error(error.message);
+                    }
+                } catch (error) {
+                    console.error('Error deleting video from Cloudinary:', error);
+                }
+            }
+            async function fetchFeaturedVideoData() {
+                try {
+                    const { data, error } = await supabase
+                        .from('featured_videos')
+                        .select('*')
+                        .order('created_at', { ascending: false })
+                        .limit(1)
+                        .single();
+
+                    if (error) throw error;
+                    return data;
+                } catch (error) {
+                    console.error('Error fetching video data:', error);
+                    return null;
+                }
+            }
+
+
+            async function uploadVideo(file, title, description) {
+                try {
+                    // Disable save button and show loading state
+                    saveFeaturedVideoBtn.disabled = true;
+                    saveFeaturedVideoBtn.innerHTML = '<span class="spinner"></span> Uploading...';
+
+                    // Create a FormData object
+                    const formData = new FormData();
+                    formData.append('file', file);
+                    formData.append('upload_preset', 'techno'); // Replace with your Cloudinary upload preset
+
+                    // Upload to Cloudinary
+                    const response = await fetch('https://api.cloudinary.com/v1_1/ddmvdwcff/video/upload', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const data = await response.json();
+
+                    if (!response.ok) throw new Error(data.error?.message || 'Upload failed');
+
+                    // Get the video URL from Cloudinary response
+                    const videoUrl = data.secure_url;
+
+                    // Save video metadata to the database
+                    const { error: dbError } = await supabase
+    .from('featured_videos')
+    .insert([{ 
+        title, 
+        description, 
+        video_url: videoUrl,
+        public_id: data.public_id, // Store Cloudinary's public_id for future reference
+        video_path: data.public_id || 'cloudinary-storage' // Use public_id as path or a placeholder
+    }]);
+
+                    showNotification('Video uploaded successfully!', 'success');
+
+                    // Reset form and refresh display
+                    currentFeaturedVideo.classList.remove('hidden');
+                    featuredVideoForm.classList.add('hidden');
+                    videoFileInput.value = '';
+                    videoFileInfo.textContent = '';
+                    videoPreview.style.display = 'none';
+                    loadFeaturedVideo();
+                } catch (error) {
+                    console.error('Error uploading video:', error);
+                    showNotification('Failed to upload video. Please try again.', 'error');
+                } finally {
+                    // Re-enable save button
+                    saveFeaturedVideoBtn.disabled = false;
+                    saveFeaturedVideoBtn.innerHTML = '<i class="fas fa-save"></i> Save Changes';
+                }
+            }
+
+            async function updateVideoMetadata(title, description) {
+                try {
+                    // Get current featured video
+                    const { data: currentVideo, error: fetchError } = await supabase
+                        .from('featured_videos')
+                        .select('*')
+                        .order('created_at', { ascending: false })
+                        .limit(1)
+                        .single();
+
+                    if (fetchError) throw fetchError;
+
+                    // Update the metadata
+                    const { error: updateError } = await supabase
+                        .from('featured_videos')
+                        .update({ title, description })
+                        .eq('id', currentVideo.id);
+
+                    if (updateError) throw updateError;
+
+                    showNotification('Video information updated successfully!', 'success');
+
+                    // Reset form and refresh display
+                    currentFeaturedVideo.classList.remove('hidden');
+                    featuredVideoForm.classList.add('hidden');
+                    loadFeaturedVideo();
+                } catch (error) {
+                    console.error('Error updating video metadata:', error);
+                    showNotification('Failed to update video information. Please try again.', 'error');
+                }
+            }
+
+
+            // YouTube Links Functions
+            async function loadYoutubeLinks() {
+                try {
+                    const { data, error } = await supabase
+                        .from('youtube_links')
+                        .select('*')
+                        .order('display_order', { ascending: true });
+
+                    if (error) throw error;
+
+                    if (data && data.length > 0) {
+                        youtubeLinks.innerHTML = data.map(link => `
+                            <div class="youtube-item" data-id="${link.id}">
+                                <img src="${getYoutubeThumbnail(link.url)}" alt="${link.title}" class="youtube-thumbnail">
+                                <div class="youtube-info">
+                                    <h4>${link.title}</h4>
+                                    <p class="youtube-link">${link.url}</p>
+                                    <small>Order: ${link.display_order}</small>
+                                </div>
+                                <div class="youtube-actions">
+                                    <button class="btn btn-primary btn-sm edit-youtube" data-id="${link.id}">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-danger btn-sm delete-youtube" data-id="${link.id}">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('');
+
+                        // Add event listeners to edit and delete buttons
+                        document.querySelectorAll('.edit-youtube').forEach(btn => {
+                            btn.addEventListener('click', (e) => {
+                                const id = e.currentTarget.getAttribute('data-id');
+                                editYoutubeLink(id);
+                            });
+                        });
+
+                        document.querySelectorAll('.delete-youtube').forEach(btn => {
+                            btn.addEventListener('click', (e) => {
+                                const id = e.currentTarget.getAttribute('data-id');
+                                if (confirm('Are you sure you want to delete this YouTube link?')) {
+                                    deleteYoutubeLink(id);
+                                }
+                            });
+                        });
+                    } else {
+                        youtubeLinks.innerHTML = '<p>No YouTube links available.</p>';
+                    }
+                } catch (error) {
+                    console.error('Error loading YouTube links:', error);
+                    youtubeLinks.innerHTML = '<p>Failed to load YouTube links.</p>';
+                }
+            }
+            async function fetchNextYoutubeDisplayOrder() {
+                try {
+                    const { data, error } = await supabase
+                        .from('youtube_links')
+                        .select('display_order')
+                        .order('display_order', { ascending: false })
+                        .limit(1);
+
+                    if (error) throw error;
+
+                    if (data && data.length > 0) {
+                        return data[0].display_order + 1;
+                    }
+                    return 1; // Default to 1 if no links exist
+                } catch (error) {
+                    console.error('Error fetching next order:', error);
+                    return 1; // Default to 1 if error occurs
+                }
+            }
+            async function addYoutubeLink(url, title, description, displayOrder) {
+                try {
+                    // Convert displayOrder to number if it's not already
+                    const orderNum = parseInt(displayOrder) || 1;
+
+                    const { error } = await supabase
+                        .from('youtube_links')
+                        .insert([
+                            {
+                                url,
+                                title,
+                                description,
+                                display_order: orderNum
+                            }
+                        ]);
+
+                    if (error) throw error;
+
+                    showNotification('YouTube link added successfully!', 'success');
+
+                    // Reset form and refresh display
+                    youtubeLinksForm.classList.add('hidden');
+                    youtubeURL.value = '';
+                    youtubeTitle.value = '';
+                    youtubeDescription.value = '';
+                    displayOrder.value = 1; // Set as value property not direct assignment
+                    loadYoutubeLinks();
+                } catch (error) {
+                    console.error('Error adding YouTube link:', error);
+                    showNotification('Failed to add YouTube link. Please try again.', 'error');
+                }
+            }
+
+            async function editYoutubeLink(id) {
+                try {
+                    const { data, error } = await supabase
+                        .from('youtube_links')
+                        .select('*')
+                        .eq('id', id)
+                        .single();
+
+                    if (error) throw error;
+
+                    // Populate edit form
+                    editYoutubeId.value = id;
+                    editYoutubeURL.value = data.url || '';
+                    editYoutubeTitle.value = data.title || '';
+                    editYoutubeDescription.value = data.description || '';
+                    editDisplayOrder.value = data.display_order || 1;
+
+                    // Show edit form
+                    editYoutubeLinkForm.classList.remove('hidden');
+                    youtubeLinksForm.classList.add('hidden');
+                } catch (error) {
+                    console.error('Error fetching YouTube link data:', error);
+                    showNotification('Failed to load YouTube link data.', 'error');
+                }
+            }
+
+            async function updateYoutubeLink(id, url, title, description, displayOrder) {
+                try {
+                    const { error } = await supabase
+                        .from('youtube_links')
+                        .update({
+                            url,
+                            title,
+                            description,
+                            display_order: displayOrder
+                        })
+                        .eq('id', id);
+
+                    if (error) throw error;
+
+                    showNotification('YouTube link updated successfully!', 'success');
+
+                    // Hide edit form and refresh display
+                    editYoutubeLinkForm.classList.add('hidden');
+                    loadYoutubeLinks();
+                } catch (error) {
+                    console.error('Error updating YouTube link:', error);
+                    showNotification('Failed to update YouTube link. Please try again.', 'error');
+                }
+            }
+
+            async function deleteYoutubeLink(id) {
+                try {
+                    const { error } = await supabase
+                        .from('youtube_links')
+                        .delete()
+                        .eq('id', id);
+
+                    if (error) throw error;
+
+                    showNotification('YouTube link deleted successfully!', 'success');
+                    loadYoutubeLinks();
+                } catch (error) {
+                    console.error('Error deleting YouTube link:', error);
+                    showNotification('Failed to delete YouTube link. Please try again.', 'error');
+                }
+            }
+
+            // About Us Functions
+            async function loadAboutUs() {
+                try {
+                    const { data, error } = await supabase
+                        .from('about_us')
+                        .select('*')
+                        .order('created_at', { ascending: false })
+                        .limit(1)
+                        .single();
+
+                    if (error && error.code !== 'PGRST116') throw error; // PGRST116 is the code for no rows returned
+
+                    if (data) {
+                        currentAboutUs.innerHTML = `
+                            <h3>${data.title || 'About Us'}</h3>
+                            <div>${data.content || 'No content available.'}</div>
+                        `;
+                    } else {
+                        currentAboutUs.innerHTML = '<p>No About Us content available.</p>';
+                    }
+                } catch (error) {
+                    console.error('Error loading About Us content:', error);
+                    currentAboutUs.innerHTML = '<p>Failed to load About Us content.</p>';
+                }
+            }
+
+            async function fetchAboutUsData() {
+                try {
+                    const { data, error } = await supabase
+                        .from('about_us')
+                        .select('*')
+                        .order('created_at', { ascending: false })
+                        .limit(1)
+                        .single();
+
+                    if (error && error.code !== 'PGRST116') throw error;
+                    return data;
+                } catch (error) {
+                    console.error('Error fetching About Us data:', error);
+                    return null;
+                }
+            }
+
+            async function updateAboutUs(title, content) {
+                try {
+                    // Check if an About Us record exists
+                    const { data, error: fetchError } = await supabase
+                        .from('about_us')
+                        .select('id')
+                        .order('created_at', { ascending: false })
+                        .limit(1);
+
+                    if (fetchError && fetchError.code !== 'PGRST116') throw fetchError;
+
+                    if (data && data.length > 0) {
+                        // Update existing record
+                        const { error: updateError } = await supabase
+                            .from('about_us')
+                            .update({ title, content })
+                            .eq('id', data[0].id);
+
+                        if (updateError) throw updateError;
+                    } else {
+                        // Insert new record
+                        const { error: insertError } = await supabase
+                            .from('about_us')
+                            .insert([{ title, content }]);
+
+                        if (insertError) throw insertError;
+                    }
+
+                    showNotification('About Us content updated successfully!', 'success');
+
+                    // Reset form and refresh display
+                    currentAboutUs.classList.remove('hidden');
+                    aboutUsForm.classList.add('hidden');
+                    loadAboutUs();
+                } catch (error) {
+                    console.error('Error updating About Us content:', error);
+                    showNotification('Failed to update About Us content. Please try again.', 'error');
+                }
+            }
+
+            // Utility Functions
+            function showNotification(message, type = 'success') {
+                notification.textContent = message;
+                notification.className = `notification notification-${type} show`;
+
+                // Auto-hide after 3 seconds
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }
+
+            function formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+
+            function getYoutubeThumbnail(url) {
+                // Extract YouTube video ID from URL
+                const videoId = extractYoutubeVideoId(url);
+                if (videoId) {
+                    return `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
+                }
+                return '/placeholder-thumbnail.jpg'; // Fallback thumbnail
+            }
+
+            function extractYoutubeVideoId(url) {
+                // Regular expressions to match different YouTube URL formats
+                const patterns = [
+                    /(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([^&]+)/i,
+                    /(?:https?:\/\/)?(?:www\.)?youtube\.com\/embed\/([^/?]+)/i,
+                    /(?:https?:\/\/)?(?:www\.)?youtu\.be\/([^/?]+)/i
+                ];
+
+                for (const pattern of patterns) {
+                    const match = url.match(pattern);
+                    if (match && match[1]) {
+                        return match[1];
+                    }
+                }
+
+                return null;
+            }
+
+            function isValidYouTubeUrl(url) {
+                return extractYoutubeVideoId(url) !== null;
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Logos - Technovation</title>
+    <link href="../images/tecpn.png" rel="shortcut icon" type="image/x-icon" />
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="admin.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Admin Navbar */
+        .admin-navbar {
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .admin-navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1.5rem;
+        }
+
+        .admin-navbar h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+
+        .admin-nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .admin-nav-links a {
+            color: #555;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .admin-nav-links a:hover {
+            background-color: #f0f2f5;
+            color: #4285f4;
+        }
+
+        .admin-nav-links a.active {
+            background-color: #4285f4;
+            color: white;
+        }
+
+        .logout-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: #c82333;
+            transform: translateY(-1px);
+        }
+
+        /* Logo Management */
+        .logo-management {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .logo-management h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 2rem;
+        }
+
+        .upload-container {
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .upload-container:hover {
+            border-color: #4285f4;
+            background-color: rgba(66, 133, 244, 0.05);
+        }
+
+        .upload-btn {
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .upload-btn:hover {
+            background-color: #3367d6;
+            transform: translateY(-1px);
+        }
+
+        .logos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .logo-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            background: #fff;
+        }
+
+        .logo-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .logo-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: contain;
+            background: #f8f9fa;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo-item .remove-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(220, 53, 69, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .logo-item .remove-btn:hover {
+            background: #dc3545;
+            transform: scale(1.1);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+        }
+
+        /* Loader */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #4285f4;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        .loader p {
+            color: #333;
+            font-weight: 500;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .logos-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-management {
+                padding: 1.5rem;
+            }
+
+            .logo-management h2 {
+                font-size: 1.5rem;
+            }
+
+            .upload-container {
+                padding: 1.5rem;
+            }
+
+            .logos-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="admin-page">
+    <div class="loader" id="loader">
+        <div class="spinner"></div>
+        <p>Processing...</p>
+    </div>
+
+    <nav class="admin-navbar">
+        <div class="container">
+            <h1>Logo Management</h1>
+            <div class="admin-nav-links" id="adminNavLinks">
+                <a href="dashboard.html" class="active">Dashboard</a>
+                <a href="manage-home.html">Manage Home</a>
+                <a href="add-product.html">Manage Products</a>
+                <a href="categories.html">Manage Categories</a>
+                <a href="manage-logos.html">Manage Logos</a>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="logo-management">
+            <h2>Upload and Manage Logos</h2>
+            <div class="upload-container">
+                <input type="file" id="logoInput" accept="image/*" multiple style="display: none;">
+                <button class="upload-btn" onclick="document.getElementById('logoInput').click()">
+                    Upload Logos
+                </button>
+            </div>
+            <div class="logos-grid" id="logosGrid">
+                <!-- Logos will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { supabase } from '../supabase.js'
+
+        // Check if user is authenticated
+        const session = JSON.parse(localStorage.getItem('adminSession'))
+        if (!session) {
+            window.location.href = 'login.html'
+        }
+
+        // Show/hide loader
+        function showLoader() {
+            document.getElementById('loader').style.display = 'flex'
+        }
+
+        function hideLoader() {
+            document.getElementById('loader').style.display = 'none'
+        }
+
+        // Load logos
+        async function loadLogos() {
+            showLoader()
+            try {
+                const { data: logos, error } = await supabase
+                    .from('logos')
+                    .select('*')
+                    .order('created_at', { ascending: false })
+
+                if (error) throw error
+
+                const logosGrid = document.getElementById('logosGrid')
+                logosGrid.innerHTML = logos.map(logo => `
+                    <div class="logo-item">
+                        <img src="${logo.url}" alt="Logo">
+                        <button class="remove-btn" onclick="deleteLogo('${logo.id}')">×</button>
+                    </div>
+                `).join('')
+            } catch (error) {
+                alert(error.message)
+            } finally {
+                hideLoader()
+            }
+        }
+
+        // Upload logos
+        document.getElementById('logoInput').addEventListener('change', async (e) => {
+            const files = e.target.files
+            if (files.length === 0) return
+
+            showLoader()
+            try {
+                for (const file of files) {
+                    const fileExt = file.name.split('.').pop()
+                    const fileName = `${Math.random()}.${fileExt}`
+                    const filePath = `logos/${fileName}`
+
+                    // Upload to storage
+                    const { error: uploadError } = await supabase.storage
+                        .from('product-assets')
+                        .upload(filePath, file)
+
+                    if (uploadError) throw uploadError
+
+                    // Get public URL
+                    const { data: { publicUrl } } = supabase.storage
+                        .from('product-assets')
+                        .getPublicUrl(filePath)
+
+                    // Save to database
+                    const { error: dbError } = await supabase
+                        .from('logos')
+                        .insert([{ url: publicUrl }])
+
+                    if (dbError) throw dbError
+                }
+
+                // Reload logos
+                loadLogos()
+            } catch (error) {
+                alert(error.message)
+            } finally {
+                hideLoader()
+            }
+        })
+
+        // Delete logo
+        window.deleteLogo = async (id) => {
+            if (!confirm('Are you sure you want to delete this logo?')) return
+
+            showLoader()
+            try {
+                // Get logo data
+                const { data: logo, error: fetchError } = await supabase
+                    .from('logos')
+                    .select('url')
+                    .eq('id', id)
+                    .single()
+
+                if (fetchError) throw fetchError
+
+                // Extract file path from URL
+                const filePath = logo.url.split('/').pop()
+
+                // Delete from storage
+                const { error: storageError } = await supabase.storage
+                    .from('product-assets')
+                    .remove([`logos/${filePath}`])
+
+                if (storageError) throw storageError
+
+                // Delete from database
+                const { error: dbError } = await supabase
+                    .from('logos')
+                    .delete()
+                    .eq('id', id)
+
+                if (dbError) throw dbError
+
+                // Reload logos
+                loadLogos()
+            } catch (error) {
+                alert(error.message)
+            } finally {
+                hideLoader()
+            }
+        }
+
+        window.logout = async function() {
+            try {
+                const { error } = await supabase.auth.signOut()
+                if (error) throw error
+                localStorage.removeItem('adminSession')
+                window.location.href = 'login.html'
+            } catch (error) {
+                console.error('Error logging out:', error)
+                alert('Error logging out. Please try again.')
+            }
+        }
+
+        // Load logos when page loads
+        loadLogos()
+    </script>
+</body>
+</html> 

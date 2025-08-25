@@ -1,0 +1,1802 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head><link as_="style" href="styles.css" rel="preload"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Technovation Products</title>
+<link href="../images/tecpn.png" rel="shortcut icon" type="image/x-icon"/>
+<link href="styles.css" rel="stylesheet"/>
+<!-- Google Fonts -->
+
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+
+
+
+
+<script defer="defer" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.0.1/model-viewer.min.js" type="module"></script>
+<script defer="defer" src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+<script defer="defer" src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/STLLoader.js"></script>
+<script defer="defer" src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/exporters/GLTFExporter.js"></script>
+<!-- Add this in your <head> section -->
+
+<!-- OR for more options -->
+
+<style>
+        .product-video-container {
+            width: 100%;
+            margin-bottom: 30px;
+            padding: 30px;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+        }
+        
+        #productVideo {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            max-height: 450px; /* 16:9 ratio for landscape videos based on max-width */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            object-fit: contain; /* Maintains aspect ratio without cropping */
+        }
+        
+        /* Portrait video styling */
+        #productVideo.portrait {
+            max-width: 450px; /* Narrower width for portrait videos */
+            max-height: 800px; /* Taller height for portrait videos */
+        }
+        
+        /* Media queries for responsive behavior */
+        @media screen and (max-width: 992px) {
+            .product-video-container {
+                padding: 20px;
+            }
+            
+            #productVideo {
+                max-width: 600px;
+                max-height: 338px; /* Maintaining 16:9 ratio */
+            }
+            
+            #productVideo.portrait {
+                max-width: 338px;
+                max-height: 600px;
+            }
+        }
+        
+        @media screen and (max-width: 768px) {
+            .product-video-container {
+                padding: 15px;
+            }
+            
+            #productVideo {
+                max-width: 480px;
+                max-height: 270px; /* Maintaining 16:9 ratio */
+            }
+            
+            #productVideo.portrait {
+                max-width: 270px;
+                max-height: 480px;
+            }
+        }
+        
+        @media screen and (max-width: 480px) {
+            .product-video-container {
+                padding: 10px;
+            }
+            
+            #productVideo {
+                max-width: 320px;
+                max-height: 180px; /* Maintaining 16:9 ratio */
+            }
+            
+            #productVideo.portrait {
+                max-width: 180px;
+                max-height: 320px;
+            }
+        }
+
+
+        /* Base specifications container */
+        #detailedSpecifications {
+            display: grid;
+            gap: 24px;
+            /* Increased from 20px */
+            padding: 24px;
+            /* Increased from 20px */
+            max-width: 1400px;
+            /* Increased from 1200px */
+            margin: 0 auto;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            /* Increased from 300px */
+        }
+
+        /* Individual spec item styling */
+        .spec-item {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
+            /* Increased from 16px */
+            background-color: #f5f5f5;
+            padding: 24px;
+            /* Increased from 20px */
+            border-radius: 10px;
+            /* Increased from 8px */
+            min-height: 90px;
+            /* Increased from 80px */
+        }
+
+        /* Spec icon container - larger icons */
+        .spec-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            /* Increased from 40px */
+            min-width: 48px;
+            height: 60px;
+            /* Increased from 40px */
+            flex-shrink: 0;
+        }
+
+        .spec-image img {
+            width: 44px;
+            /* Increased from 36px */
+            height: 44px;
+            /* Increased from 36px */
+            object-fit: contain;
+        }
+
+        /* Spec content container - positioned on right */
+        .spec-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 0;
+            flex: 1;
+        }
+
+        /* Spec name styling - larger text */
+        .spec-name {
+            font-size: 20px;
+            /* Increased from 18px */
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+            /* Increased from 6px */
+            line-height: 1.3;
+            text-align: left;
+        }
+
+        /* Spec value styling - larger text */
+        .spec-value {
+            font-size: 18px;
+            /* Increased from 16px */
+            color: #666;
+            line-height: 1.4;
+            text-align: left;
+        }
+
+        /* Layout for exactly 3 items */
+        #detailedSpecifications.three-items {
+            grid-template-columns: repeat(3, 1fr);
+            margin: 0 auto;
+            /* Added to ensure centering */
+        }
+
+        /* Layout for exactly 2 items */
+        #detailedSpecifications.two-items {
+            grid-template-columns: repeat(2, 1fr);
+            max-width: 900px;
+            /* Increased from 800px */
+            margin: 0 auto;
+            /* Added to ensure centering */
+        }
+
+        /* Layout for exactly 1 item */
+        #detailedSpecifications.one-item {
+            grid-template-columns: 1fr;
+            max-width: 500px;
+            /* Increased from 400px */
+            margin: 0 auto;
+            /* Added to ensure centering */
+        }
+
+        /* No specifications available styling */
+        .no-specs {
+            text-align: center;
+            color: #666;
+            padding: 60px 24px;
+            /* Increased from 50px 20px */
+            background-color: #f5f5f5;
+            border-radius: 10px;
+            /* Increased from 8px */
+            grid-column: 1 / -1;
+            font-size: 18px;
+            /* Increased from 16px */
+        }
+
+        /* Responsive adjustments for tablet screens */
+        @media (max-width: 992px) {
+            #detailedSpecifications.three-items {
+                grid-template-columns: repeat(2, 1fr);
+                margin: 0 auto;
+                /* Added to ensure centering */
+            }
+        }
+
+        /* Responsive adjustments for mobile screens */
+        @media (max-width: 576px) {
+            #detailedSpecifications {
+                gap: 18px;
+                /* Increased from 15px */
+                padding: 18px;
+                /* Increased from 15px */
+                margin: 0 auto;
+                /* Added to ensure centering */
+            }
+
+            #detailedSpecifications,
+            #detailedSpecifications.three-items,
+            #detailedSpecifications.two-items {
+                grid-template-columns: 1fr;
+                max-width: 100%;
+                margin: 0 auto;
+                /* Added to ensure centering */
+            }
+
+            .spec-item {
+                padding: 20px;
+                /* Increased from 16px */
+                gap: 16px;
+                /* Increased from 14px */
+                min-height: 80px;
+                /* Increased from 70px */
+            }
+
+            .spec-image {
+                width: 40px;
+                /* Increased from 32px */
+                min-width: 40px;
+                height: 40px;
+                /* Increased from 32px */
+            }
+
+            .spec-image img {
+                width: 36px;
+                /* Increased from 28px */
+                height: 36px;
+                /* Increased from 28px */
+            }
+
+            .spec-name {
+                font-size: 18px;
+                /* Increased from 16px */
+                margin-bottom: 6px;
+                /* Increased from 4px */
+            }
+
+            .spec-value {
+                font-size: 16px;
+                /* Increased from 14px */
+            }
+        }
+
+        /* For very large screens */
+        @media (min-width: 1400px) {
+            .spec-item {
+                padding: 28px;
+                /* Increased from 24px */
+            }
+
+            .spec-image {
+                width: 56px;
+                /* Increased from 48px */
+                min-width: 56px;
+                height: 56px;
+                /* Increased from 48px */
+            }
+
+            .spec-image img {
+                width: 52px;
+                /* Increased from 44px */
+                height: 52px;
+                /* Increased from 44px */
+            }
+
+            .spec-name {
+                font-size: 22px;
+                /* Increased from 20px */
+            }
+
+            .spec-value {
+                font-size: 19px;
+                /* Increased from 17px */
+            }
+        }
+
+        /* For screens smaller than 400px */
+        @media (max-width: 400px) {
+            #detailedSpecifications.one-item {
+                max-width: 100%;
+                margin: 0 auto;
+                /* Added to ensure centering */
+            }
+
+            .spec-item {
+                padding: 16px;
+                /* Increased from 14px */
+                gap: 14px;
+                /* Increased from 12px */
+            }
+
+            .spec-image {
+                width: 36px;
+                /* Increased from 30px */
+                min-width: 36px;
+                height: 36px;
+                /* Increased from 30px */
+            }
+
+            .spec-image img {
+                width: 32px;
+                /* Increased from 26px */
+                height: 32px;
+                /* Increased from 26px */
+            }
+
+            .spec-name {
+                font-size: 17px;
+                /* Increased from 15px */
+            }
+
+            .spec-value {
+                font-size: 15px;
+                /* Increased from 13px */
+            }
+        }
+
+        .enquiry-button-container {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+        }
+
+        .enquiry-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .enquiry-button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Make the layout responsive */
+        @media (max-width: 768px) {
+
+            .product-top-grid,
+            .product-description-grid,
+            .product-specification-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .product-top-grid {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+
+            .model-viewer-container,
+            .product-main-image {
+                height: 400px;
+            }
+        }
+    </style>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;family=Poppins:wght@400;500;600;700&amp;family=Roboto:wght@400;500&amp;family=Oswald:wght@700&amp;display=swap" rel="stylesheet"/>  <link rel="stylesheet" href="animation.css">
+</head>
+<body>
+<!-- Add loader at the top of body -->
+<div class="loader-container" id="loader">
+<div class="loader"></div>
+</div>
+<!-- First Navigation Bar -->
+<nav class="navbar">
+<div class="container">
+<div class="logo">
+<a href="index.html">
+<img src="./images/Tech Logo (B).png" alt="Tech Logo" class="spin-logo" />
+<img alt="Technovation Logo" loading="lazy" src="./images/techno black logo-Photoroom.png"/>
+</a>
+</div>
+<div class="search-container">
+<form action="/search" class="search-form" method="GET">
+<input class="search-input" id="navSearch" maxlength="256" name="query" placeholder="Search…" required="" type="search"/>
+<button class="search-button" type="submit">
+<svg fill="currentColor" height="16" viewbox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+</svg>
+</button>
+<div class="search-results" id="searchResults"></div>
+</form>
+</div>
+<!-- Mobile Search Icon -->
+<div class="search-icon-mobile">
+<svg fill="currentColor" height="20" viewbox="0 0 16 16" width="20" xmlns="http://www.w3.org/2000/svg">
+<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+</svg>
+</div>
+<div class="menu-toggle">
+<span class="bar"></span>
+<span class="bar"></span>
+<span class="bar"></span>
+</div>
+</div>
+</nav>
+<!-- White separator -->
+<div class="white-separator"></div>
+<div class="nav-container">
+<div class="main-navbar">
+<!-- Categories Navigation for Desktop -->
+<div class="desktop-category-navbar">
+<ul class="category-list" id="desktopCategories">
+<!-- Categories will be loaded here dynamically -->
+</ul>
+</div>
+</div>
+<!-- Mobile Categories Menu (hidden by default) -->
+<div class="mobile-category-menu">
+<ul class="mobile-category-list" id="mobileCategories">
+<!-- Categories will be loaded here dynamically -->
+</ul>
+</div>
+<!-- Mobile Search Form (hidden by default) -->
+<div class="mobile-search-container">
+<form action="/search" class="mobile-search-form" method="GET">
+<input class="mobile-search-input" id="mobileNavSearch" maxlength="256" name="query" placeholder="Search…" required="" type="search"/>
+<button class="mobile-search-button" type="submit">
+<svg fill="currentColor" height="16" viewbox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+</svg>
+</button>
+<div class="close-search-button">
+<svg fill="currentColor" height="16" viewbox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"></path>
+</svg>
+</div>
+<div class="search-results" id="mobileSearchResults"></div>
+</form>
+</div>
+</div>
+<!-- Overlay Background -->
+<div class="overlay" id="overlay"></div>
+<!-- White separator -->
+<div class="white-separator"></div>
+<!-- Banner Section HTML -->
+<section class="banner-section">
+<div class="banner-overlay">
+<h1 class="banner-title" id="productTitle">Loading...</h1>
+<div class="breadcrumb">
+<a href="./index.html">Home</a>
+<span class="breadcrumb-separator">›</span>
+<span class="current-page" id="productName">Loading...</span>
+</div>
+</div>
+</section>
+<!-- White separator -->
+<div class="white-separator"></div>
+<!-- product gallery -->
+<link href="./product.css" rel="stylesheet"/>
+<!-- New Product Layout -->
+<div class="product-container">
+<!-- Top Section: 3D Model + Main Image -->
+<div class="product-top-grid">
+<div class="model-viewer-container">
+<model-viewer alt="3D model" auto-rotate="" camera-controls="" camera-orbit="0deg 75deg 105%" enable-pan="" environment-image="neutral" exposure="1" field-of-view="25deg" id="model-viewer" interaction-prompt="auto" interaction-prompt-style="basic" interaction-prompt-threshold="0" interpolation-decay="200" max-camera-orbit="Infinity Infinity 400%" max-field-of-view="120deg" min-camera-orbit="-Infinity -Infinity 20%" min-field-of-view="5deg" orbit-sensitivity="1" rotate-two-finger="both" shadow-intensity="1" src="" style="width: 100%; height: 800px;" touch-action="pan-y">
+</model-viewer>
+</div>
+<div class="product-main-image">
+<img alt="Product Image" id="mainProductImage" loading="lazy" src=""/>
+<div class="product-info-overlay">
+<h1 id="productTitleOverlay"></h1>
+<p id="productSubtitleOverlay"></p>
+</div>
+</div>
+</div>
+<!-- Description Section -->
+<div class="product-description-grid" style="margin: 40px;">
+<div class="product-description-text">
+<h2>Description</h2>
+<div id="productDescription"></div>
+</div>
+<div class="product-description-image">
+<img alt="Description Image" id="descriptionImage" loading="lazy" src=""/>
+</div>
+</div>
+<!-- Specification Section -->
+<div class="product-specification-grid">
+<div class="product-specification-image">
+<img alt="Specification Image" id="specificationImage" loading="lazy" src=""/>
+</div>
+<div class="product-specification-table">
+<h2>Specifications</h2>
+<table id="specificationsTable">
+<!-- Specifications will be filled dynamically -->
+</table>
+</div>
+</div>
+<!-- Video Section -->
+<div class="product-video-container" id="productVideoContainer">
+<video controls="" id="productVideo">
+<source src="" type="video/mp4"/>
+                Your browser does not support the video tag.
+            </video>
+</div>
+<h2 class="product-section-heading" id="technicalSpecificationsHeading">
+            TECHNICAL SPECIFICATIONS
+        </h2>
+<style>
+            /* Product Section Heading - Unique styling with responsive design */
+.product-section-heading {
+    display: block;
+    text-align: center;
+    margin: 40px auto 20px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: #333;
+    letter-spacing: -1px;
+    width: 100%;
+    max-width: 1200px;
+    position: relative;
+    padding: 0 20px;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+/* Specific styling for technical specifications heading */
+#technicalSpecificationsHeading {
+    font-size: 36px;
+    position: relative;
+}
+
+/* Add a subtle decorative underline */
+#technicalSpecificationsHeading::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 3px;
+    background-color: #333;
+    margin: 10px auto 0;
+}
+
+/* Media queries for responsive design */
+@media screen and (max-width: 992px) {
+    .product-section-heading {
+        margin: 35px auto 18px;
+    }
+    
+    #technicalSpecificationsHeading {
+        font-size: 32px;
+    }
+    
+    #technicalSpecificationsHeading::after {
+        width: 70px;
+        margin: 8px auto 0;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .product-section-heading {
+        margin: 30px auto 15px;
+    }
+    
+    #technicalSpecificationsHeading {
+        font-size: 28px;
+    }
+    
+    #technicalSpecificationsHeading::after {
+        width: 60px;
+        height: 2px;
+        margin: 6px auto 0;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .product-section-heading {
+        margin: 25px auto 12px;
+        padding: 0 15px;
+    }
+    
+    #technicalSpecificationsHeading {
+        font-size: 24px;
+    }
+    
+    #technicalSpecificationsHeading::after {
+        width: 50px;
+        height: 2px;
+        margin: 5px auto 0;
+    }
+}
+        </style>
+<!-- Detailed Specifications With Images -->
+<div class="detailed-specifications" id="detailedSpecifications">
+<!-- Specifications with images will be filled dynamically -->
+</div>
+<!-- Enquiry Button -->
+<div class="enquiry-button-container">
+<button class="enquiry-button" id="enquiryButton">Enquiry Now</button>
+</div>
+</div>
+<!-- White separator -->
+<div class="white-separator"></div>
+<!-- Related Products -->
+<section class="related-products" id="relatedProductsSection" style="display: none;">
+<h2>Related Products</h2>
+<div class="related-products-grid" id="relatedProducts">
+<!-- Related products will be loaded here dynamically -->
+</div>
+</section>
+<!-- White separator -->
+<div class="white-separator"></div>
+<!-- footer   -->
+<footer class="tech-footer">
+<div class="footer-container">
+<div class="footer-left">
+<div class="footer-logo">
+<img alt="Technovation" loading="lazy" src="./images/techno black logo-Photoroom.png"/>
+</div>
+<p class="footer-description">
+                    With over a decade of experience, we are proud to deliver innovative products to clients around the
+                    globe.
+                </p>
+<div class="footer-contact-info">
+<p class="contact-item">
+<i class="fa-solid fa-map-marker-alt contact-icon"></i>
+                        Tamil nadu - 627416
+                    </p>
+<p class="contact-item">
+<i class="fa-solid fa-envelope contact-icon"></i>
+                        techtechnovation@gmail.com
+                    </p>
+<p class="contact-item">
+<i class="fa-solid fa-phone contact-icon"></i>
+                        7339224811
+                    </p>
+</div>
+</div>
+<div class="footer-right">
+<h2 class="footer-section-title">Sections</h2>
+<div class="footer-divider"></div>
+<ul class="footer-links">
+<li>
+<i class="fa-solid fa-chevron-right arrow-icon"></i>
+<a href="./index.html">Home</a>
+</li>
+<li>
+<i class="fa-solid fa-chevron-right arrow-icon"></i>
+<a href="./index.html#prod-section">Products</a>
+</li>
+</ul>
+</div>
+</div>
+</footer>
+<!-- Font Awesome for Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<div class="footer-navbar">
+<div class="copyright">© Copyright - <a class="company-link" href="https://technovationpvtltd.com/">Technovation</a></div>
+</div>
+<script src="script.js"></script>
+<script type="module">
+        import { supabase } from './supabase.js'
+
+        // Search functionality
+        const searchInput = document.getElementById('navSearch')
+        const searchResults = document.getElementById('searchResults')
+        let searchTimeout
+
+        // Handle search input event
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(searchTimeout)
+            const query = e.target.value.trim()
+
+            if (query.length < 2) {
+                searchResults.style.display = 'none'
+                return
+            }
+
+            searchTimeout = setTimeout(async () => {
+                try {
+                    const { data: products, error } = await supabase
+                        .from('products')
+                        .select('*')
+                        .ilike('title', `%${query}%`)
+                        .limit(5)
+
+                    if (error) throw error
+
+                    if (products.length > 0) {
+                        searchResults.innerHTML = products
+                            .map(
+                                (product) => `
+                                <a href="./product.html?id=${product.id}" class="search-result-item">
+                                    <img src="${product.main_image}" alt="${product.title}">
+                                    <div class="search-result-info">
+                                        <h4>${product.title}</h4>
+                                        <p>${product.subtitle}</p>
+                                    </div>
+                                </a>
+                            `
+                            )
+                            .join('')
+                        searchResults.style.display = 'block'
+                    } else {
+                        searchResults.innerHTML = '<div class="no-results">No products found</div>'
+                        searchResults.style.display = 'block'
+                    }
+                } catch (error) {
+                    console.error('Error searching products:', error)
+                }
+            }, 300)
+        })
+
+        // Mobile search functionality
+        const mobileSearchInput = document.getElementById('mobileNavSearch')
+        const mobileSearchResults = document.getElementById('mobileSearchResults')
+        let mobileSearchTimeout
+
+        // Handle mobile search input event
+        mobileSearchInput.addEventListener('input', (e) => {
+            clearTimeout(mobileSearchTimeout)
+            const query = e.target.value.trim()
+
+            if (query.length < 2) {
+                mobileSearchResults.style.display = 'none'
+                return
+            }
+
+            mobileSearchTimeout = setTimeout(async () => {
+                try {
+                    const { data: products, error } = await supabase
+                        .from('products')
+                        .select('*')
+                        .ilike('title', `%${query}%`)
+                        .limit(5)
+
+                    if (error) throw error
+
+                    if (products.length > 0) {
+                        mobileSearchResults.innerHTML = products
+                            .map(
+                                (product) => `
+                                <a href="./product.html?id=${product.id}" class="search-result-item">
+                                    <img src="${product.main_image}" alt="${product.title}">
+                                    <div class="search-result-info">
+                                        <h4>${product.title}</h4>
+                                        <p>${product.subtitle}</p>
+                                    </div>
+                                </a>
+                            `
+                            )
+                            .join('')
+                        mobileSearchResults.style.display = 'block'
+                    } else {
+                        mobileSearchResults.innerHTML = '<div class="no-results">No products found</div>'
+                        mobileSearchResults.style.display = 'block'
+                    }
+                } catch (error) {
+                    console.error('Error searching products:', error)
+                }
+            }, 300)
+        })
+
+        // Close search results when clicking outside (for desktop & mobile)
+        document.addEventListener('click', (e) => {
+            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                searchResults.style.display = 'none'
+            }
+            if (!mobileSearchInput.contains(e.target) && !mobileSearchResults.contains(e.target)) {
+                mobileSearchResults.style.display = 'none'
+            }
+        })
+
+        document.addEventListener('touchstart', (e) => {
+            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                searchResults.style.display = 'none'
+            }
+            if (!mobileSearchInput.contains(e.target) && !mobileSearchResults.contains(e.target)) {
+                mobileSearchResults.style.display = 'none'
+            }
+        })
+
+        // Handle search submission
+        document.querySelector('.search-form').addEventListener('submit', (e) => {
+            e.preventDefault()
+            const query = searchInput.value.trim()
+            if (query) {
+                window.location.href = `#`
+            }
+        })
+
+        // Handle mobile search form submission
+        document.querySelector('.mobile-search-form').addEventListener('submit', (e) => {
+            e.preventDefault()
+            const query = mobileSearchInput.value.trim()
+            if (query) {
+                window.location.href = `#`
+            }
+        })
+
+        // Mobile search functionality toggle
+        const searchIconMobile = document.querySelector('.search-icon-mobile')
+        const mobileSearchContainer = document.querySelector('.mobile-search-container')
+        const closeSearchButton = document.querySelector('.close-search-button')
+
+        // Show mobile search
+        searchIconMobile.addEventListener('click', () => {
+            mobileSearchContainer.classList.add('active')
+            document.querySelector('.overlay').classList.add('active')
+        })
+
+        // Close mobile search
+        closeSearchButton.addEventListener('click', () => {
+            mobileSearchContainer.classList.remove('active')
+            document.querySelector('.overlay').classList.remove('active')
+        })
+
+
+        // Load categories
+        async function loadCategories() {
+            try {
+                const { data: categories, error } = await supabase
+                    .from('categories')
+                    .select('*')
+                    .order('name')
+
+                if (error) throw error
+
+                // Update desktop categories
+                const desktopCategories = document.getElementById('desktopCategories')
+                desktopCategories.innerHTML = categories.map(category => `
+    <li class="category-item">
+        <a href="./category.html?name=${encodeURIComponent(category.name)}" class="category-link">
+            <div class="category-icon-container">
+                ${category.image_url
+                        ? `<img src="${category.image_url}" class="category-icon" alt="${category.name}">`
+                        : `<div class="no-icon-placeholder"></div>`
+                    }
+            </div>
+            <span class="category-name">${category.name}</span>
+            ${category.is_new ? '<span class="category-tag">New</span>' : ''}
+        </a>
+    </li>
+`).join('')
+
+                // Update mobile categories
+                const mobileCategories = document.getElementById('mobileCategories')
+                mobileCategories.innerHTML = categories.map(category => `
+                <li class="mobile-category-item">
+                    <a href="./category.html?name=${encodeURIComponent(category.name)}" class="mobile-category-link">
+                        <div class="category-icon-container">
+                            ${category.image_url
+                        ? `<img src="${category.image_url}" class="category-icon" alt="${category.name}">`
+                        : `<div class="no-icon-placeholder"></div>`
+                    }
+                        </div>
+                        <span class="category-name">${category.name}</span>
+                        ${category.is_new ? '<span class="mobile-category-tag">New</span>' : ''}
+                    </a>
+                </li>
+            `).join('')
+            } catch (error) {
+                console.error('Error loading categories:', error)
+            }
+        }
+
+        // Load categories when page loads
+        loadCategories()
+
+
+
+
+        // Get product ID from URL
+        const urlParams = new URLSearchParams(window.location.search)
+        const productId = urlParams.get('id')
+
+        if (!productId) {
+            window.location.href = 'index.html'
+        }
+
+
+        // Load product details
+
+        // Function to load product details with new layout
+        async function loadProductDetails() {
+            showLoader();
+            try {
+
+                const { data: product, error: productError } = await supabase
+                    .from('products')
+                    .select('*')
+                    .eq('id', productId)
+                    .single();
+
+                if (productError) throw productError;
+                console.log("Product loaded:", product);
+                console.log("Available properties:", Object.keys(product));
+
+                // Update page title and breadcrumb
+                document.title = `${product.title} - Technovation`;
+                document.getElementById('productTitle').textContent = product.title;
+                document.getElementById('productName').textContent = product.title;
+
+                // Update overlay title and subtitle
+                document.getElementById('productTitleOverlay').textContent = product.title;
+                document.getElementById('productSubtitleOverlay').textContent = product.subtitle || '';
+
+                // Update main image
+                document.getElementById('mainProductImage').src = product.main_image;
+                // Update banner image if available
+// Update banner image if available
+if (product.banner_image) {
+    console.log("Banner image URL:", product.banner_image);
+    document.querySelector('.banner-section').style.backgroundImage = `url('${product.banner_image}')`;
+    document.querySelector('.banner-section').style.backgroundSize = 'cover';
+    document.querySelector('.banner-section').style.backgroundPosition = 'center';
+    console.log("After setting style:", document.querySelector('.banner-section').style.backgroundImage);
+}
+document.querySelector('.banner-section').style.cssText = `
+    background-image: url('${product.banner_image}') !important;
+    background-size: cover !important;
+    background-position: center !important;
+`;
+                // Update description
+                document.getElementById('productDescription').innerHTML = product.description || 'No description available';
+
+                // Update description image if available
+                if (product.right_desc_image) {
+                    document.getElementById('descriptionImage').src = product.right_desc_image;
+                } else {
+                    document.getElementById('descriptionImage').src = product.main_image; // Fallback to main image
+                }
+
+                // Update specification image if available
+                if (product.left_spec_image) {
+                    document.getElementById('specificationImage').src = product.left_spec_image;
+                } else {
+                    document.getElementById('specificationImage').src = product.main_image; // Fallback to main image
+                }
+
+                // Update specifications table
+                const specificationsTable = document.getElementById('specificationsTable');
+                if (product.specifications && Object.keys(product.specifications).length > 0) {
+                    specificationsTable.innerHTML = Object.entries(product.specifications)
+                        .map(([key, value]) => `
+        <tr>
+            <td class="spec-name">${key}</td>
+            <td class="spec-value">${value}</td>
+        </tr>
+    `).join('');
+                } else {
+                    specificationsTable.innerHTML = '<tr><td colspan="2">No specifications available</td></tr>';
+                }
+
+
+                // Update detailed specifications with images
+                // For technical specifications
+                // Modified JavaScript to dynamically add classes based on spec count
+                const detailedSpecifications = document.getElementById('detailedSpecifications');
+                let specsHTML = '';
+                let specCount = 0;
+
+                if (product.technical_specifications && product.technical_specifications.length > 0) {
+                    specCount = product.technical_specifications.length;
+                    specsHTML = product.technical_specifications.map(spec => `
+        <div class="spec-item">
+            <div class="spec-image">
+                <img src="${spec.image}" alt="${spec.spec}">
+            </div>
+            <div class="spec-content">
+                <div class="spec-name">${spec.spec}</div>
+                <div class="spec-value">${spec.subspec}</div>
+            </div>
+        </div>
+    `).join('');
+                } else if (product.specifications && Object.keys(product.specifications).length > 0) {
+                    // Note: In this case, you'll need to add the image source
+                    specCount = Object.keys(product.specifications).length;
+                    specsHTML = Object.entries(product.specifications)
+                        .map(([key, value]) => `
+            <div class="spec-item">
+                <div class="spec-image">
+                    <img src="/default-spec-icon.png" alt="${key}">
+                </div>
+                <div class="spec-content">
+                    <div class="spec-name">${key}</div>
+                    <div class="spec-value">${value}</div>
+                </div>
+            </div>
+        `).join('');
+                } else {
+                    specsHTML = '<div class="no-specs">No detailed specifications available</div>';
+                }
+
+                detailedSpecifications.innerHTML = specsHTML;
+
+                // Add appropriate class based on spec count
+                if (specCount === 1) {
+                    detailedSpecifications.classList.add('one-item');
+                } else if (specCount === 2) {
+                    detailedSpecifications.classList.add('two-items');
+                } else if (specCount === 3) {
+                    detailedSpecifications.classList.add('three-items');
+                }
+
+                // For video background
+                if (product.product_video) {
+                    const videoContainer = document.getElementById('productVideoContainer');
+                    videoContainer.style.display = 'flex';
+                    const videoElement = document.getElementById('productVideo');
+                    videoElement.src = product.product_video;
+                    videoElement.poster = product.main_image;
+
+                    // Set background color for video container
+                    if (product.video_bg_settings && product.video_bg_settings.type === 'solid') {
+                        videoContainer.style.backgroundColor = product.video_bg_settings.color;
+                    }
+                } else {
+                    document.getElementById('productVideoContainer').style.display = 'none';
+                }
+
+                // Load 3D model if available
+                if (product.model_3d) {
+                    const modelViewer = document.getElementById('model-viewer')
+                    let gltfUrl = null
+
+                    // Check if the model is STL format
+                    if (product.model_3d.toLowerCase().endsWith('.stl')) {
+                        // Load STL file
+                        const loader = new THREE.STLLoader()
+                        loader.load(product.model_3d, function (geometry) {
+                            // Create a mesh
+                            const material = new THREE.MeshStandardMaterial({
+                                color: 0x808080,
+                                metalness: 0.5,
+                                roughness: 0.5
+                            })
+                            const mesh = new THREE.Mesh(geometry, material)
+
+                            // Center the geometry
+                            geometry.computeBoundingBox()
+                            const center = geometry.boundingBox.getCenter(new THREE.Vector3())
+                            geometry.translate(-center.x, -center.y, -center.z)
+
+                            // Create a scene
+                            const scene = new THREE.Scene()
+                            scene.add(mesh)
+
+                            // Export to GLTF
+                            const exporter = new THREE.GLTFExporter()
+                            exporter.parse(scene, function (gltf) {
+                                // Create a blob URL from the GLTF data
+                                const blob = new Blob([JSON.stringify(gltf)], { type: 'model/gltf+json' })
+                                gltfUrl = URL.createObjectURL(blob)
+
+                                // Update model-viewer with the GLTF URL
+                                modelViewer.src = gltfUrl
+                                modelViewer.style.display = 'block'
+                            })
+                        }, undefined, function (error) {
+                            console.error('Error loading STL file:', error)
+                            modelViewer.style.display = 'none'
+                        })
+                    } else {
+                        // For non-STL files, load directly
+                        gltfUrl = product.model_3d
+                        modelViewer.src = gltfUrl
+                        modelViewer.style.display = 'block'
+                    }
+                }
+
+                // Load related products if available
+                if (product.related_products && product.related_products.length > 0) {
+                    const { data: relatedProducts, error: relatedError } = await supabase
+                        .from('products')
+                        .select('*')
+                        .in('id', product.related_products);
+
+                    if (relatedError) throw relatedError;
+
+                    if (relatedProducts && relatedProducts.length > 0) {
+                        document.getElementById('relatedProductsSection').style.display = 'block';
+                        const relatedProductsGrid = document.getElementById('relatedProducts');
+                        relatedProductsGrid.innerHTML = relatedProducts.map(related => `
+            <a href="./product.html?id=${related.id}" class="related-product-card">
+                <img src="${related.main_image}" alt="${related.title}">
+                <h3>${related.title}</h3>
+            </a>
+        `).join('');
+                    }
+                }
+
+
+                // Add event listener to enquiry button
+                document.getElementById('enquiryButton').addEventListener('click', function () {
+                    // Open WhatsApp with pre-filled message
+                    const message = `Hi, I'm interested in: ${product.title}`;
+                    window.open(`https://wa.me/917339224811?text=${encodeURIComponent(message)}`, '_blank');
+                });
+
+            } catch (error) {
+                console.error('Error loading product details:', error);
+                alert('Error loading product details. Please try again.');
+            } finally {
+                hideLoader();
+            }
+        }
+
+        // Show/hide loader functions
+        function showLoader() {
+            const loader = document.getElementById('loader')
+            if (loader) {
+                loader.style.display = 'flex'
+            }
+        }
+
+        function hideLoader() {
+            const loader = document.getElementById('loader')
+            if (loader) {
+                loader.style.display = 'none'
+            }
+        }
+
+        // Initialize tab functionality
+        function initializeTabs() {
+            const tabButtons = document.querySelectorAll('.tab-button')
+            const tabPanes = document.querySelectorAll('.tab-pane')
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons and panes
+                    tabButtons.forEach(btn => btn.classList.remove('active'))
+                    tabPanes.forEach(pane => pane.classList.remove('active'))
+
+                    // Add active class to clicked button and corresponding pane
+                    button.classList.add('active')
+                    const tabId = button.getAttribute('data-tab')
+                    document.getElementById(tabId).classList.add('active')
+                })
+            })
+        }
+
+        // Initialize mobile accordion functionality
+        function initializeMobileAccordion() {
+            const accordionButtons = document.querySelectorAll('.accordion-button')
+
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const content = button.nextElementSibling
+                    const icon = button.querySelector('i')
+
+                    // Toggle active state
+                    button.classList.toggle('active')
+                    content.classList.toggle('active')
+
+                    // Toggle icon
+                    if (button.classList.contains('active')) {
+                        icon.classList.remove('fa-chevron-down')
+                        icon.classList.add('fa-chevron-up')
+                    } else {
+                        icon.classList.remove('fa-chevron-up')
+                        icon.classList.add('fa-chevron-down')
+                    }
+                })
+            })
+        }
+
+        // Update gallery functionality to handle videos
+        function initializeGallery() {
+            const thumbnails = document.querySelectorAll('.thumbnail')
+            const mainDisplay = document.getElementById('mainDisplay')
+            const view3dButton = document.getElementById('view3dButton')
+            let currentIndex = 0
+            let is3dView = false
+            let currentMedia = ''
+
+            console.log('Initializing gallery with thumbnails:', thumbnails.length)
+
+            thumbnails.forEach((thumb, index) => {
+                thumb.addEventListener('click', async () => {
+                    console.log('Thumbnail clicked:', {
+                        type: thumb.dataset.type,
+                        src: thumb.dataset.src,
+                        index: index
+                    })
+
+                    // Update active state
+                    thumbnails.forEach(t => {
+                        if (t && t.classList) {
+                            t.classList.remove('active')
+                        }
+                    })
+                    if (thumb && thumb.classList) {
+                        thumb.classList.add('active')
+                    }
+
+                    // Update main display
+                    if (thumb.dataset.type === '3d') {
+                        const modelUrl = thumb.dataset.model
+
+                        if (modelUrl.toLowerCase().endsWith('.stl')) {
+                            // Convert STL to GLTF
+                            const loader = new THREE.STLLoader()
+                            loader.load(modelUrl, function (geometry) {
+                                // Create a mesh
+                                const material = new THREE.MeshStandardMaterial({
+                                    color: 0x808080,
+                                    metalness: 0.5,
+                                    roughness: 0.5
+                                })
+                                const mesh = new THREE.Mesh(geometry, material)
+
+                                // Center the geometry
+                                geometry.computeBoundingBox()
+                                const center = geometry.boundingBox.getCenter(new THREE.Vector3())
+                                geometry.translate(-center.x, -center.y, -center.z)
+
+                                // Create a scene
+                                const scene = new THREE.Scene()
+                                scene.add(mesh)
+
+                                // Export to GLTF
+                                const exporter = new THREE.GLTFExporter()
+                                exporter.parse(scene, function (gltf) {
+                                    // Create a blob URL from the GLTF data
+                                    const blob = new Blob([JSON.stringify(gltf)], { type: 'model/gltf+json' })
+                                    const gltfUrl = URL.createObjectURL(blob)
+
+                                    // Update main display with model-viewer
+                                    mainDisplay.innerHTML = `
+                             <model-viewer
+        src="${gltfUrl}"
+        alt="3D model"
+        auto-rotate
+        camera-controls
+        shadow-intensity="1"
+        camera-orbit="0deg 75deg 105%"
+        min-camera-orbit="-Infinity -Infinity 50%"
+        max-camera-orbit="Infinity Infinity 200%"
+        orbit-sensitivity="1"
+        min-field-of-view="10deg"
+        max-field-of-view="90deg"
+        interaction-prompt="auto"
+        interaction-prompt-style="basic"
+        interaction-prompt-threshold="0"
+        exposure="1"
+        environment-image="neutral"
+        style="width: 100%; height: 100%;"
+    ></model-viewer>
+                        `
+                                    is3dView = true
+                                })
+                            }, undefined, function (error) {
+                                console.error('Error loading STL file:', error)
+                                mainDisplay.innerHTML = `<div class="error-message">Error loading 3D model</div>`
+                            })
+                        } else {
+                            // For non-STL files, load directly
+                            mainDisplay.innerHTML = `
+                                <model-viewer
+        src="${modelUrl}"
+        alt="3D model"
+        auto-rotate
+        camera-controls
+        shadow-intensity="1"
+        camera-orbit="0deg 75deg 105%"
+        min-camera-orbit="-Infinity -Infinity 50%"
+        max-camera-orbit="Infinity Infinity 200%"
+        orbit-sensitivity="1"
+        min-field-of-view="10deg"
+        max-field-of-view="90deg"
+        interaction-prompt="auto"
+        interaction-prompt-style="basic"
+        interaction-prompt-threshold="0"
+        exposure="1"
+        environment-image="neutral"
+        style="width: 100%; height: 100%;"
+    ></model-viewer>
+                            `
+                            is3dView = true
+                        }
+                    } else if (thumb.dataset.type === 'video') {
+                        currentMedia = `
+                            <video controls autoplay>
+                                <source src="${thumb.dataset.src}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        `
+                        mainDisplay.innerHTML = currentMedia
+                        is3dView = false
+                    } else {
+                        currentMedia = `<img src="${thumb.dataset.src}" alt="Product Image">`
+                        mainDisplay.innerHTML = currentMedia
+                        is3dView = false
+                    }
+
+                    currentIndex = index
+                })
+            })
+
+            // Navigation buttons
+            const prevButton = document.querySelector('.main-prev')
+            const nextButton = document.querySelector('.main-next')
+
+            if (prevButton) {
+                prevButton.addEventListener('click', () => {
+                    currentIndex = (currentIndex - 1 + thumbnails.length) % thumbnails.length
+                    if (thumbnails[currentIndex]) {
+                        thumbnails[currentIndex].click()
+                    }
+                })
+            }
+
+            if (nextButton) {
+                nextButton.addEventListener('click', () => {
+                    currentIndex = (currentIndex + 1) % thumbnails.length
+                    if (thumbnails[currentIndex]) {
+                        thumbnails[currentIndex].click()
+                    }
+                })
+            }
+
+            // 3D view button
+            if (view3dButton) {
+                view3dButton.addEventListener('click', () => {
+                    const modelThumb = document.querySelector('.thumbnail[data-type="3d"]')
+                    if (modelThumb) {
+                        modelThumb.click()
+                    }
+                })
+            }
+        }
+
+        loadProductDetails()
+    </script>
+<!-- WhatsApp Floating Button -->
+<div class="whatsapp-float">
+<div class="thought-bubble" id="thoughtBubble">
+            Contact us for Custom Robots
+        </div>
+<button class="whatsapp-button" id="whatsappButton">
+<i class="fab fa-whatsapp"></i>
+</button>
+</div>
+<!-- WhatsApp Modal -->
+<div class="whatsapp-modal" id="whatsappModal">
+<div class="whatsapp-modal-content">
+<div class="whatsapp-modal-header">
+<div class="whatsapp-profile">
+<img alt="Technovation" loading="lazy" src="./images/techno black logo-Photoroom.png"/>
+<div class="whatsapp-profile-info">
+<h3>Technovation</h3>
+<p>Online</p>
+</div>
+</div>
+<button class="close-modal" id="closeWhatsappModal">×</button>
+</div>
+<div class="whatsapp-modal-body">
+<p>Hi! How can we help you today?</p>
+</div>
+<div class="whatsapp-modal-footer">
+<a class="whatsapp-chat-button" href="https://wa.me/917339224811" target="_blank">
+<i class="fab fa-whatsapp"></i> Start Chat
+                </a>
+</div>
+</div>
+</div>
+<style>
+        /* Update thumbnail styles */
+        .thumbnail {
+            position: relative;
+            width: 10%;
+            aspect-ratio: 1;
+            border: 2px solid transparent;
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .thumbnail.active {
+            border-color: #3498db;
+        }
+
+        .thumbnail img,
+        .thumbnail video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .thumbnail video {
+            pointer-events: none;
+        }
+
+        .video-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            pointer-events: none;
+        }
+
+        .model-icon {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            pointer-events: none;
+        }
+
+        /* Search Results Styles */
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-top: none;
+            z-index: 1001;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .search-results.active {
+            display: block;
+        }
+
+        .search-result-item {
+            display: flex;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .search-result-item:hover {
+            background-color: #f9f9f9;
+        }
+
+        .search-result-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+
+        .search-result-info h4 {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .search-result-info p {
+            margin: 5px 0 0;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .no-results {
+            padding: 10px;
+            text-align: center;
+            color: #666;
+        }
+
+        /* Mobile Search Results Styles */
+        .mobile-search-container .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-top: none;
+            z-index: 1001;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .mobile-search-container .search-results.active {
+            display: block;
+        }
+
+        .mobile-search-container .search-result-item {
+            display: flex;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .mobile-search-container .search-result-item:hover {
+            background-color: #f9f9f9;
+        }
+
+        .mobile-search-container .search-result-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+
+        .mobile-search-container .search-result-info h4 {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .mobile-search-container .search-result-info p {
+            margin: 5px 0 0;
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* WhatsApp Floating Button Styles */
+        .thought-bubble {
+            position: absolute;
+            right: 60px;
+            bottom: 35px;
+            width: 120px;
+            height: auto;
+            background-color: white;
+            border: 2px solid #075E54;
+            border-radius: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            text-align: center;
+            padding: 8px 10px;
+            z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #075E54;
+            font-weight: 600;
+        }
+
+        /* Create the small circles connecting the bubble to the button */
+        .thought-bubble::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -10px;
+            width: 10px;
+            height: 10px;
+            background-color: white;
+            border-right: 2px solid #075E54;
+            border-bottom: 2px solid #075E54;
+            transform: rotate(-45deg) translateY(-50%);
+        }
+
+        /* WhatsApp Floating Button Styles */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .whatsapp-button {
+            width: 60px;
+            height: 60px;
+            background-color: #25D366;
+            border-radius: 50%;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .whatsapp-button:hover {
+            transform: scale(1.1);
+        }
+
+        .whatsapp-button i {
+            font-size: 32px;
+            color: white;
+        }
+
+        /* WhatsApp Modal Styles */
+        .whatsapp-modal {
+            display: none;
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 300px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .whatsapp-modal.active {
+            display: block;
+        }
+
+        .whatsapp-modal-content {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .whatsapp-modal-header {
+            background-color: #075E54;
+            color: white;
+            padding: 15px;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .whatsapp-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .whatsapp-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            background-color: #f0f0f0;
+        }
+
+        .whatsapp-profile-info h3 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .whatsapp-profile-info p {
+            margin: 0;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .whatsapp-modal-body {
+            padding: 15px;
+            background-color: #ECE5DD;
+            flex-grow: 1;
+        }
+
+        .whatsapp-modal-body p {
+            margin: 0;
+            color: #075E54;
+            font-size: 14px;
+        }
+
+        .whatsapp-modal-footer {
+            padding: 15px;
+            background-color: #F0F0F0;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .whatsapp-chat-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: #25D366;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .whatsapp-chat-button:hover {
+            background-color: #128C7E;
+        }
+
+        .whatsapp-chat-button i {
+            font-size: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .whatsapp-float {
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .whatsapp-button {
+                width: 50px;
+                height: 50px;
+            }
+
+            .whatsapp-button i {
+                font-size: 28px;
+            }
+            
+            .thought-bubble {
+                right: 50px;
+                bottom: 30px;
+                width: 100px;
+                font-size: 12px;
+            }
+
+            .whatsapp-modal {
+                bottom: 80px;
+                right: 20px;
+                width: 280px;
+            }
+        }
+    </style>
+<script>
+        const whatsappButton = document.getElementById('whatsappButton');
+        const whatsappModal = document.getElementById('whatsappModal');
+        const closeWhatsappModal = document.getElementById('closeWhatsappModal');
+        const thoughtBubble = document.getElementById('thoughtBubble');
+
+        // When WhatsApp button is clicked
+        whatsappButton.addEventListener('click', () => {
+            whatsappModal.classList.add('active');
+            // Hide thought bubble when opening modal
+            thoughtBubble.style.display = 'none';
+        });
+
+        // When close button is clicked
+        closeWhatsappModal.addEventListener('click', () => {
+            whatsappModal.classList.remove('active');
+            // Show thought bubble when closing modal
+            thoughtBubble.style.display = 'flex';
+        });
+
+        // Close modal when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!whatsappModal.contains(e.target) && !whatsappButton.contains(e.target)) {
+                whatsappModal.classList.remove('active');
+                // Show thought bubble when closing modal
+                thoughtBubble.style.display = 'flex';
+            }
+        });
+    </script>
+<script src="mouse.js"></script>
+</body>
+</html>
