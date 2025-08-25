@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Debug check - ensure elements exist before adding event listeners
    
 
-    // Toggle menu when hamburger button is clicked
     menuToggle.addEventListener('click', function (e) {
         e.stopPropagation(); // Prevent click from closing the menu immediately
         this.classList.toggle('active');
