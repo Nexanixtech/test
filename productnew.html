@@ -5,7 +5,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Technovation Products</title>
-<link href="../images/tecpn.png" rel="shortcut icon" type="image/x-icon"/>
+<link href="/public/tecpn.png" rel="shortcut icon" type="image/x-icon"/>
 <link href="styles.css" rel="stylesheet"/>
 <!-- Google Fonts -->
 
@@ -283,8 +283,8 @@
 <div class="container">
 <div class="logo">
 <a href="index.html">
-<img src="./images/Tech Logo (B).png" alt="Tech Logo" class="spin-logo" />
-<img alt="Technovation Logo" loading="lazy" src="./images/techno black logo-Photoroom.png"/>
+<img src="/public/Tech Logo (B).png" alt="Tech Logo" class="spin-logo" />
+<img alt="Technovation Logo" loading="lazy" src="/public/techno black logo-Photoroom.png"/>
 </a>
 </div>
 <div class="nav-links">
@@ -436,7 +436,7 @@
 <div class="footer-container">
 <div class="footer-left">
 <div class="footer-logo">
-<img alt="Technovation" loading="lazy" src="./images/techno black logo-Photoroom.png"/>
+<img alt="Technovation" loading="lazy" src="/public/techno black logo-Photoroom.png"/>
 </div>
 <p class="footer-description">
                     With over a decade of experience, we are proud to deliver innovative products to clients around the
@@ -768,7 +768,7 @@
                     detailedSpecifications.innerHTML = product.technical_specifications.map(spec => `
         <div class="spec-item">
             <div class="spec-image">
-                <img src="${spec.image || './images/spec-default.png'}" alt="${spec.spec}">
+                <img src="${spec.image || '/public/spec-default.png'}" alt="${spec.spec}">
             </div>
             <div class="spec-content">
                 <div class="spec-name">${spec.spec}</div>
@@ -782,7 +782,7 @@
                         detailedSpecifications.innerHTML = Object.entries(product.specifications)
                             .map(([key, value]) => `<div class="spec-item">
             <div class="spec-image">
-                <img src="./images/spec-default.png" alt="${key}">
+                <img src="/public/spec-default.png" alt="${key}">
             </div>
             <div class="spec-content">
                 <div class="spec-name">${key}</div>
@@ -1133,7 +1133,7 @@
 <div class="whatsapp-modal-content">
 <div class="whatsapp-modal-header">
 <div class="whatsapp-profile">
-<img alt="Technovation" loading="lazy" src="./images/techno black logo-Photoroom.png"/>
+<img alt="Technovation" loading="lazy" src="/public/techno black logo-Photoroom.png"/>
 <div class="whatsapp-profile-info">
 <h3>Technovation</h3>
 <p>Online</p>
