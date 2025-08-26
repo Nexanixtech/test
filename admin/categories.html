@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Categories - Technovation</title>
-    <link href="/public/tecpn.png" rel="shortcut icon" type="image/x-icon" />
+    <link href="/tecpn.png" rel="shortcut icon" type="image/x-icon" />
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="admin.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -438,13 +438,13 @@
     <script type="module">
         import { supabase } from '../supabase.js'
 
-        // Check if user is authenticated
+        / Check if user is authenticated
         const session = JSON.parse(localStorage.getItem('adminSession'))
         if (!session) {
             window.location.href = 'login.html'
         }
 
-        // Handle image preview
+        / Handle image preview
         document.getElementById('categoryImage').addEventListener('change', function (event) {
             const file = event.target.files[0];
             if (file) {
@@ -457,7 +457,7 @@
                 reader.readAsDataURL(file);
             }
         });
-        // For add category form
+        / For add category form
         document.getElementById('categoryBgImage').addEventListener('change', function (event) {
             const file = event.target.files[0];
             if (file) {
@@ -471,7 +471,7 @@
             }
         });
 
-        // For edit category form
+        / For edit category form
         document.getElementById('editCategoryBgImage').addEventListener('change', function (event) {
             const file = event.target.files[0];
             if (file) {
@@ -485,20 +485,20 @@
             }
         });
 
-        // Add event listeners for remove buttons
+        / Add event listeners for remove buttons
 document.getElementById('removeBgImage').addEventListener('click', function() {
     document.getElementById('currentBgImageContainer').style.display = 'none';
-    // Set a flag to indicate image should be removed
+    / Set a flag to indicate image should be removed
     document.getElementById('editCategoryForm').dataset.removeBgImage = 'true';
 });
 
 document.getElementById('removeMainImage').addEventListener('click', function() {
     document.getElementById('currentMainImageContainer').style.display = 'none';
-    // Set a flag to indicate image should be removed
+    / Set a flag to indicate image should be removed
     document.getElementById('editCategoryForm').dataset.removeMainImage = 'true';
 });
-        // Load categories
-        // Update the loadCategories function HTML template
+        / Load categories
+        / Update the loadCategories function HTML template
         async function loadCategories() {
             try {
                 const { data: categories, error } = await supabase
@@ -560,18 +560,18 @@ ${category.bg_image_url ?
 
                 if (error) throw error
 
-                // Populate the edit form
+                / Populate the edit form
                 document.getElementById('editCategoryId').value = category.id
                 document.getElementById('editCategoryName').value = category.name
                 document.getElementById('editBgImagePreview').style.display = 'none'
                 document.getElementById('editIsMainCategory').checked = category.is_main
                 document.getElementById('editCategoryDescription').value = category.description || ''
                 document.getElementById('editCategoryColor').value = category.color || '#3498db';
-                // Add to the editCategory function where you populate fields
+                / Add to the editCategory function where you populate fields
                 document.getElementById('editCategoryNameColor').value = category.name_color || '#000000';
                 document.getElementById('editCategoryDescriptionColor').value = category.description_color || '#666666';
 
-                // Show current image if exists
+                / Show current image if exists
                 const currentImageContainer = document.getElementById('currentImageContainer')
                 const currentImage = document.getElementById('currentImage')
 
@@ -589,7 +589,7 @@ ${category.bg_image_url ?
                 } else {
                     document.getElementById('currentBgImageContainer').style.display = 'none'
                 }
-                // Show current main image if exists
+                / Show current main image if exists
                 const currentMainImageContainer = document.getElementById('currentMainImageContainer')
                 const currentMainImage = document.getElementById('currentMainImage')
 
@@ -600,11 +600,11 @@ ${category.bg_image_url ?
                     currentMainImageContainer.style.display = 'none'
                 }
 
-                // Clear any previous previews
+                / Clear any previous previews
                 document.getElementById('editImagePreview').style.display = 'none'
                 document.getElementById('editMainImagePreview').style.display = 'none'
 
-                // Show the modal
+                / Show the modal
                 document.getElementById('editCategoryModal').style.display = 'block'
             } catch (error) {
                 console.error('Error fetching category:', error)
@@ -612,7 +612,7 @@ ${category.bg_image_url ?
             }
         }
 
-        // Handle image preview for edit form
+        / Handle image preview for edit form
         document.getElementById('editCategoryImage').addEventListener('change', function (event) {
             const file = event.target.files[0]
             if (file) {
@@ -626,7 +626,7 @@ ${category.bg_image_url ?
             }
         })
 
-        // Add this with your other event listeners
+        / Add this with your other event listeners
         document.getElementById('categoryMainImage').addEventListener('change', function (event) {
             const file = event.target.files[0];
             if (file) {
@@ -640,7 +640,7 @@ ${category.bg_image_url ?
             }
         });
 
-        // Add this with your other event listeners
+        / Add this with your other event listeners
         document.getElementById('editCategoryMainImage').addEventListener('change', function (event) {
             const file = event.target.files[0];
             if (file) {
@@ -653,7 +653,7 @@ ${category.bg_image_url ?
                 reader.readAsDataURL(file);
             }
         });
-        // Name color feedback
+        / Name color feedback
         document.getElementById('categoryNameColor').addEventListener('change', function (event) {
             const colorValue = this.value;
             this.style.backgroundColor = colorValue;
@@ -668,7 +668,7 @@ ${category.bg_image_url ?
             label.innerHTML = `Category Name Color: <span style="color:${colorValue}">${colorValue}</span>`;
         });
 
-        // Description color feedback
+        / Description color feedback
         document.getElementById('categoryDescriptionColor').addEventListener('change', function (event) {
             const colorValue = this.value;
             this.style.backgroundColor = colorValue;
@@ -682,12 +682,12 @@ ${category.bg_image_url ?
             const label = document.querySelector('label[for="editCategoryDescriptionColor"]');
             label.innerHTML = `Description Color: <span style="color:${colorValue}">${colorValue}</span>`;
         });
-        // Close modal when clicking the X
+        / Close modal when clicking the X
         document.querySelector('.close-modal').addEventListener('click', () => {
             document.getElementById('editCategoryModal').style.display = 'none'
         })
 
-        // Close modal when clicking outside
+        / Close modal when clicking outside
         window.addEventListener('click', (event) => {
             const modal = document.getElementById('editCategoryModal')
             if (event.target === modal) {
@@ -695,7 +695,7 @@ ${category.bg_image_url ?
             }
         })
 
-        // Handle edit form submission
+        / Handle edit form submission
         document.getElementById('editCategoryForm').addEventListener('submit', async (e) => {
             e.preventDefault()
 
@@ -706,14 +706,14 @@ ${category.bg_image_url ?
             const description = document.getElementById('editCategoryDescription').value
             const imageFile = document.getElementById('editCategoryImage').files[0]
             const mainImageFile = document.getElementById('editCategoryMainImage').files[0]
-            // Inside the edit form submission handler, add this line with the other variable definitions
+            / Inside the edit form submission handler, add this line with the other variable definitions
             const color = document.getElementById('editCategoryColor').value;
             const nameColor = document.getElementById('editCategoryNameColor').value;
             const descriptionColor = document.getElementById('editCategoryDescriptionColor').value;
             const removeBgImage = document.getElementById('editCategoryForm').dataset.removeBgImage === 'true';
 const removeMainImage = document.getElementById('editCategoryForm').dataset.removeMainImage === 'true';
             try {
-                // Get the current category to compare changes
+                / Get the current category to compare changes
                 const { data: currentCategory } = await supabase
                     .from('categories')
                     .select('image_url, main_image_url')
@@ -723,9 +723,9 @@ const removeMainImage = document.getElementById('editCategoryForm').dataset.remo
                 let imageUrl = currentCategory.image_url
                 let mainImageUrl = currentCategory.main_image_url
 
-                // Upload new image if selected
+                / Upload new image if selected
                 if (imageFile) {
-                    // Delete old image if exists
+                    / Delete old image if exists
                     if (imageUrl) {
                         const oldFileName = imageUrl.split('/').pop()
                         const { error: deleteError } = await supabase.storage
@@ -735,7 +735,7 @@ const removeMainImage = document.getElementById('editCategoryForm').dataset.remo
                         if (deleteError) console.error('Error deleting old image:', deleteError)
                     }
 
-                    // Upload new image
+                    / Upload new image
                     const fileName = `category_${Date.now()}_${imageFile.name.replace(/\s+/g, '_')}`
                     const { data, error: uploadError } = await supabase.storage
                         .from('category-images')
@@ -743,7 +743,7 @@ const removeMainImage = document.getElementById('editCategoryForm').dataset.remo
 
                     if (uploadError) throw uploadError
 
-                    // Get public URL for the new image
+                    / Get public URL for the new image
                     const { data: { publicUrl } } = supabase.storage
                         .from('category-images')
                         .getPublicUrl(fileName)
@@ -752,9 +752,9 @@ const removeMainImage = document.getElementById('editCategoryForm').dataset.remo
                 }
                 let bgImageUrl = currentCategory.bg_image_url
 
-                // Upload new background image if selected
+                / Upload new background image if selected
                 if (bgImageFile) {
-                    // Delete old background image if exists
+                    / Delete old background image if exists
                     if (bgImageUrl) {
                         const oldBgFileName = bgImageUrl.split('/').pop()
                         const { error: deleteBgError } = await supabase.storage
@@ -764,7 +764,7 @@ const removeMainImage = document.getElementById('editCategoryForm').dataset.remo
                         if (deleteBgError) console.error('Error deleting old background image:', deleteBgError)
                     }
 
-                    // Upload new background image
+                    / Upload new background image
                     const bgFileName = `bg_category_${Date.now()}_${bgImageFile.name.replace(/\s+/g, '_')}`
                     const { data, error: uploadBgError } = await supabase.storage
                         .from('category-images')
@@ -772,16 +772,16 @@ const removeMainImage = document.getElementById('editCategoryForm').dataset.remo
 
                     if (uploadBgError) throw uploadBgError
 
-                    // Get public URL for the new background image
+                    / Get public URL for the new background image
                     const { data: { publicUrl } } = supabase.storage
                         .from('category-images')
                         .getPublicUrl(bgFileName)
 
                     bgImageUrl = publicUrl
                 }
-                // Upload new main image if selected
+                / Upload new main image if selected
                 if (mainImageFile) {
-                    // Delete old main image if exists
+                    / Delete old main image if exists
                     if (mainImageUrl) {
                         const oldMainFileName = mainImageUrl.split('/').pop()
                         const { error: deleteMainError } = await supabase.storage
@@ -791,7 +791,7 @@ const removeMainImage = document.getElementById('editCategoryForm').dataset.remo
                         if (deleteMainError) console.error('Error deleting old main image:', deleteMainError)
                     }
 
-                    // Upload new main image
+                    / Upload new main image
                     const mainFileName = `main_category_${Date.now()}_${mainImageFile.name.replace(/\s+/g, '_')}`
                     const { data, error: uploadMainError } = await supabase.storage
                         .from('category-images')
@@ -799,7 +799,7 @@ const removeMainImage = document.getElementById('editCategoryForm').dataset.remo
 
                     if (uploadMainError) throw uploadMainError
 
-                    // Get public URL for the new main image
+                    / Get public URL for the new main image
                     const { data: { publicUrl } } = supabase.storage
                         .from('category-images')
                         .getPublicUrl(mainFileName)
@@ -807,7 +807,7 @@ const removeMainImage = document.getElementById('editCategoryForm').dataset.remo
                     mainImageUrl = publicUrl
                 }
                 if (removeBgImage) {
-                    // Delete old background image if exists
+                    / Delete old background image if exists
                     if (bgImageUrl) {
                         const oldBgFileName = bgImageUrl.split('/').pop();
                         const { error: deleteBgError } = await supabase.storage
@@ -816,11 +816,11 @@ const removeMainImage = document.getElementById('editCategoryForm').dataset.remo
                 
                         if (deleteBgError) console.error('Error deleting old background image:', deleteBgError);
                     }
-                    bgImageUrl = null; // Set to null to remove from database
+                    bgImageUrl = null; / Set to null to remove from database
                 }
                 
                 if (removeMainImage) {
-                    // Delete old main image if exists
+                    / Delete old main image if exists
                     if (mainImageUrl) {
                         const oldMainFileName = mainImageUrl.split('/').pop();
                         const { error: deleteMainError } = await supabase.storage
@@ -829,13 +829,13 @@ const removeMainImage = document.getElementById('editCategoryForm').dataset.remo
                 
                         if (deleteMainError) console.error('Error deleting old main image:', deleteMainError);
                     }
-                    mainImageUrl = null; // Set to null to remove from database
+                    mainImageUrl = null; / Set to null to remove from database
                 }
-                // Update the category
-                // 1. First, modify the update category function by adding updated_at field
-// In the editCategoryForm submit event listener, modify the supabase update call (around line 697)
+                / Update the category
+                / 1. First, modify the update category function by adding updated_at field
+/ In the editCategoryForm submit event listener, modify the supabase update call (around line 697)
 
-// Update the category
+/ Update the category
 const { error } = await supabase
     .from('categories')
     .update({
@@ -848,13 +848,13 @@ const { error } = await supabase
         color: color,
         name_color: nameColor,
         description_color: descriptionColor,
-        created_at: new Date().toISOString() // This ensures proper ISO format
+        created_at: new Date().toISOString() / This ensures proper ISO format
     })
     .eq('id', id)
 
                 if (error) throw error
 
-                // Hide modal and reload categories
+                / Hide modal and reload categories
                 document.getElementById('editCategoryModal').style.display = 'none'
                 loadCategories()
             } catch (error) {
@@ -864,25 +864,25 @@ const { error } = await supabase
         });
         document.getElementById('editCategoryForm').dataset.removeBgImage = 'false';
 document.getElementById('editCategoryForm').dataset.removeMainImage = 'false';
-        // Add this event listener for the color picker
+        / Add this event listener for the color picker
         document.getElementById('categoryColor').addEventListener('change', function (event) {
-            // Update a visual indicator or the label to show the selected color
+            / Update a visual indicator or the label to show the selected color
             const colorValue = this.value;
             this.style.backgroundColor = colorValue;
-            // Optional: you can also update a label next to it
+            / Optional: you can also update a label next to it
             const label = document.querySelector('label[for="categoryColor"]');
             label.innerHTML = `Category Color: <span style="color:${colorValue}">${colorValue}</span>`;
         });
 
-        // Same for the edit color picker
+        / Same for the edit color picker
         document.getElementById('editCategoryColor').addEventListener('change', function (event) {
             const colorValue = this.value;
             this.style.backgroundColor = colorValue;
             const label = document.querySelector('label[for="editCategoryColor"]');
             label.innerHTML = `Category Color: <span style="color:${colorValue}">${colorValue}</span>`;
         });
-        // Add category with image
-        // Update the add category submission
+        / Add category with image
+        / Update the add category submission
         document.getElementById('addCategoryForm').addEventListener('submit', async (e) => {
             e.preventDefault()
             const name = document.getElementById('categoryName').value
@@ -897,7 +897,7 @@ document.getElementById('editCategoryForm').dataset.removeMainImage = 'false';
                 let imageUrl = null;
                 let mainImageUrl = null;
 
-                // Upload regular image if selected
+                / Upload regular image if selected
                 if (imageFile) {
                     const fileName = `category_${Date.now()}_${imageFile.name.replace(/\s+/g, '_')}`;
                     const { data, error: uploadError } = await supabase.storage
@@ -906,7 +906,7 @@ document.getElementById('editCategoryForm').dataset.removeMainImage = 'false';
 
                     if (uploadError) throw uploadError;
 
-                    // Get public URL for the uploaded image
+                    / Get public URL for the uploaded image
                     const { data: { publicUrl } } = supabase.storage
                         .from('category-images')
                         .getPublicUrl(fileName);
@@ -915,7 +915,7 @@ document.getElementById('editCategoryForm').dataset.removeMainImage = 'false';
                 }
                 let bgImageUrl = null;
 
-                // Upload background image if selected
+                / Upload background image if selected
                 if (bgImageFile) {
                     const bgFileName = `bg_category_${Date.now()}_${bgImageFile.name.replace(/\s+/g, '_')}`;
                     const { data, error: uploadBgError } = await supabase.storage
@@ -924,7 +924,7 @@ document.getElementById('editCategoryForm').dataset.removeMainImage = 'false';
 
                     if (uploadBgError) throw uploadBgError;
 
-                    // Get public URL for the uploaded background image
+                    / Get public URL for the uploaded background image
                     const { data: { publicUrl } } = supabase.storage
                         .from('category-images')
                         .getPublicUrl(bgFileName);
@@ -932,7 +932,7 @@ document.getElementById('editCategoryForm').dataset.removeMainImage = 'false';
                     bgImageUrl = publicUrl;
                 }
 
-                // Upload main image if selected
+                / Upload main image if selected
                 if (mainImageFile) {
                     const mainFileName = `main_category_${Date.now()}_${mainImageFile.name.replace(/\s+/g, '_')}`;
                     const { data, error: uploadMainError } = await supabase.storage
@@ -941,7 +941,7 @@ document.getElementById('editCategoryForm').dataset.removeMainImage = 'false';
 
                     if (uploadMainError) throw uploadMainError;
 
-                    // Get public URL for the uploaded main image
+                    / Get public URL for the uploaded main image
                     const { data: { publicUrl } } = supabase.storage
                         .from('category-images')
                         .getPublicUrl(mainFileName);
@@ -949,7 +949,7 @@ document.getElementById('editCategoryForm').dataset.removeMainImage = 'false';
                     mainImageUrl = publicUrl;
                 }
                 const color = document.getElementById('categoryColor').value;
-                // Insert the category with both image URLs
+                / Insert the category with both image URLs
                 const { error } = await supabase
                 .from('categories')
                 .insert([{
@@ -967,7 +967,7 @@ document.getElementById('editCategoryForm').dataset.removeMainImage = 'false';
 
                 if (error) throw error;
 
-                // Reset form
+                / Reset form
                 document.getElementById('addCategoryForm').reset();
                 document.getElementById('imagePreview').style.display = 'none';
                 document.getElementById('mainImagePreview').style.display = 'none';
@@ -978,12 +978,12 @@ document.getElementById('editCategoryForm').dataset.removeMainImage = 'false';
             }
         });
 
-        // Delete category
+        / Delete category
         window.deleteCategory = async (id) => {
             if (!confirm('Are you sure you want to delete this category?')) return;
 
             try {
-                // First get the category to check if it has images
+                / First get the category to check if it has images
                 const { data: category, error: fetchError } = await supabase
                     .from('categories')
                     .select('image_url, main_image_url')
@@ -992,7 +992,7 @@ document.getElementById('editCategoryForm').dataset.removeMainImage = 'false';
 
                 if (fetchError) throw fetchError;
 
-                // Delete regular image if exists
+                / Delete regular image if exists
                 if (category.image_url) {
                     const fileName = category.image_url.split('/').pop();
                     const { error: storageError } = await supabase.storage
@@ -1010,7 +1010,7 @@ document.getElementById('editCategoryForm').dataset.removeMainImage = 'false';
                     if (bgStorageError) console.error('Error deleting background image:', bgStorageError);
                 }
 
-                // Delete main image if exists
+                / Delete main image if exists
                 if (category.main_image_url) {
                     const mainFileName = category.main_image_url.split('/').pop();
                     const { error: mainStorageError } = await supabase.storage
@@ -1020,7 +1020,7 @@ document.getElementById('editCategoryForm').dataset.removeMainImage = 'false';
                     if (mainStorageError) console.error('Error deleting main image:', mainStorageError);
                 }
 
-                // Delete the category from the database
+                / Delete the category from the database
                 const { error } = await supabase
                     .from('categories')
                     .delete()
@@ -1035,7 +1035,7 @@ document.getElementById('editCategoryForm').dataset.removeMainImage = 'false';
             }
         };
 
-        // Load categories when page loads
+        / Load categories when page loads
         loadCategories();
     </script>
 </body>
