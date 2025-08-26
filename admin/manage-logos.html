@@ -256,7 +256,7 @@
         }
     </style>
 </head>
-<body class="admin-page">
+<body>
     <div class="loader" id="loader">
         <div class="spinner"></div>
         <p>Processing...</p>
@@ -265,12 +265,11 @@
     <nav class="admin-navbar">
         <div class="container">
             <h1>Logo Management</h1>
-            <div class="admin-nav-links" id="adminNavLinks">
-                <a href="dashboard.html" class="active">Dashboard</a>
-                <a href="manage-home.html">Manage Home</a>
+            <div class="admin-nav-links">
+                <a href="dashboard.html">Dashboard</a>
                 <a href="add-product.html">Manage Products</a>
                 <a href="categories.html">Manage Categories</a>
-                <a href="manage-logos.html">Manage Logos</a>
+                <a href="manage-logos.html" class="active">Manage Logos</a>
                 <button class="logout-btn" onclick="logout()">Logout</button>
             </div>
         </div>
@@ -417,13 +416,13 @@
             }
         }
 
-       // Logout
-        window.logout = async function() {
+        // Logout
+        async function logout() {
             try {
                 const { error } = await supabase.auth.signOut()
                 if (error) throw error
                 localStorage.removeItem('adminSession')
-                window.location.href = 'login.html'
+                window.location.href = '../index.html'
             } catch (error) {
                 console.error('Error logging out:', error)
                 alert('Error logging out. Please try again.')
@@ -433,13 +432,5 @@
         // Load logos when page loads
         loadLogos()
     </script>
-
-<script>
-  function adminLogout() {
-    localStorage.removeItem('adminSession');
-    window.location.href = "login.html";
-  }
-</script>
-
 </body>
 </html> 
