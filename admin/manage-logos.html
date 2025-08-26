@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Logos - Technovation</title>
-    <link href="/images/tecpn.png" rel="shortcut icon" type="image/x-icon" />
-    <link rel="stylesheet" href="/styles.css">
+    <link href="../images/tecpn.png" rel="shortcut icon" type="image/x-icon" />
+    <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="admin.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -265,11 +265,12 @@
     <nav class="admin-navbar">
         <div class="container">
             <h1>Logo Management</h1>
-            <div class="admin-nav-links">
-                <a href="dashboard.html">Dashboard</a>
+            <div class="admin-nav-links" id="adminNavLinks">
+                <a href="dashboard.html" class="active">Dashboard</a>
+                <a href="manage-home.html">Manage Home</a>
                 <a href="add-product.html">Manage Products</a>
                 <a href="categories.html">Manage Categories</a>
-                <a href="manage-logos.html" class="active">Manage Logos</a>
+                <a href="manage-logos.html">Manage Logos</a>
                 <button class="logout-btn" onclick="logout()">Logout</button>
             </div>
         </div>
@@ -416,13 +417,13 @@
             }
         }
 
-        // Logout
-        async function logout() {
+       // Logout
+        window.logout = async function() {
             try {
                 const { error } = await supabase.auth.signOut()
                 if (error) throw error
                 localStorage.removeItem('adminSession')
-                window.location.href = '../index.html'
+                window.location.href = 'login.html'
             } catch (error) {
                 console.error('Error logging out:', error)
                 alert('Error logging out. Please try again.')
@@ -432,5 +433,13 @@
         // Load logos when page loads
         loadLogos()
     </script>
+
+<script>
+  function adminLogout() {
+    localStorage.removeItem('adminSession');
+    window.location.href = "login.html";
+  }
+</script>
+
 </body>
 </html> 
