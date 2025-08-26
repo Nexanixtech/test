@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const drone = document.createElement("img");
-  drone.src = "./images/drone.png"; // place drone image inside ./images/
+  drone.src = "/drone.png"; // place drone image inside ./images/
   drone.className = "drone-cursor";
   document.body.appendChild(drone);
 
